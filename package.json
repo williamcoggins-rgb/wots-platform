@@ -1,0 +1,28 @@
+{
+  "name": "wots-platform",
+  "version": "0.1.0",
+  "private": true,
+  "description": "War of the Sphinx — PWA platform with Claude-powered world assistant",
+  "scripts": {
+    "dev": "concurrently \"npm run dev:frontend\" \"npm run dev:functions\"",
+    "dev:frontend": "cd frontend && npm run dev",
+    "dev:functions": "cd functions && npm run watch",
+    "build": "npm run build:frontend && npm run build:functions",
+    "build:frontend": "cd frontend && npm run build",
+    "build:functions": "cd functions && npm run build",
+    "test": "npm run test:functions && npm run test:integration",
+    "test:functions": "cd functions && npm test",
+    "test:integration": "jest --config jest.integration.config.js --passWithNoTests",
+    "deploy": "firebase deploy",
+    "deploy:hosting": "firebase deploy --only hosting",
+    "deploy:functions": "firebase deploy --only functions",
+    "lint": "cd functions && npm run lint"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.0",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.1.0",
+    "@types/jest": "^29.5.0",
+    "typescript": "^5.4.0"
+  }
+}
