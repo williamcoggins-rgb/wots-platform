@@ -1,0 +1,21 @@
+{
+  "name": "War of the Sphinx",
+  "short_name": "WOTS",
+  "description": "A mythical world powered by the Sphinx — explore, solve riddles, and uncover ancient lore.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#1a1a2e",
+  "theme_color": "#ffd700",
+  "icons": [
+    {
+      "src": "/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
