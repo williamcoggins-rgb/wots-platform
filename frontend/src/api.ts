@@ -39,3 +39,10 @@ export async function getContent(
 export async function getContentItem(id: string): Promise<ApiResponse<ContentItem>> {
   return request(`/content/${id}`);
 }
+
+export async function subscribeEmail(email: string): Promise<ApiResponse<{ message: string }>> {
+  return request('/subscribe', {
+    method: 'POST',
+    body: JSON.stringify({ email }),
+  });
+}

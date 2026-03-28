@@ -10,5 +10,9 @@ service cloud.firestore {
       allow read: if true;
       allow write: if request.auth != null && request.auth.token.admin == true;
     }
+    match /email_subscribers/{docId} {
+      allow read: if request.auth != null && request.auth.token.admin == true;
+      allow create: if true;
+    }
   }
 }

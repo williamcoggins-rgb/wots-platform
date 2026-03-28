@@ -153,6 +153,38 @@ app.get('/content/:id', async (req, res) => {
   }
 });
 
+// Email subscriber signup
+app.post('/subscribe', async (req, res) => {
+  try {
+    const { email } = req.body;
+    if (!email || typeof email !== 'string' || !email.includes('@')) {
+      res.status(400).json({ success: false, error: 'Valid email required' } as ApiResponse);
+      return;
+    }
+
+    const normalizedEmail = email.trim().toLowerCase();
+
+    // Check for duplicate
+    const existing = await db.collection('email_subscribers')
+      .where('email', '==', normalizedEmail).limit(1).get();
+    if (!existing.empty) {
+      res.json({ success: true, data: { message: 'Already enrolled' } } as ApiResponse);
+      return;
+    }
+
+    await db.collection('email_subscribers').add({
+      email: normalizedEmail,
+      subscribedAt: Date.now(),
+      source: 'homepage',
+    });
+
+    res.json({ success: true, data: { message: 'Welcome, Seeker' } } as ApiResponse);
+  } catch (error) {
+    const errMsg = error instanceof Error ? error.message : 'Unknown error';
+    res.status(500).json({ success: false, error: errMsg } as ApiResponse);
+  }
+});
+
 // Update content status
 app.patch('/content/:id', async (req, res) => {
   try {

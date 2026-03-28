@@ -11,17 +11,229 @@
   --color-emerald: #2d6b4f;
   --color-crystal: #7eb8da;
   --color-shadow: #0d0d1a;
+  --color-parchment: #f5e6c8;
+  --color-parchment-dark: #e0c9a0;
+  --color-obsidian-deep: #12121f;
+  --color-amethyst: #6b3fa0;
+
+  --font-display: 'Cinzel', serif;
+  --font-body: 'Crimson Text', 'Georgia', serif;
 }
 
 body {
   margin: 0;
-  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  font-family: var(--font-body);
   background-color: var(--color-obsidian);
   color: var(--color-sand-light);
   min-height: 100vh;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  letter-spacing: 0.05em;
 }
 
 /* Scrollbar styling */
 ::-webkit-scrollbar { width: 8px; }
 ::-webkit-scrollbar-track { background: var(--color-obsidian); }
 ::-webkit-scrollbar-thumb { background: var(--color-sand-dark); border-radius: 4px; }
+
+/* ============================================================
+   GOLD SHIMMER — animated text highlight for headings
+   ============================================================ */
+@keyframes goldShimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+.text-shimmer {
+  background: linear-gradient(
+    90deg,
+    var(--color-sphinx-gold) 0%,
+    #fff8d6 25%,
+    var(--color-sphinx-gold) 50%,
+    #fff8d6 75%,
+    var(--color-sphinx-gold) 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: goldShimmer 6s linear infinite;
+}
+
+/* ============================================================
+   NOISE / GRAIN TEXTURE OVERLAY (CSS-only)
+   ============================================================ */
+.grain-overlay {
+  position: relative;
+}
+.grain-overlay::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 256px 256px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ============================================================
+   SANDSTONE TEXTURE — carved stone feel
+   ============================================================ */
+.sandstone-texture {
+  background-image:
+    radial-gradient(ellipse at 20% 50%, rgba(212,165,116,0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 20%, rgba(184,131,74,0.06) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 80%, rgba(232,201,160,0.05) 0%, transparent 50%);
+}
+
+/* ============================================================
+   TEMPLE STONE TEXTURE — for chat area
+   ============================================================ */
+.temple-stone {
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 40px,
+      rgba(184,131,74,0.03) 40px,
+      rgba(184,131,74,0.03) 41px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 40px,
+      rgba(184,131,74,0.03) 40px,
+      rgba(184,131,74,0.03) 41px
+    ),
+    radial-gradient(ellipse at 30% 70%, rgba(212,165,116,0.06) 0%, transparent 50%),
+    radial-gradient(ellipse at 70% 30%, rgba(184,131,74,0.04) 0%, transparent 50%);
+}
+
+/* ============================================================
+   GEOMETRIC BORDER PATTERN (Egyptian-inspired)
+   ============================================================ */
+.geo-border-top {
+  border-top: 1px solid rgba(212,165,116,0.2);
+  background-image:
+    linear-gradient(90deg, transparent 0%, rgba(255,215,0,0.1) 50%, transparent 100%);
+  background-size: 100% 1px;
+  background-position: top;
+  background-repeat: no-repeat;
+}
+
+.geo-border {
+  border: 1px solid rgba(184,131,74,0.2);
+  position: relative;
+}
+.geo-border::before,
+.geo-border::after {
+  content: '';
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border: 1px solid var(--color-sphinx-gold-dim);
+  opacity: 0.3;
+}
+.geo-border::before {
+  top: -1px;
+  left: -1px;
+  border-right: none;
+  border-bottom: none;
+}
+.geo-border::after {
+  bottom: -1px;
+  right: -1px;
+  border-left: none;
+  border-top: none;
+}
+
+/* ============================================================
+   FOG / MIST ANIMATION — for lore empty state
+   ============================================================ */
+@keyframes fogDrift {
+  0%   { transform: translateX(-10%) scaleX(1); opacity: 0.3; }
+  50%  { transform: translateX(10%) scaleX(1.1); opacity: 0.5; }
+  100% { transform: translateX(-10%) scaleX(1); opacity: 0.3; }
+}
+
+@keyframes fogDriftReverse {
+  0%   { transform: translateX(10%) scaleX(1.1); opacity: 0.2; }
+  50%  { transform: translateX(-10%) scaleX(1); opacity: 0.4; }
+  100% { transform: translateX(10%) scaleX(1.1); opacity: 0.2; }
+}
+
+.fog-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.fog-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.fog-layer::before,
+.fog-layer::after {
+  content: '';
+  position: absolute;
+  width: 120%;
+  height: 60%;
+  border-radius: 50%;
+  filter: blur(40px);
+}
+
+.fog-layer::before {
+  bottom: -20%;
+  left: -10%;
+  background: radial-gradient(ellipse, rgba(232,201,160,0.15), transparent 70%);
+  animation: fogDrift 12s ease-in-out infinite;
+}
+
+.fog-layer::after {
+  top: -10%;
+  right: -10%;
+  background: radial-gradient(ellipse, rgba(184,131,74,0.1), transparent 70%);
+  animation: fogDriftReverse 15s ease-in-out infinite;
+}
+
+/* ============================================================
+   SPHINX PULSE — contemplation loading
+   ============================================================ */
+@keyframes sphinxPulse {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+
+.sphinx-pulse {
+  animation: sphinxPulse 2s ease-in-out infinite;
+}
+
+/* ============================================================
+   CARD HOVER LIFT
+   ============================================================ */
+.card-hover {
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+.card-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+}
+
+/* ============================================================
+   EMAIL CAPTURE GLOW
+   ============================================================ */
+@keyframes borderGlow {
+  0%, 100% { box-shadow: 0 0 8px rgba(255,215,0,0.15); }
+  50% { box-shadow: 0 0 20px rgba(255,215,0,0.3); }
+}
+
+.email-glow:focus-within {
+  animation: borderGlow 2s ease-in-out infinite;
+}
