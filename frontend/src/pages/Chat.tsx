@@ -5,10 +5,10 @@ import type { ChatMessage } from '../types';
 const USER_ID = 'anonymous-player';
 
 const CONVERSATION_STARTERS = [
-  'Tell me about Neo-Nubia',
-  'Who are the Hidden Ones?',
-  'What is the Mandate?',
-  'Describe the Five Realms',
+  'What is this place?',
+  'Who are you?',
+  'Tell me about the war',
+  'What lies beneath the sand?',
 ];
 
 export function Chat() {
@@ -53,24 +53,24 @@ export function Chat() {
   };
 
   return (
-    <div className="flex flex-col h-[calc(100vh-8rem)] max-w-3xl mx-auto p-4">
-      {/* Header */}
-      <div className="text-center mb-4">
-        <h2 className="text-2xl md:text-3xl font-bold text-[var(--color-sphinx-gold)] font-[var(--font-display)] tracking-wide">
+    <div className="flex flex-col h-[calc(100dvh-3.5rem)] md:h-[calc(100dvh-4.5rem)] max-w-3xl mx-auto px-3 py-2 md:p-4">
+      {/* Header — compact on mobile */}
+      <div className="text-center mb-2 md:mb-4 shrink-0">
+        <h2 className="text-xl md:text-3xl font-bold text-[var(--color-sphinx-gold)] font-[var(--font-display)] tracking-wide">
           The Sphinx Speaks
         </h2>
-        <p className="text-sm text-[var(--color-sand-dark)] mt-1">
-          Voice of Neo-Nubia. Keeper of the Mandate. Ask wisely.
+        <p className="text-xs md:text-sm text-[var(--color-sand-dark)] mt-0.5">
+          An ancient voice. Choose your words wisely.
         </p>
       </div>
 
       {/* Chat container — temple stone texture */}
-      <div className="flex-1 overflow-y-auto space-y-4 mb-4 p-4 md:p-6 rounded-lg temple-stone bg-[var(--color-obsidian-deep)] border border-[var(--color-sand-dark)]/15">
+      <div className="flex-1 min-h-0 overflow-y-auto space-y-3 md:space-y-4 mb-2 md:mb-4 p-3 md:p-6 rounded-lg temple-stone bg-[var(--color-obsidian-deep)] border border-[var(--color-sand-dark)]/15">
         {/* Empty state */}
         {messages.length === 0 && (
-          <div className="flex flex-col items-center justify-center py-12 text-center">
+          <div className="flex flex-col items-center justify-center py-8 md:py-12 text-center">
             {/* Sphinx eye icon */}
-            <svg viewBox="0 0 64 64" className="w-16 h-16 text-[var(--color-sphinx-gold)]/40 mb-6" fill="none" stroke="currentColor" strokeWidth="1">
+            <svg viewBox="0 0 64 64" className="w-12 h-12 md:w-16 md:h-16 text-[var(--color-sphinx-gold)]/40 mb-4 md:mb-6" fill="none" stroke="currentColor" strokeWidth="1">
               <ellipse cx="32" cy="32" rx="28" ry="14" />
               <circle cx="32" cy="32" r="8" />
               <circle cx="32" cy="32" r="3" fill="currentColor" />
@@ -79,18 +79,18 @@ export function Chat() {
               <line x1="2" y1="32" x2="10" y2="32" />
               <line x1="54" y1="32" x2="62" y2="32" />
             </svg>
-            <p className="text-lg text-[var(--color-sand)] italic font-[var(--font-body)] leading-relaxed max-w-md">
-              "I am the voice of Neo-Nubia, griot of all that was and all that shall be.
+            <p className="text-base md:text-lg text-[var(--color-sand)] italic font-[var(--font-body)] leading-relaxed max-w-sm md:max-w-md px-2">
+              "I have been here longer than the stones remember.
               What do you seek, traveler?"
             </p>
 
-            {/* Conversation starter pills */}
-            <div className="flex flex-wrap justify-center gap-2 mt-8">
+            {/* Conversation starter pills — 2-col on mobile, wrap on desktop */}
+            <div className="grid grid-cols-2 md:flex md:flex-wrap md:justify-center gap-2 mt-6 md:mt-8 w-full max-w-sm md:max-w-none px-2">
               {CONVERSATION_STARTERS.map((starter) => (
                 <button
                   key={starter}
                   onClick={() => handleSend(starter)}
-                  className="px-4 py-2 text-sm rounded-full border border-[var(--color-sand-dark)]/30 text-[var(--color-sand)] hover:border-[var(--color-sphinx-gold)]/50 hover:text-[var(--color-sphinx-gold)] hover:bg-[var(--color-sphinx-gold)]/5 transition-all font-[var(--font-body)]"
+                  className="px-3 md:px-4 py-2.5 md:py-2 text-sm rounded-full border border-[var(--color-sand-dark)]/30 text-[var(--color-sand)] hover:border-[var(--color-sphinx-gold)]/50 hover:text-[var(--color-sphinx-gold)] hover:bg-[var(--color-sphinx-gold)]/5 active:bg-[var(--color-sphinx-gold)]/10 transition-all font-[var(--font-body)]"
                 >
                   {starter}
                 </button>
@@ -106,14 +106,14 @@ export function Chat() {
             className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
           >
             <div
-              className={`max-w-[80%] px-4 py-3 rounded-lg ${
+              className={`max-w-[85%] md:max-w-[80%] px-3 md:px-4 py-2.5 md:py-3 rounded-lg ${
                 msg.role === 'user'
                   ? 'bg-[var(--color-sand-dark)]/20 text-[var(--color-sand-light)] border border-[var(--color-sand-dark)]/15'
                   : 'bg-[var(--color-parchment)]/8 text-[var(--color-parchment)] border border-[var(--color-parchment)]/10'
               }`}
             >
               {msg.role === 'assistant' && (
-                <span className="text-xs font-semibold block mb-1.5 text-[var(--color-sphinx-gold-dim)] font-[var(--font-display)] tracking-wider uppercase">
+                <span className="text-xs font-semibold block mb-1 text-[var(--color-sphinx-gold-dim)] font-[var(--font-display)] tracking-wider uppercase">
                   The Sphinx
                 </span>
               )}
@@ -125,7 +125,7 @@ export function Chat() {
         {/* Loading indicator */}
         {loading && (
           <div className="flex justify-start">
-            <div className="px-4 py-3 rounded-lg bg-[var(--color-parchment)]/8 border border-[var(--color-parchment)]/10">
+            <div className="px-3 md:px-4 py-2.5 md:py-3 rounded-lg bg-[var(--color-parchment)]/8 border border-[var(--color-parchment)]/10">
               <span className="text-xs font-semibold block mb-1 text-[var(--color-sphinx-gold-dim)] font-[var(--font-display)] tracking-wider uppercase">
                 The Sphinx
               </span>
@@ -138,21 +138,21 @@ export function Chat() {
         <div ref={messagesEndRef} />
       </div>
 
-      {/* Input area */}
-      <div className="flex gap-2">
+      {/* Input area — safe area padding for PWA */}
+      <div className="flex gap-2 shrink-0 pb-[env(safe-area-inset-bottom)]">
         <input
           type="text"
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={(e) => e.key === 'Enter' && handleSend()}
           placeholder="Speak to the Sphinx..."
-          className="flex-1 px-4 py-3 rounded-lg bg-[var(--color-obsidian-light)] border border-[var(--color-sand-dark)]/20 text-[var(--color-sand-light)] placeholder-[var(--color-sand-dark)]/60 focus:outline-none focus:border-[var(--color-sphinx-gold)]/40 transition-colors font-[var(--font-body)]"
+          className="flex-1 px-3 md:px-4 py-3 rounded-lg bg-[var(--color-obsidian-light)] border border-[var(--color-sand-dark)]/20 text-[var(--color-sand-light)] placeholder-[var(--color-sand-dark)]/60 focus:outline-none focus:border-[var(--color-sphinx-gold)]/40 transition-colors font-[var(--font-body)] text-base"
           disabled={loading}
         />
         <button
           onClick={() => handleSend()}
           disabled={loading || !input.trim()}
-          className="px-6 py-3 bg-[var(--color-sphinx-gold)] text-[var(--color-obsidian)] font-semibold rounded-lg hover:bg-[var(--color-sphinx-gold-dim)] transition-colors disabled:opacity-50 disabled:cursor-not-allowed font-[var(--font-display)] tracking-wider text-sm uppercase"
+          className="px-4 md:px-6 py-3 bg-[var(--color-sphinx-gold)] text-[var(--color-obsidian)] font-semibold rounded-lg hover:bg-[var(--color-sphinx-gold-dim)] active:bg-[var(--color-sphinx-gold-dim)] transition-colors disabled:opacity-50 disabled:cursor-not-allowed font-[var(--font-display)] tracking-wider text-sm uppercase"
         >
           Send
         </button>
