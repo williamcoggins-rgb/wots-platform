@@ -3,50 +3,7 @@ import { BrowserRouter, Routes, Route, Link, useLocation } from 'react-router-do
 import { Chat } from './pages/Chat';
 import { Lore } from './pages/Lore';
 import { Home } from './pages/Home';
-
-function About() {
-  return (
-    <div className="max-w-3xl mx-auto px-4 py-12 md:py-16 text-center">
-      <h2 className="text-3xl md:text-4xl font-bold text-[var(--color-gold)] font-[var(--font-display)] tracking-wide mb-6">
-        About the Project
-      </h2>
-      <div className="w-16 h-px bg-gradient-to-r from-transparent via-[var(--color-gold)]/50 to-transparent mx-auto mb-8" />
-      <div className="text-left space-y-6 text-[var(--color-sand-light)]/80 leading-relaxed">
-        <p>
-          <strong className="text-[var(--color-gold)] font-[var(--font-display)]">War of the Sphinx</strong> is
-          an epic worldbuilding project — a seven-volume saga where ancient civilization collides with
-          modern power, and a single enigmatic voice shapes the fate of all who listen.
-        </p>
-        <p>
-          Volume 1 is currently in development. The world is being built from the ground up — its history,
-          geography, people, and the mysteries that bind them. Every detail is crafted with intention.
-        </p>
-        <p>
-          This platform is your gateway into that world. Speak with the Sphinx. Uncover fragments
-          of lore as they surface. Be part of the story before the first volume arrives.
-        </p>
-        <h3 className="text-xl font-bold text-[var(--color-gold)] font-[var(--font-display)] tracking-wide pt-2">
-          The Vision
-        </h3>
-        <p>
-          Seven volumes. One world. A story that rewards those who arrived early and paid attention.
-          The Seekers who join now will have access to lore, updates, and early content that won't
-          be available once the gates fully open.
-        </p>
-        <h3 className="text-xl font-bold text-[var(--color-gold)] font-[var(--font-display)] tracking-wide pt-2">
-          Follow the Journey
-        </h3>
-        <p>
-          War of the Sphinx will launch via Kickstarter. Join the email list on the homepage to be
-          notified first. Follow us on social media for world teasers and development updates.
-        </p>
-        <p className="text-[var(--color-sand-dark)] italic">
-          The Sphinx remembers those who arrived before the war began.
-        </p>
-      </div>
-    </div>
-  );
-}
+import { About } from './pages/About';
 
 function ScrollProgress() {
   const [progress, setProgress] = useState(0);
