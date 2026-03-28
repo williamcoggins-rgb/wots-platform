@@ -68,11 +68,11 @@ export function Lore() {
     <div className="max-w-4xl mx-auto p-4 pb-16">
       <div className="text-center mb-10 mt-4">
         <h2 className="text-3xl md:text-4xl font-bold text-[var(--color-sphinx-gold)] font-[var(--font-display)] tracking-wide">
-          The World of Neo-Nubia
+          World Lore
         </h2>
         <div className="w-16 h-px bg-gradient-to-r from-transparent via-[var(--color-sphinx-gold)]/50 to-transparent mx-auto my-4" />
         <p className="text-[var(--color-sand-dark)] max-w-lg mx-auto">
-          Fragments of knowledge gathered from across the realms.
+          Fragments of forgotten knowledge. More surfaces as the Sphinx speaks.
         </p>
       </div>
 

@@ -4,8 +4,8 @@ import { subscribeEmail } from '../api';
 
 const REALM_CARDS = [
   {
-    title: 'Five Realms',
-    desc: 'From the sunlit spires of the Sandstone Citadel to the whispering depths of the Shadow Veil — five realms shape the fate of Neo-Nubia.',
+    title: 'A World Buried in Sand',
+    desc: 'An ancient civilization stirs beneath the desert. Its cities remember what its people have forgotten.',
     accent: 'from-amber-700/20 to-yellow-900/10',
     border: 'hover:border-[var(--color-sand)]',
     icon: (
@@ -18,8 +18,8 @@ const REALM_CARDS = [
     ),
   },
   {
-    title: 'The Hidden Ones',
-    desc: 'Ancient powers move unseen. The cosmology of Neo-Nubia binds mortal ambition to forces older than memory.',
+    title: 'Ancient Riddles',
+    desc: 'The Sphinx speaks in puzzles. Every answer opens a door — and every door hides another question.',
     accent: 'from-emerald-800/20 to-emerald-950/10',
     border: 'hover:border-[var(--color-emerald)]',
     icon: (
@@ -35,8 +35,8 @@ const REALM_CARDS = [
     ),
   },
   {
-    title: 'The Mandate',
-    desc: 'The Sphinx does not merely speak — it legitimizes. Those who hold the Mandate hold the right to rule.',
+    title: 'A War Is Coming',
+    desc: 'Power shifts in the dark. Something old is waking, and not everyone will survive what follows.',
     accent: 'from-purple-900/20 to-indigo-950/10',
     border: 'hover:border-[var(--color-amethyst)]',
     icon: (
@@ -98,8 +98,8 @@ export function Home() {
           </h1>
           <div className="w-24 h-px bg-gradient-to-r from-transparent via-[var(--color-sphinx-gold)] to-transparent mb-6" />
           <p className="text-xl md:text-2xl text-[var(--color-sand-light)] max-w-2xl mb-10 leading-relaxed">
-            The Sphinx speaks, and Neo-Nubia listens. Enter a civilization of ancient power,
-            buried wisdom, and the struggle for the Mandate.
+            An ancient voice stirs beneath the sand. A civilization forgotten by time.
+            A war that will change everything. Are you ready to listen?
           </p>
           <div className="flex flex-col sm:flex-row gap-4">
             <Link
