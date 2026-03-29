@@ -1,6 +1,6 @@
 import type { ApiResponse, ChatMessage, ContentItem, ChatSession, GalleryImage } from './types';
 import { db } from './firebase';
-import { collection, getDocs, query, orderBy, where } from 'firebase/firestore';
+import { collection, getDocs, query, orderBy, where, type QueryConstraint } from 'firebase/firestore';
 
 const API_BASE = '/api';
 
@@ -51,7 +51,7 @@ export async function subscribeEmail(email: string): Promise<ApiResponse<{ messa
 
 export async function getGalleryImages(category?: string): Promise<GalleryImage[]> {
   const col = collection(db, 'gallery_images');
-  const constraints = [orderBy('uploadedAt', 'desc')];
+  const constraints: QueryConstraint[] = [orderBy('uploadedAt', 'desc')];
   if (category) {
     constraints.unshift(where('category', '==', category));
   }
