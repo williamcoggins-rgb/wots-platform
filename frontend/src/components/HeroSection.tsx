@@ -1,4 +1,4 @@
-const LOGO_URL = 'https://res.cloudinary.com/dcpeomifz/image/upload/image0_1_avuytq.png';
+const LOGO_URL = 'https://res.cloudinary.com/dcpeomifz/image/upload/e_background_removal/image0_1_avuytq.png';
 
 const heroStyles = `
 @keyframes scrollBounce {
@@ -51,7 +51,6 @@ export function HeroSection() {
                 width: '85vw',
                 display: 'block',
                 margin: '0 auto',
-                mixBlendMode: 'multiply' as const,
               }}
             />
           </div>
