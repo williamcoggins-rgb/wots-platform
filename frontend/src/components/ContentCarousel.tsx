@@ -2,37 +2,29 @@ import { useRef } from 'react';
 import { useInView } from './useInView';
 
 const carouselStyles = `
-@keyframes carouselCardIn {
-  0%   { opacity: 0; transform: translateY(30px); }
-  100% { opacity: 1; transform: translateY(0); }
-}
-
 .carousel-card {
   flex: 0 0 280px;
-  height: 400px;
-  border-radius: 12px;
+  height: 380px;
+  border-radius: 4px;
   position: relative;
   overflow: hidden;
   cursor: pointer;
-  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.4s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
   scroll-snap-align: start;
 }
 .carousel-card:hover {
-  transform: scale(1.05);
-  box-shadow: 0 16px 48px rgba(0,0,0,0.5);
+  transform: scale(1.03);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.6);
 }
 .carousel-card:hover .carousel-overlay {
-  opacity: 0.85;
+  background: linear-gradient(180deg, transparent 20%, rgba(0,0,0,0.85) 100%);
 }
-.carousel-card:hover .carousel-label {
-  transform: translateY(0);
-  opacity: 1;
-}
+.carousel-scroll::-webkit-scrollbar { display: none; }
 
 @media (max-width: 640px) {
   .carousel-card {
     flex: 0 0 260px;
-    height: 360px;
+    height: 340px;
   }
 }
 `;
@@ -42,7 +34,6 @@ interface CarouselCard {
   category: string;
   desc: string;
   gradient: string;
-  iconPath: string;
   imageUrl?: string;
 }
 
@@ -51,29 +42,25 @@ const CARDS: CarouselCard[] = [
     title: 'Volume 1 Coming Soon',
     category: 'ANNOUNCEMENT',
     desc: 'The first chapter of an ancient war is about to be written.',
-    gradient: 'linear-gradient(135deg, #152828 0%, #5c3a1a 50%, #D4912E 100%)',
-    iconPath: 'M24 4 L28 16 L40 16 L30 24 L34 36 L24 28 L14 36 L18 24 L8 16 L20 16 Z',
+    gradient: 'linear-gradient(160deg, #1a1a1a 0%, #3d2200 60%, #E88A1A 100%)',
   },
   {
     title: 'Meet the Sphinx',
     category: 'LORE',
     desc: 'A guardian older than memory. Its riddles shape the fate of worlds.',
-    gradient: 'linear-gradient(135deg, #0D1B1B 0%, #1E3535 50%, #2BA5A5 100%)',
-    iconPath: 'M24 8 C24 8 16 20 16 28 C16 32.4 19.6 36 24 36 C28.4 36 32 32.4 32 28 C32 20 24 8 24 8 Z',
+    gradient: 'linear-gradient(160deg, #1a1a1a 0%, #0f3333 60%, #2BA5A5 100%)',
   },
   {
     title: 'The War Begins',
     category: 'STORY',
     desc: 'Ancient powers stir. Lines are drawn in sand and blood.',
-    gradient: 'linear-gradient(135deg, #1a0a0a 0%, #6b2a1a 50%, #C45A2A 100%)',
-    iconPath: 'M24 4 L26 18 L40 18 L28 26 L32 40 L24 30 L16 40 L20 26 L8 18 L22 18 Z',
+    gradient: 'linear-gradient(160deg, #1a1a1a 0%, #3d1515 60%, #c43030 100%)',
   },
   {
     title: 'Join the Seekers',
     category: 'COMMUNITY',
     desc: 'Knowledge is earned, not given. The worthy will find their way.',
-    gradient: 'linear-gradient(135deg, #080F0F 0%, #0D1B1B 50%, #1E7A7A 100%)',
-    iconPath: 'M24 6 L24 42 M12 24 L36 24 M16 12 L32 36 M32 12 L16 36',
+    gradient: 'linear-gradient(160deg, #1a1a1a 0%, #1a3d1a 60%, #2e8b2e 100%)',
   },
 ];
 
@@ -84,8 +71,8 @@ export function ContentCarousel() {
   return (
     <>
       <style>{carouselStyles}</style>
-      <section ref={sectionRef} style={{ padding: '5rem 0 4rem', overflow: 'hidden' }}>
-        {/* Section title with decorative lines */}
+      <section ref={sectionRef} style={{ padding: '4rem 0 3rem', overflow: 'hidden' }}>
+        {/* Section title */}
         <div
           style={{
             display: 'flex',
@@ -93,45 +80,34 @@ export function ContentCarousel() {
             justifyContent: 'center',
             gap: '1.5rem',
             marginBottom: '2.5rem',
-            padding: '0 1.5rem',
+            padding: '0 2rem',
             opacity: isVisible ? 1 : 0,
             transform: isVisible ? 'translateY(0)' : 'translateY(20px)',
-            transition: 'all 0.8s cubic-bezier(0.22, 1, 0.36, 1)',
+            transition: 'all 0.8s ease',
           }}
         >
-          <div
-            style={{
-              flex: '1',
-              maxWidth: '200px',
-              height: '1px',
-              background: 'linear-gradient(90deg, transparent, var(--color-primary-dim))',
-            }}
-          />
+          <div style={{ flex: 1, maxWidth: '200px', height: '1px', background: 'linear-gradient(90deg, transparent, #333)' }} />
           <h2
             style={{
-              fontFamily: 'var(--font-display)',
-              fontSize: 'clamp(1.2rem, 3vw, 1.6rem)',
-              color: 'var(--color-primary)',
-              letterSpacing: '0.15em',
-              textTransform: 'uppercase',
+              fontFamily: "'Roboto Condensed', sans-serif",
+              fontSize: '24px',
+              fontWeight: 700,
+              color: '#FFFFFF',
+              letterSpacing: '2px',
+              textTransform: 'uppercase' as const,
               whiteSpace: 'nowrap',
+              margin: 0,
             }}
           >
             Featured
           </h2>
-          <div
-            style={{
-              flex: '1',
-              maxWidth: '200px',
-              height: '1px',
-              background: 'linear-gradient(90deg, var(--color-primary-dim), transparent)',
-            }}
-          />
+          <div style={{ flex: 1, maxWidth: '200px', height: '1px', background: 'linear-gradient(90deg, #333, transparent)' }} />
         </div>
 
         {/* Horizontal scrolling cards */}
         <div
           ref={scrollRef}
+          className="carousel-scroll"
           style={{
             display: 'flex',
             gap: '1.5rem',
@@ -139,18 +115,20 @@ export function ContentCarousel() {
             overflowX: 'auto',
             scrollSnapType: 'x mandatory',
             scrollbarWidth: 'none',
-            msOverflowStyle: 'none',
           }}
         >
           {CARDS.map((card, i) => (
             <div
               key={card.title}
               className="carousel-card"
+              tabIndex={0}
+              role="article"
+              aria-label={card.title}
               style={{
-                background: card.gradient,
+                background: card.imageUrl ? undefined : card.gradient,
                 opacity: isVisible ? 1 : 0,
                 transform: isVisible ? 'translateY(0)' : 'translateY(30px)',
-                transition: `all 0.6s cubic-bezier(0.22, 1, 0.36, 1) ${0.15 * i}s`,
+                transition: `opacity 0.6s ease ${0.1 * i}s, transform 0.6s ease ${0.1 * i}s`,
               }}
             >
               {/* Background image if available */}
@@ -166,30 +144,16 @@ export function ContentCarousel() {
                 />
               )}
 
-              {/* Icon */}
-              <div style={{ position: 'absolute', top: '2rem', left: '1.5rem', opacity: 0.3 }}>
-                <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
-                  <path
-                    d={card.iconPath}
-                    stroke="var(--color-primary)"
-                    strokeWidth="1.5"
-                    strokeLinejoin="round"
-                    strokeLinecap="round"
-                  />
-                </svg>
-              </div>
-
-              {/* Overlay gradient (darkens on hover) */}
+              {/* Overlay gradient */}
               <div
                 className="carousel-overlay"
                 style={{
                   position: 'absolute',
                   inset: 0,
                   background: card.imageUrl
-                    ? 'linear-gradient(180deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.8) 100%)'
-                    : 'linear-gradient(180deg, transparent 30%, rgba(0,0,0,0.7) 100%)',
-                  opacity: 0.6,
-                  transition: 'opacity 0.4s ease',
+                    ? 'linear-gradient(180deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.8) 100%)'
+                    : 'linear-gradient(180deg, transparent 40%, rgba(0,0,0,0.6) 100%)',
+                  transition: 'background 0.3s ease',
                 }}
               />
 
@@ -204,46 +168,38 @@ export function ContentCarousel() {
                   zIndex: 2,
                 }}
               >
-                {/* Category label — slides up on hover */}
                 <span
-                  className="carousel-label"
                   style={{
                     display: 'inline-block',
-                    fontFamily: 'var(--font-display)',
-                    fontSize: '0.6rem',
-                    letterSpacing: '0.2em',
-                    textTransform: 'uppercase',
-                    color: 'var(--color-primary)',
-                    background: 'rgba(212,145,46,0.1)',
-                    border: '1px solid rgba(212,145,46,0.2)',
-                    padding: '0.25rem 0.6rem',
-                    borderRadius: '4px',
-                    marginBottom: '0.75rem',
-                    transform: 'translateY(10px)',
-                    opacity: 0.6,
-                    transition: 'all 0.4s ease',
+                    fontFamily: "'Roboto Condensed', sans-serif",
+                    fontSize: '11px',
+                    letterSpacing: '2px',
+                    textTransform: 'uppercase' as const,
+                    color: '#E88A1A',
+                    marginBottom: '8px',
                   }}
                 >
                   {card.category}
                 </span>
                 <h3
                   style={{
-                    fontFamily: 'var(--font-display)',
-                    fontSize: '1.2rem',
-                    color: 'var(--color-sand-light)',
-                    marginBottom: '0.5rem',
-                    letterSpacing: '0.03em',
+                    fontFamily: "'Roboto Condensed', sans-serif",
+                    fontSize: '18px',
+                    fontWeight: 700,
+                    color: '#FFFFFF',
+                    marginBottom: '6px',
+                    margin: '0 0 6px 0',
                   }}
                 >
                   {card.title}
                 </h3>
                 <p
                   style={{
-                    fontFamily: 'var(--font-body)',
-                    fontSize: '0.85rem',
-                    color: 'var(--color-sand)',
-                    opacity: 0.7,
+                    fontFamily: "'Inter', sans-serif",
+                    fontSize: '14px',
+                    color: '#999999',
                     lineHeight: 1.5,
+                    margin: 0,
                   }}
                 >
                   {card.desc}

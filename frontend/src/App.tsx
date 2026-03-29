@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Link, useLocation } from 'react-router-dom';
 import { Chat } from './pages/Chat';
 import { Lore } from './pages/Lore';
@@ -7,75 +7,19 @@ import { About } from './pages/About';
 import { Admin } from './pages/Admin';
 import { Gallery } from './pages/Gallery';
 
-const LOGO_URL = 'https://res.cloudinary.com/dcpeomifz/image/upload/image0_1_avuytq.png';
+const LOGO_URL = 'https://res.cloudinary.com/dcpeomlfz/image/upload/image0_1_avuytq.png';
 
-function ScrollProgress() {
-  const [progress, setProgress] = useState(0);
+const NAV_LINKS = [
+  { to: '/', label: 'Home' },
+  { to: '/chat', label: 'The Sphinx' },
+  { to: '/lore', label: 'The World' },
+  { to: '/gallery', label: 'Gallery' },
+  { to: '/about', label: 'About' },
+] as const;
 
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollTop = window.scrollY;
-      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-      setProgress(docHeight > 0 ? (scrollTop / docHeight) * 100 : 0);
-    };
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  return (
-    <div
-      className="fixed top-0 left-0 h-[3px] z-[100]"
-      style={{
-        width: `${progress}%`,
-        background: 'linear-gradient(90deg, var(--color-primary-dim), var(--color-primary), var(--color-teal))',
-        transition: 'width 50ms linear',
-      }}
-    />
-  );
-}
-
-const PARTICLE_ANIMATIONS = [
-  'particleFloat1', 'particleFloat2', 'particleFloat3', 'particleFloat4', 'particleFloat5',
-];
-
-const particles = Array.from({ length: 25 }, (_, i) => ({
-  id: i,
-  left: `${Math.random() * 100}%`,
-  top: `${20 + Math.random() * 70}%`,
-  size: 2 + Math.random() * 2,
-  animation: PARTICLE_ANIMATIONS[i % PARTICLE_ANIMATIONS.length],
-  duration: 15 + Math.random() * 15,
-  delay: Math.random() * 20,
-  opacity: 0.15 + Math.random() * 0.15,
-}));
-
-function ParticleField() {
-  return (
-    <div className="fixed inset-0 pointer-events-none z-[1] overflow-hidden" aria-hidden="true">
-      {particles.map((p) => (
-        <div
-          key={p.id}
-          style={{
-            position: 'absolute',
-            left: p.left,
-            top: p.top,
-            width: `${p.size}px`,
-            height: `${p.size}px`,
-            borderRadius: '50%',
-            background: p.id % 3 === 0
-              ? 'var(--color-primary)'
-              : p.id % 3 === 1
-                ? 'var(--color-teal)'
-                : 'var(--color-sand)',
-            opacity: p.opacity,
-            animation: `${p.animation} ${p.duration}s ease-in-out ${p.delay}s infinite`,
-          }}
-        />
-      ))}
-    </div>
-  );
-}
-
+/* ----------------------------------------------------------------
+   NavLink — Desktop
+   ---------------------------------------------------------------- */
 function NavLink({ to, children, onClick }: { to: string; children: React.ReactNode; onClick?: () => void }) {
   const { pathname } = useLocation();
   const active = pathname === to;
@@ -83,29 +27,45 @@ function NavLink({ to, children, onClick }: { to: string; children: React.ReactN
     <Link
       to={to}
       onClick={onClick}
-      className="relative no-underline transition-colors font-[var(--font-display)] text-sm tracking-wider uppercase group"
       style={{
-        color: active ? 'var(--color-primary)' : 'rgba(240, 200, 120, 0.7)',
+        textDecoration: 'none',
+        fontFamily: 'var(--font-display)',
+        fontSize: '13px',
+        fontWeight: 700,
+        textTransform: 'uppercase',
+        letterSpacing: '-0.5px',
+        color: active ? '#E88A1A' : '#999999',
+        transition: 'color 200ms ease',
+        position: 'relative',
+        padding: '4px 0',
+      }}
+      onMouseEnter={(e) => {
+        if (!active) (e.currentTarget as HTMLElement).style.color = '#FFFFFF';
+      }}
+      onMouseLeave={(e) => {
+        if (!active) (e.currentTarget as HTMLElement).style.color = '#999999';
       }}
     >
-      <span className="relative z-10 transition-colors duration-200 group-hover:text-[var(--color-primary)]">
-        {children}
-      </span>
-      <span
-        className="absolute -bottom-1 left-0 h-[2px] transition-all duration-300 ease-out"
-        style={{
-          width: active ? '100%' : '0%',
-          background: 'linear-gradient(90deg, var(--color-primary), var(--color-teal))',
-          opacity: active ? 1 : 0,
-        }}
-      />
-      {!active && (
-        <span className="absolute -bottom-1 left-1/2 h-[2px] w-0 group-hover:w-full group-hover:left-0 transition-all duration-300 ease-out bg-[var(--color-primary)]/40" />
+      {children}
+      {active && (
+        <span
+          style={{
+            position: 'absolute',
+            bottom: '-2px',
+            left: 0,
+            width: '100%',
+            height: '2px',
+            background: '#E88A1A',
+          }}
+        />
       )}
     </Link>
   );
 }
 
+/* ----------------------------------------------------------------
+   MobileNavLink
+   ---------------------------------------------------------------- */
 function MobileNavLink({ to, children, onClick, index }: { to: string; children: React.ReactNode; onClick: () => void; index: number }) {
   const { pathname } = useLocation();
   const active = pathname === to;
@@ -113,11 +73,17 @@ function MobileNavLink({ to, children, onClick, index }: { to: string; children:
     <Link
       to={to}
       onClick={onClick}
-      className="no-underline font-[var(--font-display)] text-3xl tracking-widest uppercase transition-all duration-300"
       style={{
-        color: active ? 'var(--color-primary)' : 'var(--color-sand-light)',
-        animation: `fadeInUp 0.4s ease-out ${index * 0.1}s forwards`,
+        textDecoration: 'none',
+        fontFamily: 'var(--font-display)',
+        fontSize: '2rem',
+        fontWeight: 900,
+        textTransform: 'uppercase',
+        letterSpacing: '-0.5px',
+        color: active ? '#E88A1A' : '#FFFFFF',
+        animation: `fadeInUp 0.4s ease-out ${index * 0.08}s forwards`,
         opacity: 0,
+        transition: 'color 200ms ease',
       }}
     >
       {children}
@@ -125,6 +91,71 @@ function MobileNavLink({ to, children, onClick, index }: { to: string; children:
   );
 }
 
+/* ----------------------------------------------------------------
+   HamburgerIcon
+   ---------------------------------------------------------------- */
+function HamburgerIcon({ open }: { open: boolean }) {
+  const barStyle: React.CSSProperties = {
+    display: 'block',
+    position: 'absolute',
+    left: 0,
+    height: '2px',
+    width: '24px',
+    background: 'currentColor',
+    transition: 'all 300ms ease-out',
+  };
+  return (
+    <div style={{ position: 'relative', width: '24px', height: '20px' }}>
+      <span
+        style={{
+          ...barStyle,
+          top: open ? '9px' : '0px',
+          transform: open ? 'rotate(45deg)' : 'rotate(0)',
+        }}
+      />
+      <span
+        style={{
+          ...barStyle,
+          top: '9px',
+          opacity: open ? 0 : 1,
+          transform: open ? 'translateX(8px)' : 'translateX(0)',
+        }}
+      />
+      <span
+        style={{
+          ...barStyle,
+          top: open ? '9px' : '18px',
+          transform: open ? 'rotate(-45deg)' : 'rotate(0)',
+        }}
+      />
+    </div>
+  );
+}
+
+/* ----------------------------------------------------------------
+   SearchIcon
+   ---------------------------------------------------------------- */
+function SearchIcon() {
+  return (
+    <svg
+      width="18"
+      height="18"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <circle cx="11" cy="11" r="8" />
+      <line x1="21" y1="21" x2="16.65" y2="16.65" />
+    </svg>
+  );
+}
+
+/* ----------------------------------------------------------------
+   AnimatedRoutes — page transitions
+   ---------------------------------------------------------------- */
 function AnimatedRoutes() {
   const location = useLocation();
   const [displayLocation, setDisplayLocation] = useState(location);
@@ -152,44 +183,17 @@ function AnimatedRoutes() {
         <Route path="/" element={<Home />} />
         <Route path="/chat" element={<Chat />} />
         <Route path="/lore" element={<Lore />} />
+        <Route path="/gallery" element={<Gallery />} />
         <Route path="/about" element={<About />} />
-            <Route path="/gallery" element={<Gallery />} />
-            <Route path="/admin" element={<Admin />} />
+        <Route path="/admin" element={<Admin />} />
       </Routes>
     </div>
   );
 }
 
-function HamburgerIcon({ open }: { open: boolean }) {
-  const barClass = "block absolute left-0 h-[2px] w-6 bg-current transition-all duration-300 ease-out";
-  return (
-    <div className="relative w-6 h-5">
-      <span
-        className={barClass}
-        style={{
-          top: open ? '9px' : '0px',
-          transform: open ? 'rotate(45deg)' : 'rotate(0)',
-        }}
-      />
-      <span
-        className={barClass}
-        style={{
-          top: '9px',
-          opacity: open ? 0 : 1,
-          transform: open ? 'translateX(8px)' : 'translateX(0)',
-        }}
-      />
-      <span
-        className={barClass}
-        style={{
-          top: open ? '9px' : '18px',
-          transform: open ? 'rotate(-45deg)' : 'rotate(0)',
-        }}
-      />
-    </div>
-  );
-}
-
+/* ----------------------------------------------------------------
+   Footer — Clean Marvel-style
+   ---------------------------------------------------------------- */
 function Footer() {
   const [footerEmail, setFooterEmail] = useState('');
   const [footerState, setFooterState] = useState<'idle' | 'done'>('idle');
@@ -203,91 +207,179 @@ function Footer() {
   };
 
   return (
-    <footer className="relative border-t border-[var(--color-primary)]/10 overflow-hidden bg-[var(--color-obsidian)]">
-      <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
-        <svg className="w-full h-full opacity-[0.03]" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <pattern id="hieroglyph" x="0" y="0" width="80" height="80" patternUnits="userSpaceOnUse">
-              <ellipse cx="20" cy="16" rx="6" ry="8" fill="none" stroke="var(--color-primary)" strokeWidth="1" />
-              <line x1="20" y1="24" x2="20" y2="44" stroke="var(--color-primary)" strokeWidth="1" />
-              <line x1="12" y1="32" x2="28" y2="32" stroke="var(--color-primary)" strokeWidth="1" />
-              <ellipse cx="60" cy="20" rx="10" ry="5" fill="none" stroke="var(--color-primary)" strokeWidth="0.8" />
-              <circle cx="60" cy="20" r="2.5" fill="var(--color-primary)" opacity="0.3" />
-              <polyline points="10,60 18,52 26,60 34,52 42,60" fill="none" stroke="var(--color-primary)" strokeWidth="0.8" />
-              <line x1="60" y1="50" x2="60" y2="72" stroke="var(--color-primary)" strokeWidth="0.8" />
-              <path d="M56 56 Q60 50 64 56" fill="none" stroke="var(--color-primary)" strokeWidth="0.8" />
-              <path d="M56 64 Q60 58 64 64" fill="none" stroke="var(--color-primary)" strokeWidth="0.8" />
-            </pattern>
-          </defs>
-          <rect width="100%" height="100%" fill="url(#hieroglyph)" />
-        </svg>
-      </div>
-      <div className="relative z-10 max-w-6xl mx-auto px-4 py-12 md:py-16">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-8 mb-12">
+    <footer
+      style={{
+        background: '#111111',
+        borderTop: '1px solid #333333',
+      }}
+    >
+      <div
+        style={{
+          maxWidth: '1200px',
+          margin: '0 auto',
+          padding: '48px 24px 0',
+        }}
+      >
+        {/* Three column grid */}
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
+            gap: '40px',
+            marginBottom: '40px',
+          }}
+        >
+          {/* Col 1: Logo + tagline */}
           <div>
-            <h4 className="font-[var(--font-display)] text-[var(--color-primary)] text-lg tracking-wider mb-4">About</h4>
-            <p className="text-[var(--color-sand)]/80 text-sm leading-relaxed mb-3">
+            <img
+              src={LOGO_URL}
+              alt="War of the Sphinx"
+              style={{ width: '100px', marginBottom: '12px', display: 'block' }}
+            />
+            <p
+              style={{
+                fontFamily: 'var(--font-body)',
+                fontSize: '14px',
+                color: '#999999',
+                lineHeight: '1.5',
+                margin: 0,
+              }}
+            >
               A seven-volume saga where ancient civilization collides with modern power.
             </p>
-            <p className="text-[var(--color-sand-dark)] text-xs italic">A world forged in riddles.</p>
           </div>
+
+          {/* Col 2: Quick links */}
           <div>
-            <h4 className="font-[var(--font-display)] text-[var(--color-primary)] text-lg tracking-wider mb-4">Quick Links</h4>
-            <nav className="flex flex-col gap-2.5">
-              {[
-                { to: '/', label: 'Home' },
-                { to: '/chat', label: 'The Sphinx' },
-                { to: '/lore', label: 'The World' },
-                { to: '/about', label: 'About' },
-                { to: '/gallery', label: 'Gallery' },
-              ].map((link) => (
+            <h4
+              style={{
+                fontFamily: 'var(--font-display)',
+                fontSize: '13px',
+                fontWeight: 700,
+                textTransform: 'uppercase',
+                letterSpacing: '0.5px',
+                color: '#FFFFFF',
+                marginBottom: '16px',
+                marginTop: 0,
+              }}
+            >
+              Quick Links
+            </h4>
+            <nav style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+              {NAV_LINKS.map((link) => (
                 <Link
                   key={link.to}
                   to={link.to}
-                  className="text-[var(--color-sand)]/70 hover:text-[var(--color-primary)] transition-colors text-sm no-underline font-[var(--font-display)] tracking-wide uppercase"
+                  style={{
+                    textDecoration: 'none',
+                    fontFamily: 'var(--font-body)',
+                    fontSize: '14px',
+                    color: '#999999',
+                    transition: 'color 200ms ease',
+                  }}
+                  onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.color = '#E88A1A'; }}
+                  onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.color = '#999999'; }}
                 >
                   {link.label}
                 </Link>
               ))}
             </nav>
           </div>
+
+          {/* Col 3: Social + email signup */}
           <div>
-            <h4 className="font-[var(--font-display)] text-[var(--color-primary)] text-lg tracking-wider mb-4">Connect</h4>
-            <div className="flex gap-4 mb-6">
-              <a href="#" className="text-[var(--color-sand-dark)] hover:text-[var(--color-primary)] transition-all duration-300 hover:drop-shadow-[0_0_8px_rgba(212,145,46,0.4)] p-1" aria-label="Twitter / X">
-                <svg viewBox="0 0 24 24" className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="1.5">
+            <h4
+              style={{
+                fontFamily: 'var(--font-display)',
+                fontSize: '13px',
+                fontWeight: 700,
+                textTransform: 'uppercase',
+                letterSpacing: '0.5px',
+                color: '#FFFFFF',
+                marginBottom: '16px',
+                marginTop: 0,
+              }}
+            >
+              Connect
+            </h4>
+            {/* Social icons */}
+            <div style={{ display: 'flex', gap: '16px', marginBottom: '20px' }}>
+              <a href="#" aria-label="X / Twitter" style={{ color: '#666666', transition: 'color 200ms' }}
+                onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.color = '#FFFFFF'; }}
+                onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.color = '#666666'; }}
+              >
+                <svg viewBox="0 0 24 24" style={{ width: '20px', height: '20px' }} fill="none" stroke="currentColor" strokeWidth="1.5">
                   <path d="M4 4l6.5 8L4 20h2l5.5-6.8L16 20h4l-6.8-8.4L20 4h-2l-5.2 6.4L8 4H4z" />
                 </svg>
               </a>
-              <a href="#" className="text-[var(--color-sand-dark)] hover:text-[var(--color-primary)] transition-all duration-300 hover:drop-shadow-[0_0_8px_rgba(212,145,46,0.4)] p-1" aria-label="Discord">
-                <svg viewBox="0 0 24 24" className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="1.5">
+              <a href="#" aria-label="Discord" style={{ color: '#666666', transition: 'color 200ms' }}
+                onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.color = '#FFFFFF'; }}
+                onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.color = '#666666'; }}
+              >
+                <svg viewBox="0 0 24 24" style={{ width: '20px', height: '20px' }} fill="none" stroke="currentColor" strokeWidth="1.5">
                   <path d="M9.5 14.5a1.5 1.5 0 100-3 1.5 1.5 0 000 3zM14.5 14.5a1.5 1.5 0 100-3 1.5 1.5 0 000 3z" fill="currentColor" />
                   <path d="M5.5 16c1.5 2 4 3 6.5 3s5-1 6.5-3M8 8c1-0.5 2.5-1 4-1s3 .5 4 1M6 9l-1 7 3.5 3h7l3.5-3-1-7" />
                 </svg>
               </a>
-              <a href="#" className="text-[var(--color-sand-dark)] hover:text-[var(--color-primary)] transition-all duration-300 hover:drop-shadow-[0_0_8px_rgba(212,145,46,0.4)] p-1" aria-label="Instagram">
-                <svg viewBox="0 0 24 24" className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="1.5">
+              <a href="#" aria-label="Instagram" style={{ color: '#666666', transition: 'color 200ms' }}
+                onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.color = '#FFFFFF'; }}
+                onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.color = '#666666'; }}
+              >
+                <svg viewBox="0 0 24 24" style={{ width: '20px', height: '20px' }} fill="none" stroke="currentColor" strokeWidth="1.5">
                   <rect x="3" y="3" width="18" height="18" rx="5" />
                   <circle cx="12" cy="12" r="5" />
                   <circle cx="17.5" cy="6.5" r="1" fill="currentColor" />
                 </svg>
               </a>
             </div>
+            {/* Mini email signup */}
             {footerState === 'done' ? (
-              <p className="text-[var(--color-primary)] text-sm font-[var(--font-display)] tracking-wide">The Archive remembers you.</p>
+              <p style={{ fontFamily: 'var(--font-body)', fontSize: '14px', color: '#E88A1A', margin: 0 }}>
+                You're subscribed. Stay tuned.
+              </p>
             ) : (
-              <form onSubmit={handleFooterSubscribe} className="flex gap-2">
+              <form onSubmit={handleFooterSubscribe} style={{ display: 'flex', gap: '8px' }}>
                 <input
                   type="email"
                   value={footerEmail}
                   onChange={(e) => setFooterEmail(e.target.value)}
                   placeholder="your@email.com"
                   required
-                  className="flex-1 min-w-0 px-3 py-2 rounded bg-[var(--color-obsidian-light)] border border-[var(--color-sand-dark)]/20 text-[var(--color-sand-light)] placeholder-[var(--color-sand-dark)]/50 text-sm focus:outline-none focus:border-[var(--color-primary)]/40 transition-colors"
+                  style={{
+                    flex: 1,
+                    minWidth: 0,
+                    padding: '8px 12px',
+                    borderRadius: '4px',
+                    background: '#1A1A1A',
+                    border: '1px solid #333333',
+                    color: '#FFFFFF',
+                    fontFamily: 'var(--font-body)',
+                    fontSize: '13px',
+                    outline: 'none',
+                    transition: 'border-color 200ms',
+                  }}
+                  onFocus={(e) => { e.currentTarget.style.borderColor = '#E88A1A'; }}
+                  onBlur={(e) => { e.currentTarget.style.borderColor = '#333333'; }}
                 />
                 <button
                   type="submit"
-                  className="px-4 py-2 bg-[var(--color-primary)] text-[var(--color-obsidian)] font-[var(--font-display)] text-xs tracking-wider uppercase rounded hover:bg-[var(--color-primary-dim)] transition-colors font-semibold whitespace-nowrap"
+                  style={{
+                    padding: '8px 16px',
+                    background: '#E88A1A',
+                    color: '#151515',
+                    fontFamily: 'var(--font-display)',
+                    fontSize: '12px',
+                    fontWeight: 700,
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.5px',
+                    border: 'none',
+                    borderRadius: '4px',
+                    cursor: 'pointer',
+                    transition: 'background 200ms',
+                    whiteSpace: 'nowrap',
+                  }}
+                  onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = '#F59E2E'; }}
+                  onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = '#E88A1A'; }}
                 >
                   Join
                 </button>
@@ -295,69 +387,37 @@ function Footer() {
             )}
           </div>
         </div>
-        <div className="border-t border-[var(--color-primary)]/10 pt-6 text-center">
-          <img src={LOGO_URL} alt="War of the Sphinx" style={{ height: '30px', margin: '0 auto 8px', display: 'block', opacity: 0.5 }} />
-          <p className="text-xs text-[var(--color-sand-dark)]/40">&copy; 2026 War of the Sphinx. All rights reserved.</p>
+
+        {/* Bottom bar */}
+        <div
+          style={{
+            borderTop: '1px solid #222222',
+            padding: '20px 0',
+            textAlign: 'center',
+          }}
+        >
+          <p
+            style={{
+              fontFamily: 'var(--font-body)',
+              fontSize: '12px',
+              color: '#666666',
+              margin: 0,
+            }}
+          >
+            &copy; 2026 War of the Sphinx. All rights reserved.
+          </p>
         </div>
       </div>
     </footer>
   );
 }
 
-function LoadingScreen({ onComplete }: { onComplete: () => void }) {
-  const [phase, setPhase] = useState<'eye' | 'text' | 'fadeout' | 'done'>('eye');
-
-  useEffect(() => {
-    const t1 = setTimeout(() => setPhase('text'), 800);
-    const t2 = setTimeout(() => setPhase('fadeout'), 2000);
-    const t3 = setTimeout(() => {
-      setPhase('done');
-      onComplete();
-    }, 2600);
-    return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); };
-  }, [onComplete]);
-
-  if (phase === 'done') return null;
-
-  return (
-    <div
-      className="fixed inset-0 z-[9999] flex flex-col items-center justify-center"
-      style={{
-        background: 'var(--color-obsidian)',
-        opacity: phase === 'fadeout' ? 0 : 1,
-        transition: 'opacity 0.6s ease-out',
-        pointerEvents: phase === 'fadeout' ? 'none' : 'auto',
-      }}
-    >
-      <div style={{ animation: 'loadingEyeScale 1s ease-out forwards' }}>
-        <img
-          src={LOGO_URL}
-          alt="War of the Sphinx"
-          style={{
-            width: '200px',
-            maxWidth: '60vw',
-            filter: 'drop-shadow(0 0 30px rgba(212, 145, 46, 0.4)) drop-shadow(0 0 60px rgba(196, 90, 42, 0.2))',
-          }}
-        />
-      </div>
-      <p
-        className="font-[var(--font-display)] text-[var(--color-primary)] text-sm tracking-[0.3em] uppercase mt-6"
-        style={{
-          opacity: phase === 'eye' ? 0 : 0.6,
-          transform: phase === 'eye' ? 'translateY(10px)' : 'translateY(0)',
-          transition: 'opacity 0.6s ease-out, transform 0.6s ease-out',
-        }}
-      >
-        A World Forged in Riddles
-      </p>
-    </div>
-  );
-}
-
+/* ----------------------------------------------------------------
+   Layout — Navbar + content + footer
+   ---------------------------------------------------------------- */
 function Layout() {
   const [menuOpen, setMenuOpen] = useState(false);
   const location = useLocation();
-  const navRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     setMenuOpen(false);
@@ -369,24 +429,87 @@ function Layout() {
   }, [menuOpen]);
 
   return (
-    <div className="min-h-screen flex flex-col relative">
-      <ScrollProgress />
-      <ParticleField />
-
-      <nav ref={navRef} className="sticky top-0 z-50 glass-heavy border-b border-[var(--color-primary)]/8">
-        <div className="flex items-center justify-between px-4 md:px-8 py-3 md:py-4 max-w-7xl mx-auto">
-          <Link to="/" className="no-underline group relative">
-            <img src={LOGO_URL} alt="War of the Sphinx" style={{ height: '40px' }} />
+    <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', position: 'relative' }}>
+      {/* ---- NAVBAR ---- */}
+      <nav
+        style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          width: '100%',
+          zIndex: 50,
+          background: '#151515',
+          borderBottom: '1px solid #333333',
+          height: '60px',
+          display: 'flex',
+          alignItems: 'center',
+        }}
+      >
+        <div
+          style={{
+            width: '100%',
+            maxWidth: '1280px',
+            margin: '0 auto',
+            padding: '0 24px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+          }}
+        >
+          {/* Logo */}
+          <Link to="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center' }}>
+            <img src={LOGO_URL} alt="War of the Sphinx" style={{ height: '45px' }} />
           </Link>
-          <div className="hidden md:flex gap-8 items-center">
-            <NavLink to="/">Home</NavLink>
-            <NavLink to="/chat">The Sphinx</NavLink>
-            <NavLink to="/lore">The World</NavLink>
-            <NavLink to="/about">About</NavLink>
+
+          {/* Desktop nav links */}
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '32px',
+            }}
+            className="hidden md:flex"
+          >
+            {NAV_LINKS.map((link) => (
+              <NavLink key={link.to} to={link.to}>
+                {link.label}
+              </NavLink>
+            ))}
+            {/* Search icon */}
+            <button
+              aria-label="Search"
+              style={{
+                background: 'none',
+                border: 'none',
+                color: '#999999',
+                cursor: 'pointer',
+                padding: '4px',
+                display: 'flex',
+                alignItems: 'center',
+                transition: 'color 200ms',
+              }}
+              onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.color = '#FFFFFF'; }}
+              onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.color = '#999999'; }}
+            >
+              <SearchIcon />
+            </button>
           </div>
+
+          {/* Mobile hamburger */}
           <button
             onClick={() => setMenuOpen(!menuOpen)}
-            className="md:hidden p-2 text-[var(--color-sand-light)] hover:text-[var(--color-primary)] transition-colors relative z-[60]"
+            className="md:hidden"
+            style={{
+              background: 'none',
+              border: 'none',
+              color: menuOpen ? '#FFFFFF' : '#999999',
+              cursor: 'pointer',
+              padding: '8px',
+              position: 'relative',
+              zIndex: 60,
+              display: 'flex',
+              alignItems: 'center',
+            }}
             aria-label="Toggle menu"
             aria-expanded={menuOpen}
           >
@@ -395,43 +518,52 @@ function Layout() {
         </div>
       </nav>
 
+      {/* ---- MOBILE MENU OVERLAY ---- */}
       <div
-        className="fixed inset-0 z-[55] md:hidden flex flex-col items-center justify-center gap-8 transition-all duration-300"
+        className="md:hidden"
         style={{
-          background: 'rgba(13, 27, 27, 0.97)',
+          position: 'fixed',
+          inset: 0,
+          zIndex: 55,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          gap: '24px',
+          background: 'rgba(21, 21, 21, 0.98)',
           backdropFilter: 'blur(20px)',
           WebkitBackdropFilter: 'blur(20px)',
           opacity: menuOpen ? 1 : 0,
           visibility: menuOpen ? 'visible' : 'hidden',
           pointerEvents: menuOpen ? 'auto' : 'none',
+          transition: 'opacity 300ms ease, visibility 300ms ease',
         }}
       >
-        <img src={LOGO_URL} alt="War of the Sphinx" style={{ width: '120px', marginBottom: '16px', opacity: 0.3 }} />
-        <MobileNavLink to="/" onClick={() => setMenuOpen(false)} index={0}>Home</MobileNavLink>
-        <MobileNavLink to="/chat" onClick={() => setMenuOpen(false)} index={1}>The Sphinx</MobileNavLink>
-        <MobileNavLink to="/lore" onClick={() => setMenuOpen(false)} index={2}>The World</MobileNavLink>
-        <MobileNavLink to="/about" onClick={() => setMenuOpen(false)} index={3}>About</MobileNavLink>
+        {NAV_LINKS.map((link, i) => (
+          <MobileNavLink key={link.to} to={link.to} onClick={() => setMenuOpen(false)} index={i}>
+            {link.label}
+          </MobileNavLink>
+        ))}
       </div>
 
-      <main className="flex-1 relative z-[2]">
+      {/* ---- MAIN CONTENT ---- */}
+      <main style={{ flex: 1, position: 'relative', zIndex: 2, marginTop: '60px' }}>
         <AnimatedRoutes />
       </main>
 
+      {/* ---- FOOTER ---- */}
       <Footer />
     </div>
   );
 }
 
+/* ----------------------------------------------------------------
+   App — Root
+   ---------------------------------------------------------------- */
 export default function App() {
-  const [loaded, setLoaded] = useState(false);
-  const handleLoadComplete = useCallback(() => setLoaded(true), []);
-
   return (
     <BrowserRouter>
-      {!loaded && <LoadingScreen onComplete={handleLoadComplete} />}
-      <div style={{ opacity: loaded ? 1 : 0, transition: 'opacity 0.3s ease-out' }}>
-        <Layout />
-      </div>
+      <Layout />
     </BrowserRouter>
   );
 }
