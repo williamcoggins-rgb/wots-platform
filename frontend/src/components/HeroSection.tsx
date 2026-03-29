@@ -33,7 +33,6 @@ export function HeroSection() {
         <div
           style={{
             position: 'relative',
-            zIndex: 10,
             textAlign: 'center',
             padding: '4rem 1.5rem',
             maxWidth: '800px',
