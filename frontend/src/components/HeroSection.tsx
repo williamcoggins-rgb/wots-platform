@@ -1,4 +1,4 @@
-const LOGO_URL = 'https://res.cloudinary.com/dcpeomifz/image/upload/e_replace_color:151515:50:FFFFFF/image0_1_avuytq.png';
+const LOGO_URL = 'https://res.cloudinary.com/dcpeomifz/image/upload/e_replace_color:151515:10:FFFFFF/image0_1_avuytq.png';
 
 const heroStyles = `
 @keyframes scrollBounce {
