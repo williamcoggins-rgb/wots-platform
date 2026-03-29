@@ -19,11 +19,14 @@ export function HeroSection() {
         style={{
           position: 'relative',
           width: '100%',
-          minHeight: 'calc(100vh - 60px)',
+          height: '100vh',
+          minHeight: '600px',
+          overflow: 'hidden',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          background: `
+          backgroundColor: '#151515',
+          backgroundImage: `
             radial-gradient(ellipse 60% 50% at 50% 50%, rgba(232,138,26,0.08) 0%, transparent 70%),
             linear-gradient(180deg, #0a0a0a 0%, #151515 100%)
           `,
@@ -44,8 +47,8 @@ export function HeroSection() {
               src={LOGO_URL}
               alt="War of the Sphinx"
               style={{
-                maxWidth: '350px',
-                width: '75vw',
+                maxWidth: '500px',
+                width: '85vw',
                 display: 'block',
                 margin: '0 auto',
                 mixBlendMode: 'multiply' as const,

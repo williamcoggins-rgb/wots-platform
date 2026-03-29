@@ -234,7 +234,7 @@ function Footer() {
             <img
               src={LOGO_URL}
               alt="War of the Sphinx"
-              style={{ width: '100px', marginBottom: '12px', display: 'block', mixBlendMode: 'multiply' }}
+              style={{ width: '100px', marginBottom: '12px', display: 'block', mixBlendMode: 'multiply', background: '#111111' }}
             />
             <p
               style={{
@@ -457,7 +457,7 @@ function Layout() {
           }}
         >
           {/* Logo */}
-          <Link to="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center' }}>
+          <Link to="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', background: '#151515' }}>
             <img src={LOGO_URL} alt="War of the Sphinx" style={{ height: '45px', mixBlendMode: 'multiply' }} />
           </Link>
 
