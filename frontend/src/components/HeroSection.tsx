@@ -51,6 +51,7 @@ export function HeroSection() {
                 width: '85vw',
                 display: 'block',
                 margin: '0 auto',
+                mixBlendMode: 'multiply' as const,
               }}
             />
           </div>
