@@ -25,6 +25,7 @@ export function HeroSection() {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
+          isolation: 'isolate' as const,
           backgroundColor: '#151515',
           backgroundImage: `
             radial-gradient(ellipse 60% 50% at 50% 50%, rgba(232,138,26,0.08) 0%, transparent 70%),
