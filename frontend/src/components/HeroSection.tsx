@@ -43,7 +43,7 @@ export function HeroSection() {
           }}
         >
           {/* Logo */}
-          <div style={{ marginBottom: '1.5rem', animation: 'fadeInUp 1s ease-out forwards' }}>
+          <div style={{ marginBottom: '1.5rem', animation: 'fadeInUp 1s ease-out forwards', backgroundColor: '#151515' }}>
             <img
               src={LOGO_URL}
               alt="War of the Sphinx"
