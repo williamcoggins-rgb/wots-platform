@@ -1,4 +1,4 @@
-const LOGO_URL = 'https://res.cloudinary.com/dcpeomifz/image/upload/image0_1_avuytq.png';
+const LOGO_URL = 'https://res.cloudinary.com/dcpeomifz/image/upload/e_replace_color:151515:50:FFFFFF/image0_1_avuytq.png';
 
 const heroStyles = `
 @keyframes scrollBounce {
@@ -51,9 +51,6 @@ export function HeroSection() {
                 width: '85vw',
                 display: 'block',
                 margin: '0 auto',
-                backgroundColor: '#151515',
-                borderRadius: '4px',
-                padding: '8px',
               }}
             />
           </div>
