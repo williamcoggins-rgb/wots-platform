@@ -1,4 +1,4 @@
-const LOGO_URL = '/art/logo-transparent.png';
+const LOGO_URL = 'https://res.cloudinary.com/dcpeomifz/image/upload/image0_1_avuytq.png';
 
 const heroStyles = `
 @keyframes scrollBounce {
@@ -42,7 +42,7 @@ export function HeroSection() {
           }}
         >
           {/* Logo */}
-          <div style={{ marginBottom: '1.5rem', animation: 'fadeInUp 1s ease-out forwards' }}>
+          <div style={{ marginBottom: '1.5rem', animation: 'fadeInUp 1s ease-out forwards', backgroundColor: '#151515' }}>
             <img
               src={LOGO_URL}
               alt="War of the Sphinx"
@@ -51,6 +51,7 @@ export function HeroSection() {
                 width: '85vw',
                 display: 'block',
                 margin: '0 auto',
+                mixBlendMode: 'multiply' as const,
               }}
             />
           </div>
