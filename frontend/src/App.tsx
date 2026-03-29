@@ -7,7 +7,7 @@ import { About } from './pages/About';
 import { Admin } from './pages/Admin';
 import { Gallery } from './pages/Gallery';
 
-const LOGO_URL = 'https://res.cloudinary.com/dcpeomlfz/image/upload/image0_1_avuytq.png';
+const LOGO_URL = 'https://res.cloudinary.com/dcpeomifz/image/upload/image0_1_avuytq.png';
 
 const NAV_LINKS = [
   { to: '/', label: 'Home' },
