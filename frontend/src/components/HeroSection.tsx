@@ -19,7 +19,7 @@ export function HeroSection() {
         style={{
           position: 'relative',
           width: '100%',
-          minHeight: '100vh',
+          minHeight: 'calc(100vh - 60px)',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
