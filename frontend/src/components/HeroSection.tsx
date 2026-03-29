@@ -25,7 +25,6 @@ export function HeroSection() {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          isolation: 'isolate' as const,
           backgroundColor: '#151515',
           backgroundImage: `
             radial-gradient(ellipse 60% 50% at 50% 50%, rgba(232,138,26,0.08) 0%, transparent 70%),
@@ -43,7 +42,7 @@ export function HeroSection() {
           }}
         >
           {/* Logo */}
-          <div style={{ marginBottom: '1.5rem', animation: 'fadeInUp 1s ease-out forwards', backgroundColor: '#151515' }}>
+          <div style={{ marginBottom: '1.5rem', animation: 'fadeInUp 1s ease-out forwards' }}>
             <img
               src={LOGO_URL}
               alt="War of the Sphinx"
@@ -52,7 +51,9 @@ export function HeroSection() {
                 width: '85vw',
                 display: 'block',
                 margin: '0 auto',
-                mixBlendMode: 'multiply' as const,
+                backgroundColor: '#151515',
+                borderRadius: '4px',
+                padding: '8px',
               }}
             />
           </div>

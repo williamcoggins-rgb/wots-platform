@@ -1,4 +1,7 @@
+import { useState, useEffect } from 'react';
 import { useInView } from './useInView';
+import { getGalleryImages } from '../api';
+import type { GalleryImage } from '../types';
 
 const gridStyles = `
 .feature-card-modern {
@@ -19,6 +22,7 @@ interface Feature {
   desc: string;
   borderColor: string;
   hoverBorderColor: string;
+  imageUrl?: string;
 }
 
 const FEATURES: Feature[] = [
@@ -44,6 +48,18 @@ const FEATURES: Feature[] = [
 
 export function FeatureGrid() {
   const { ref, isVisible } = useInView(0.1);
+  const [envImages, setEnvImages] = useState<GalleryImage[]>([]);
+
+  useEffect(() => {
+    getGalleryImages('environments')
+      .then(setEnvImages)
+      .catch(() => {/* use plain background fallbacks */});
+  }, []);
+
+  const featuresWithImages = FEATURES.map((feat, i) => {
+    const img = envImages[i];
+    return img ? { ...feat, imageUrl: img.url } : feat;
+  });
 
   return (
     <>
@@ -89,7 +105,7 @@ export function FeatureGrid() {
             gap: '1.5rem',
           }}
         >
-          {FEATURES.map((feat, i) => (
+          {featuresWithImages.map((feat, i) => (
             <div
               key={feat.title}
               className="feature-card-modern"
@@ -98,6 +114,7 @@ export function FeatureGrid() {
                 opacity: isVisible ? 1 : 0,
                 transform: isVisible ? 'translateY(0)' : 'translateY(20px)',
                 transition: `opacity 0.6s ease ${0.15 * i}s, transform 0.6s ease ${0.15 * i}s`,
+                overflow: 'hidden',
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.borderLeftColor = feat.hoverBorderColor;
@@ -106,8 +123,30 @@ export function FeatureGrid() {
                 e.currentTarget.style.borderLeftColor = feat.borderColor;
               }}
             >
+              {/* Background image if available */}
+              {feat.imageUrl && (
+                <>
+                  <div
+                    style={{
+                      position: 'absolute',
+                      inset: 0,
+                      backgroundImage: `url(${feat.imageUrl})`,
+                      backgroundSize: 'cover',
+                      backgroundPosition: 'center',
+                    }}
+                  />
+                  <div
+                    style={{
+                      position: 'absolute',
+                      inset: 0,
+                      background: 'rgba(34,34,34,0.85)',
+                    }}
+                  />
+                </>
+              )}
               <h3
                 style={{
+                  position: 'relative',
                   fontFamily: "'Roboto Condensed', sans-serif",
                   fontSize: '18px',
                   fontWeight: 700,
@@ -122,6 +161,7 @@ export function FeatureGrid() {
               </h3>
               <p
                 style={{
+                  position: 'relative',
                   fontFamily: "'Inter', sans-serif",
                   fontSize: '15px',
                   color: '#999999',

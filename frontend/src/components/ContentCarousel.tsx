@@ -1,5 +1,7 @@
-import { useRef } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { useInView } from './useInView';
+import { getGalleryImages } from '../api';
+import type { GalleryImage } from '../types';
 
 const carouselStyles = `
 .carousel-card {
@@ -64,9 +66,31 @@ const CARDS: CarouselCard[] = [
   },
 ];
 
+const CARD_CATEGORY_MAP: Record<string, GalleryImage['category']> = {
+  'ANNOUNCEMENT': 'covers',
+  'LORE': 'characters',
+  'STORY': 'hero',
+  'COMMUNITY': 'environments',
+};
+
 export function ContentCarousel() {
   const scrollRef = useRef<HTMLDivElement>(null);
   const { ref: sectionRef, isVisible } = useInView(0.1);
+  const [galleryImages, setGalleryImages] = useState<GalleryImage[]>([]);
+
+  useEffect(() => {
+    getGalleryImages()
+      .then(setGalleryImages)
+      .catch(() => {/* use gradient fallbacks */});
+  }, []);
+
+  const cardsWithImages = CARDS.map((card) => {
+    const targetCategory = CARD_CATEGORY_MAP[card.category];
+    const match = targetCategory
+      ? galleryImages.find((img) => img.category === targetCategory)
+      : undefined;
+    return match ? { ...card, imageUrl: match.url } : card;
+  });
 
   return (
     <>
@@ -117,7 +141,7 @@ export function ContentCarousel() {
             scrollbarWidth: 'none',
           }}
         >
-          {CARDS.map((card, i) => (
+          {cardsWithImages.map((card, i) => (
             <div
               key={card.title}
               className="carousel-card"

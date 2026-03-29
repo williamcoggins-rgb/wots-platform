@@ -234,7 +234,7 @@ function Footer() {
             <img
               src={LOGO_URL}
               alt="War of the Sphinx"
-              style={{ width: '100px', marginBottom: '12px', display: 'block', mixBlendMode: 'multiply', background: '#111111' }}
+              style={{ width: '100px', marginBottom: '12px', display: 'block', backgroundColor: '#111111', borderRadius: '4px', padding: '4px' }}
             />
             <p
               style={{
@@ -457,8 +457,8 @@ function Layout() {
           }}
         >
           {/* Logo */}
-          <Link to="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', background: '#151515' }}>
-            <img src={LOGO_URL} alt="War of the Sphinx" style={{ height: '45px', mixBlendMode: 'multiply' }} />
+          <Link to="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center' }}>
+            <img src={LOGO_URL} alt="War of the Sphinx" style={{ height: '45px', backgroundColor: '#151515', borderRadius: '4px', padding: '4px' }} />
           </Link>
 
           {/* Desktop nav links */}
