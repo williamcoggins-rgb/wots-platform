@@ -85,20 +85,20 @@ const aboutStyles = [
   '@media (min-width: 768px) {',
   '  .about-split { flex-direction: row; gap: 0; }',
   '  .about-split-left, .about-split-right { flex: 1; padding: 0 32px; }',
-  '  .about-split-divider { width: 1px; background: linear-gradient(180deg, transparent, var(--color-sphinx-gold), transparent); opacity: 0.3; flex-shrink: 0; }',
+  '  .about-split-divider { width: 1px; background: linear-gradient(180deg, transparent, var(--color-primary), transparent); opacity: 0.3; flex-shrink: 0; }',
   '}',
   '@media (max-width: 767px) {',
-  '  .about-split-divider-mobile { height: 1px; background: linear-gradient(90deg, transparent, var(--color-sphinx-gold), transparent); opacity: 0.3; margin: 8px 0; }',
+  '  .about-split-divider-mobile { height: 1px; background: linear-gradient(90deg, transparent, var(--color-primary), transparent); opacity: 0.3; margin: 8px 0; }',
   '}',
-  '.progress-bar-track { width: 100%; height: 8px; background: rgba(45,45,68,0.8); border-radius: 4px; overflow: hidden; position: relative; }',
-  '.progress-bar-fill { height: 100%; border-radius: 4px; background: linear-gradient(90deg, var(--color-sphinx-gold-dim), var(--color-sphinx-gold)); animation: progressFill 1.5s ease-out forwards; position: relative; }',
+  '.progress-bar-track { width: 100%; height: 8px; background: rgba(21,40,40,0.8); border-radius: 4px; overflow: hidden; position: relative; }',
+  '.progress-bar-fill { height: 100%; border-radius: 4px; background: linear-gradient(90deg, var(--color-primary-dim), var(--color-primary)); animation: progressFill 1.5s ease-out forwards; position: relative; }',
   '.progress-bar-fill::after { content: \'\'; position: absolute; right: 0; top: 0; width: 12px; height: 100%; background: rgba(255,255,255,0.3); border-radius: 4px; animation: progressPulse 2s ease-in-out infinite; }',
   '.social-link { display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 50%; border: 1px solid rgba(184,131,74,0.2); color: var(--color-sand-dark); transition: all 0.3s ease; cursor: pointer; background: transparent; text-decoration: none; }',
-  '.social-link:hover { color: var(--color-sphinx-gold); border-color: var(--color-sphinx-gold); box-shadow: 0 0 16px rgba(255,215,0,0.2), 0 0 4px rgba(255,215,0,0.15); }',
-  '.timeline-line { position: absolute; left: 15px; top: 0; bottom: 0; width: 2px; background: linear-gradient(180deg, var(--color-sphinx-gold), rgba(184,131,74,0.3), rgba(184,131,74,0.1)); }',
+  '.social-link:hover { color: var(--color-primary); border-color: var(--color-primary); box-shadow: 0 0 16px rgba(212,145,46,0.2), 0 0 4px rgba(212,145,46,0.15); }',
+  '.timeline-line { position: absolute; left: 15px; top: 0; bottom: 0; width: 2px; background: linear-gradient(180deg, var(--color-primary), rgba(184,131,74,0.3), rgba(184,131,74,0.1)); }',
   '.timeline-node { position: relative; padding-left: 44px; padding-bottom: 24px; }',
   '.timeline-dot { position: absolute; left: 8px; top: 4px; width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--color-sand-dark); background: var(--color-obsidian); z-index: 1; }',
-  '.timeline-dot-active { border-color: var(--color-sphinx-gold); background: var(--color-sphinx-gold); box-shadow: 0 0 10px rgba(255,215,0,0.3); }',
+  '.timeline-dot-active { border-color: var(--color-primary); background: var(--color-primary); box-shadow: 0 0 10px rgba(212,145,46,0.3); }',
   '.timeline-node-dimmed { opacity: 0.4; }',
 ].join('\n');
 
@@ -122,7 +122,7 @@ export function About() {
           <h2
             style={{
               fontFamily: 'var(--font-display)',
-              color: 'var(--color-sphinx-gold)',
+              color: 'var(--color-primary)',
               fontSize: 'clamp(1.75rem, 4vw, 2.5rem)',
               margin: 0,
               letterSpacing: '0.08em',
@@ -134,7 +134,7 @@ export function About() {
           <div
             style={{
               height: 2,
-              background: 'linear-gradient(90deg, transparent, var(--color-sphinx-gold), transparent)',
+              background: 'linear-gradient(90deg, transparent, var(--color-primary), transparent)',
               maxWidth: 180,
               margin: '12px auto 0',
             }}
@@ -149,7 +149,7 @@ export function About() {
               <h3
                 style={{
                   fontFamily: 'var(--font-display)',
-                  color: 'var(--color-sphinx-gold)',
+                  color: 'var(--color-primary)',
                   fontSize: '1.2rem',
                   letterSpacing: '0.06em',
                   margin: '0 0 16px',
@@ -161,7 +161,7 @@ export function About() {
               <div
                 style={{
                   fontFamily: 'var(--font-body)',
-                  color: 'rgba(232,201,160,0.8)',
+                  color: 'rgba(240,200,120,0.8)',
                   fontSize: '0.95rem',
                   lineHeight: 1.7,
                   display: 'flex',
@@ -172,7 +172,7 @@ export function About() {
                 <p style={{ margin: 0 }}>
                   <strong
                     style={{
-                      color: 'var(--color-sphinx-gold)',
+                      color: 'var(--color-primary)',
                       fontFamily: 'var(--font-display)',
                     }}
                   >
@@ -207,7 +207,7 @@ export function About() {
               <h3
                 style={{
                   fontFamily: 'var(--font-display)',
-                  color: 'var(--color-sphinx-gold)',
+                  color: 'var(--color-primary)',
                   fontSize: '1.2rem',
                   letterSpacing: '0.06em',
                   margin: '0 0 16px',
@@ -219,7 +219,7 @@ export function About() {
               <p
                 style={{
                   fontFamily: 'var(--font-body)',
-                  color: 'rgba(232,201,160,0.8)',
+                  color: 'rgba(240,200,120,0.8)',
                   fontSize: '0.95rem',
                   lineHeight: 1.7,
                   margin: '0 0 24px',
@@ -242,7 +242,7 @@ export function About() {
                   <span
                     style={{
                       fontFamily: 'var(--font-display)',
-                      color: 'var(--color-sphinx-gold)',
+                      color: 'var(--color-primary)',
                       fontSize: '0.8rem',
                       letterSpacing: '0.08em',
                       textTransform: 'uppercase',
@@ -281,7 +281,7 @@ export function About() {
                         style={{
                           fontFamily: 'var(--font-display)',
                           color: vol.active
-                            ? 'var(--color-sphinx-gold)'
+                            ? 'var(--color-primary)'
                             : 'var(--color-sand-dark)',
                           fontSize: '0.85rem',
                           letterSpacing: '0.06em',
@@ -316,7 +316,7 @@ export function About() {
           <h3
             style={{
               fontFamily: 'var(--font-display)',
-              color: 'var(--color-sphinx-gold)',
+              color: 'var(--color-primary)',
               fontSize: '1.15rem',
               letterSpacing: '0.06em',
               margin: '0 0 12px',

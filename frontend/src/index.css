@@ -1,29 +1,37 @@
 @import "tailwindcss";
 
 /* ================================================================
-   WAR OF THE SPHINX — GLOBAL DESIGN SYSTEM
+   WAR OF THE SPHINX — GLOBAL DESIGN SYSTEM (COMIC BOOK BOLD REBRAND)
    ================================================================ */
 
 :root {
-  --color-gold: #ffd700;
-  --color-gold-dim: #b8960f;
-  --color-gold-glow: rgba(255, 215, 0, 0.3);
-  --color-sand: #d4a574;
-  --color-sand-light: #e8c9a0;
-  --color-sand-dark: #b8834a;
-  --color-obsidian: #0a0a14;
-  --color-obsidian-mid: #141428;
-  --color-obsidian-light: #1e1e3a;
-  --color-parchment: #f5e6c8;
+  --color-primary: #D4912E;
+  --color-primary-dim: #A06820;
+  --color-primary-glow: rgba(212, 145, 46, 0.3);
+  --color-gold: var(--color-primary);
+  --color-gold-dim: var(--color-primary-dim);
+  --color-gold-glow: var(--color-primary-glow);
+  --color-sphinx-gold: var(--color-primary);
+  --color-sphinx-gold-dim: var(--color-primary-dim);
+  --color-teal: #2BA5A5;
+  --color-teal-dim: #1E7A7A;
+  --color-teal-glow: rgba(43, 165, 165, 0.3);
+  --color-border: #C45A2A;
+  --color-border-glow: rgba(196, 90, 42, 0.3);
+  --color-sand: #E0A050;
+  --color-sand-light: #F0C878;
+  --color-sand-dark: #B87830;
+  --color-obsidian: #0D1B1B;
+  --color-obsidian-mid: #152828;
+  --color-obsidian-light: #1E3535;
+  --color-obsidian-deep: #080F0F;
+  --color-shadow: #050A0A;
+  --color-parchment: #F5DEB3;
+  --color-parchment-dark: #e0c9a0;
   --color-amber: #ff8c00;
   --color-scarlet: #8b1a1a;
   --color-emerald: #2d6b4f;
   --color-crystal: #7eb8da;
-  --color-sphinx-gold: var(--color-gold);
-  --color-sphinx-gold-dim: var(--color-gold-dim);
-  --color-obsidian-deep: #0a0a14;
-  --color-shadow: #060610;
-  --color-parchment-dark: #e0c9a0;
   --color-amethyst: #6b3fa0;
   --space-xs: 0.25rem;
   --space-sm: 0.5rem;
@@ -34,7 +42,7 @@
   --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4), 0 1px 2px rgba(0, 0, 0, 0.3);
   --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.5), 0 2px 6px rgba(0, 0, 0, 0.4);
   --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.6), 0 4px 16px rgba(0, 0, 0, 0.5);
-  --shadow-glow: 0 0 20px rgba(255, 215, 0, 0.15), 0 0 60px rgba(255, 215, 0, 0.08);
+  --shadow-glow: 0 0 20px rgba(212, 145, 46, 0.15), 0 0 60px rgba(212, 145, 46, 0.08);
   --duration-fast: 150ms;
   --duration-normal: 300ms;
   --duration-slow: 600ms;
@@ -71,8 +79,8 @@ body {
 }
 
 ::selection {
-  background: rgba(255, 215, 0, 0.25);
-  color: var(--color-gold);
+  background: rgba(212, 145, 46, 0.25);
+  color: var(--color-primary);
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -90,31 +98,31 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, var(--color-gold-dim), var(--color-sand-dark));
+  background: linear-gradient(180deg, var(--color-primary-dim), var(--color-sand-dark));
   border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--color-gold);
+  background: var(--color-primary);
 }
 
 * {
   scrollbar-width: thin;
-  scrollbar-color: var(--color-gold-dim) var(--color-obsidian);
+  scrollbar-color: var(--color-primary-dim) var(--color-obsidian);
 }
 
 .glass {
-  background: rgba(20, 20, 40, 0.6);
+  background: rgba(21, 40, 40, 0.6);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 215, 0, 0.1);
+  border: 1px solid rgba(212, 145, 46, 0.1);
 }
 
 .glass-heavy {
-  background: rgba(10, 10, 20, 0.8);
+  background: rgba(13, 27, 27, 0.8);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 215, 0, 0.08);
+  border: 1px solid rgba(212, 145, 46, 0.08);
 }
 
 @keyframes goldShimmer {
@@ -124,7 +132,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .text-shimmer,
 .shimmer {
-  background: linear-gradient(90deg, var(--color-gold) 0%, #fff8d6 25%, var(--color-gold) 50%, #fff8d6 75%, var(--color-gold) 100%);
+  background: linear-gradient(90deg, var(--color-primary) 0%, #ffe0a0 25%, var(--color-primary) 50%, #ffe0a0 75%, var(--color-primary) 100%);
   background-size: 200% auto;
   -webkit-background-clip: text;
   background-clip: text;
@@ -173,8 +181,8 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 @keyframes glowPulse {
-  0%, 100% { box-shadow: 0 0 8px rgba(255, 215, 0, 0.15); }
-  50% { box-shadow: 0 0 24px rgba(255, 215, 0, 0.35), 0 0 60px rgba(255, 215, 0, 0.1); }
+  0%, 100% { box-shadow: 0 0 8px rgba(212, 145, 46, 0.15); }
+  50% { box-shadow: 0 0 24px rgba(212, 145, 46, 0.35), 0 0 60px rgba(212, 145, 46, 0.1); }
 }
 
 .glow-pulse {
@@ -268,7 +276,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .geo-border-top {
   border-top: 1px solid rgba(212,165,116,0.2);
-  background-image: linear-gradient(90deg, transparent 0%, rgba(255,215,0,0.1) 50%, transparent 100%);
+  background-image: linear-gradient(90deg, transparent 0%, rgba(212,145,46,0.1) 50%, transparent 100%);
   background-size: 100% 1px;
   background-position: top;
   background-repeat: no-repeat;
@@ -285,7 +293,7 @@ h1, h2, h3, h4, h5, h6 {
   position: absolute;
   width: 12px;
   height: 12px;
-  border: 1px solid var(--color-gold-dim);
+  border: 1px solid var(--color-primary-dim);
   opacity: 0.3;
 }
 
@@ -369,8 +377,8 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 @keyframes borderGlow {
-  0%, 100% { box-shadow: 0 0 8px rgba(255,215,0,0.15); }
-  50% { box-shadow: 0 0 20px rgba(255,215,0,0.3); }
+  0%, 100% { box-shadow: 0 0 8px rgba(212,145,46,0.15); }
+  50% { box-shadow: 0 0 20px rgba(212,145,46,0.3); }
 }
 
 .email-glow:focus-within {

@@ -36,3 +36,11 @@ export interface ApiResponse<T = unknown> {
   data?: T;
   error?: string;
 }
+
+export interface GalleryImage {
+  id: string;
+  url: string;
+  title: string;
+  category: 'hero' | 'characters' | 'environments' | 'covers' | 'misc';
+  uploadedAt: number;
+}

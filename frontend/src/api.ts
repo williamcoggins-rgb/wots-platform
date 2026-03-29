@@ -1,4 +1,6 @@
-import type { ApiResponse, ChatMessage, ContentItem, ChatSession } from './types';
+import type { ApiResponse, ChatMessage, ContentItem, ChatSession, GalleryImage } from './types';
+import { db } from './firebase';
+import { collection, getDocs, query, orderBy, where } from 'firebase/firestore';
 
 const API_BASE = '/api';
 
@@ -45,4 +47,18 @@ export async function subscribeEmail(email: string): Promise<ApiResponse<{ messa
     method: 'POST',
     body: JSON.stringify({ email }),
   });
+}
+
+export async function getGalleryImages(category?: string): Promise<GalleryImage[]> {
+  const col = collection(db, 'gallery_images');
+  const constraints = [orderBy('uploadedAt', 'desc')];
+  if (category) {
+    constraints.unshift(where('category', '==', category));
+  }
+  const q = query(col, ...constraints);
+  const snapshot = await getDocs(q);
+  return snapshot.docs.map((doc) => ({
+    id: doc.id,
+    ...doc.data(),
+  })) as GalleryImage[];
 }

@@ -33,7 +33,7 @@ function HieroglyphSidebar() {
       style={{
         width: 60,
         minHeight: '100%',
-        background: 'linear-gradient(180deg, rgba(13,13,26,0.95) 0%, rgba(26,26,46,0.9) 50%, rgba(13,13,26,0.95) 100%)',
+        background: 'linear-gradient(180deg, rgba(13,27,27,0.95) 0%, rgba(21,40,40,0.9) 50%, rgba(13,27,27,0.95) 100%)',
         borderRight: '1px solid rgba(184,131,74,0.12)',
         display: 'flex',
         flexDirection: 'column',
@@ -43,35 +43,35 @@ function HieroglyphSidebar() {
         flexShrink: 0,
       }}
     >
-      <svg viewBox="0 0 32 32" width="28" height="28" fill="none" stroke="rgba(212,165,116,0.25)" strokeWidth="1">
+      <svg viewBox="0 0 32 32" width="28" height="28" fill="none" stroke="rgba(212,145,46,0.25)" strokeWidth="1">
         <ellipse cx="16" cy="14" rx="12" ry="7" />
-        <circle cx="16" cy="14" r="3" fill="rgba(212,165,116,0.15)" />
+        <circle cx="16" cy="14" r="3" fill="rgba(212,145,46,0.15)" />
         <path d="M10 21 L8 28" />
         <path d="M14 21 L16 26 L18 21" />
       </svg>
-      <svg viewBox="0 0 32 40" width="24" height="32" fill="none" stroke="rgba(212,165,116,0.2)" strokeWidth="1.2">
+      <svg viewBox="0 0 32 40" width="24" height="32" fill="none" stroke="rgba(212,145,46,0.2)" strokeWidth="1.2">
         <ellipse cx="16" cy="10" rx="7" ry="8" />
         <line x1="16" y1="18" x2="16" y2="38" />
         <line x1="8" y1="26" x2="24" y2="26" />
       </svg>
-      <svg viewBox="0 0 32 32" width="26" height="26" fill="none" stroke="rgba(212,165,116,0.2)" strokeWidth="1">
+      <svg viewBox="0 0 32 32" width="26" height="26" fill="none" stroke="rgba(212,145,46,0.2)" strokeWidth="1">
         <path d="M6 24 Q10 12 20 10 Q26 9 28 12" />
-        <circle cx="26" cy="10" r="2" fill="rgba(212,165,116,0.12)" />
+        <circle cx="26" cy="10" r="2" fill="rgba(212,145,46,0.12)" />
         <path d="M20 10 Q18 18 10 24" />
         <path d="M10 24 L6 28" />
         <path d="M10 24 L14 28" />
       </svg>
-      <svg viewBox="0 0 32 32" width="24" height="24" fill="none" stroke="rgba(212,165,116,0.18)" strokeWidth="1">
+      <svg viewBox="0 0 32 32" width="24" height="24" fill="none" stroke="rgba(212,145,46,0.18)" strokeWidth="1">
         <path d="M16 4 L30 28 L2 28 Z" />
         <line x1="16" y1="4" x2="16" y2="28" opacity="0.4" />
       </svg>
-      <svg viewBox="0 0 32 32" width="26" height="26" fill="none" stroke="rgba(212,165,116,0.2)" strokeWidth="1">
+      <svg viewBox="0 0 32 32" width="26" height="26" fill="none" stroke="rgba(212,145,46,0.2)" strokeWidth="1">
         <ellipse cx="16" cy="18" rx="8" ry="10" />
         <path d="M8 14 Q2 8 4 4" />
         <path d="M24 14 Q30 8 28 4" />
         <line x1="12" y1="8" x2="20" y2="8" opacity="0.3" />
       </svg>
-      <svg viewBox="0 0 24 40" width="20" height="32" fill="none" stroke="rgba(212,165,116,0.18)" strokeWidth="1">
+      <svg viewBox="0 0 24 40" width="20" height="32" fill="none" stroke="rgba(212,145,46,0.18)" strokeWidth="1">
         <path d="M12 2 Q6 10 6 20 Q6 30 12 38" />
         <path d="M12 2 Q18 10 18 20 Q18 30 12 38" />
         <line x1="12" y1="2" x2="12" y2="38" opacity="0.3" />
@@ -104,39 +104,39 @@ const chatStyles = [
   '.chat-temple-bg {',
   '  position: relative;',
   '  background:',
-  '    radial-gradient(ellipse at 10% 10%, rgba(255,160,40,0.06) 0%, transparent 50%),',
-  '    radial-gradient(ellipse at 90% 8%, rgba(255,140,30,0.05) 0%, transparent 50%),',
-  '    linear-gradient(180deg, rgba(13,13,26,0.98) 0%, rgba(26,26,46,0.95) 40%, rgba(18,18,31,0.98) 100%),',
+  '    radial-gradient(ellipse at 10% 10%, rgba(212,145,46,0.06) 0%, transparent 50%),',
+  '    radial-gradient(ellipse at 90% 8%, rgba(196,90,42,0.05) 0%, transparent 50%),',
+  '    linear-gradient(180deg, rgba(13,27,27,0.98) 0%, rgba(21,40,40,0.95) 40%, rgba(13,27,27,0.98) 100%),',
   '    repeating-linear-gradient(0deg, transparent, transparent 48px, rgba(184,131,74,0.025) 48px, rgba(184,131,74,0.025) 49px),',
   '    repeating-linear-gradient(90deg, transparent, transparent 48px, rgba(184,131,74,0.025) 48px, rgba(184,131,74,0.025) 49px);',
   '}',
   '.chat-temple-bg::before {',
   '  content: \'\'; position: absolute; top: 0; left: 0;',
   '  width: 200px; height: 300px;',
-  '  background: radial-gradient(ellipse at center, rgba(255,170,50,0.12), transparent 70%);',
+  '  background: radial-gradient(ellipse at center, rgba(212,145,46,0.12), transparent 70%);',
   '  pointer-events: none; animation: torchFlicker 4s ease-in-out infinite; z-index: 0;',
   '}',
   '.chat-temple-bg::after {',
   '  content: \'\'; position: absolute; top: 0; right: 0;',
   '  width: 200px; height: 300px;',
-  '  background: radial-gradient(ellipse at center, rgba(255,150,40,0.1), transparent 70%);',
+  '  background: radial-gradient(ellipse at center, rgba(196,90,42,0.1), transparent 70%);',
   '  pointer-events: none; animation: torchFlicker2 5s ease-in-out infinite; z-index: 0;',
   '}',
   '.hieroglyph-border {',
   '  height: 3px; opacity: 0.3;',
   '  background: repeating-linear-gradient(90deg,',
-  '    var(--color-sphinx-gold-dim) 0px, var(--color-sphinx-gold-dim) 4px,',
+  '    var(--color-primary-dim) 0px, var(--color-primary-dim) 4px,',
   '    transparent 4px, transparent 8px,',
-  '    var(--color-sphinx-gold) 8px, var(--color-sphinx-gold) 10px,',
+  '    var(--color-primary) 8px, var(--color-primary) 10px,',
   '    transparent 10px, transparent 16px,',
-  '    var(--color-sphinx-gold-dim) 16px, var(--color-sphinx-gold-dim) 18px,',
+  '    var(--color-primary-dim) 16px, var(--color-primary-dim) 18px,',
   '    transparent 18px, transparent 24px);',
   '  animation: hieroglyphScroll 12s linear infinite;',
   '}',
   '.sphinx-eye-pulse { animation: eyePulse 2.5s ease-in-out infinite; }',
   '.stone-tablet-btn {',
   '  clip-path: polygon(6% 0%, 94% 0%, 100% 100%, 0% 100%);',
-  '  background: linear-gradient(180deg, rgba(45,45,68,0.9) 0%, rgba(35,35,55,0.95) 100%);',
+  '  background: linear-gradient(180deg, rgba(21,40,40,0.9) 0%, rgba(13,27,27,0.95) 100%);',
   '  border: none; cursor: pointer; color: var(--color-sand);',
   '  font-family: var(--font-body); font-size: 0.85rem;',
   '  padding: 14px 12px; min-height: 44px; line-height: 1.3;',
@@ -145,18 +145,18 @@ const chatStyles = [
   '}',
   '.stone-tablet-btn:hover {',
   '  transform: translateY(-4px);',
-  '  box-shadow: 0 8px 24px rgba(0,0,0,0.5), 0 0 16px rgba(255,215,0,0.08);',
+  '  box-shadow: 0 8px 24px rgba(0,0,0,0.5), 0 0 16px rgba(212,145,46,0.08);',
   '}',
   '.stone-tablet-btn:active { transform: translateY(-2px); }',
   '.msg-assistant {',
-  '  background: rgba(245,230,200,0.07); border: 1px solid rgba(245,230,200,0.1);',
+  '  background: rgba(245,222,179,0.07); border: 1px solid rgba(245,222,179,0.1);',
   '  border-radius: 12px 12px 12px 2px; box-shadow: 0 2px 8px rgba(0,0,0,0.2);',
   '}',
   '.msg-user {',
-  '  background: rgba(45,45,68,0.6); border: 1px solid rgba(184,131,74,0.12);',
+  '  background: rgba(21,40,40,0.6); border: 1px solid rgba(184,131,74,0.12);',
   '  border-radius: 12px 12px 2px 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.2);',
   '}',
-  '.chat-input-field:focus { border-color: rgba(255,215,0,0.35) !important; }',
+  '.chat-input-field:focus { border-color: rgba(212,145,46,0.35) !important; }',
 ].join('\n');
 
 export function Chat() {
@@ -205,9 +205,9 @@ export function Chat() {
   };
 
   const eyeResponsiveStyle = [
-    '.sphinx-eye-pulse { width: 56px; height: 36px; color: rgba(255,215,0,0.35); margin-bottom: 20px; }',
+    '.sphinx-eye-pulse { width: 56px; height: 36px; color: rgba(212,145,46,0.35); margin-bottom: 20px; }',
     '@media(min-width:768px){ .sphinx-eye-pulse { width: 72px; height: 46px; margin-bottom: 28px; } }',
-    '.msg-assistant .sphinx-eye-pulse { width: 36px; height: 22px; color: var(--color-sphinx-gold-dim); }',
+    '.msg-assistant .sphinx-eye-pulse { width: 36px; height: 22px; color: var(--color-primary-dim); }',
   ].join('\n');
 
   return (
@@ -239,7 +239,7 @@ export function Chat() {
             <h2
               style={{
                 fontFamily: 'var(--font-display)',
-                color: 'var(--color-sphinx-gold)',
+                color: 'var(--color-primary)',
                 fontSize: 'clamp(1.25rem, 3vw, 1.75rem)',
                 margin: 0,
                 letterSpacing: '0.08em',
@@ -339,7 +339,7 @@ export function Chat() {
                         style={{
                           display: 'block',
                           fontFamily: 'var(--font-display)',
-                          color: 'var(--color-sphinx-gold-dim)',
+                          color: 'var(--color-primary-dim)',
                           fontSize: '0.7rem',
                           letterSpacing: '0.12em',
                           textTransform: 'uppercase',
@@ -383,7 +383,7 @@ export function Chat() {
                     <span
                       style={{
                         fontFamily: 'var(--font-body)',
-                        color: 'rgba(245,230,200,0.6)',
+                        color: 'rgba(245,222,179,0.6)',
                         fontSize: '0.78rem',
                         fontStyle: 'italic',
                       }}
@@ -407,7 +407,7 @@ export function Chat() {
               paddingBottom: 'max(8px, env(safe-area-inset-bottom))',
               flexShrink: 0,
               borderTop: '1px solid rgba(184,131,74,0.1)',
-              background: 'rgba(13,13,26,0.6)',
+              background: 'rgba(13,27,27,0.6)',
             }}
           >
             <input
@@ -439,7 +439,7 @@ export function Chat() {
                 padding: '12px 20px',
                 borderRadius: 8,
                 border: 'none',
-                background: 'var(--color-sphinx-gold)',
+                background: 'var(--color-primary)',
                 color: 'var(--color-obsidian)',
                 fontFamily: 'var(--font-display)',
                 fontWeight: 600,

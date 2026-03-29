@@ -37,33 +37,42 @@ const carouselStyles = `
 }
 `;
 
-const CARDS = [
+interface CarouselCard {
+  title: string;
+  category: string;
+  desc: string;
+  gradient: string;
+  iconPath: string;
+  imageUrl?: string;
+}
+
+const CARDS: CarouselCard[] = [
   {
     title: 'Volume 1 Coming Soon',
     category: 'ANNOUNCEMENT',
     desc: 'The first chapter of an ancient war is about to be written.',
-    gradient: 'linear-gradient(135deg, #2a1535 0%, #5c3a1a 50%, #8b6914 100%)',
+    gradient: 'linear-gradient(135deg, #152828 0%, #5c3a1a 50%, #D4912E 100%)',
     iconPath: 'M24 4 L28 16 L40 16 L30 24 L34 36 L24 28 L14 36 L18 24 L8 16 L20 16 Z',
   },
   {
     title: 'Meet the Sphinx',
     category: 'LORE',
     desc: 'A guardian older than memory. Its riddles shape the fate of worlds.',
-    gradient: 'linear-gradient(135deg, #1a1028 0%, #2d1b4e 50%, #6b3fa0 100%)',
+    gradient: 'linear-gradient(135deg, #0D1B1B 0%, #1E3535 50%, #2BA5A5 100%)',
     iconPath: 'M24 8 C24 8 16 20 16 28 C16 32.4 19.6 36 24 36 C28.4 36 32 32.4 32 28 C32 20 24 8 24 8 Z',
   },
   {
     title: 'The War Begins',
     category: 'STORY',
     desc: 'Ancient powers stir. Lines are drawn in sand and blood.',
-    gradient: 'linear-gradient(135deg, #1a0a0a 0%, #4a1a1a 50%, #7a2828 100%)',
+    gradient: 'linear-gradient(135deg, #1a0a0a 0%, #6b2a1a 50%, #C45A2A 100%)',
     iconPath: 'M24 4 L26 18 L40 18 L28 26 L32 40 L24 30 L16 40 L20 26 L8 18 L22 18 Z',
   },
   {
     title: 'Join the Seekers',
     category: 'COMMUNITY',
     desc: 'Knowledge is earned, not given. The worthy will find their way.',
-    gradient: 'linear-gradient(135deg, #0a1a1a 0%, #1a3a2a 50%, #2d6b4f 100%)',
+    gradient: 'linear-gradient(135deg, #080F0F 0%, #0D1B1B 50%, #1E7A7A 100%)',
     iconPath: 'M24 6 L24 42 M12 24 L36 24 M16 12 L32 36 M32 12 L16 36',
   },
 ];
@@ -95,14 +104,14 @@ export function ContentCarousel() {
               flex: '1',
               maxWidth: '200px',
               height: '1px',
-              background: 'linear-gradient(90deg, transparent, var(--color-sphinx-gold-dim))',
+              background: 'linear-gradient(90deg, transparent, var(--color-primary-dim))',
             }}
           />
           <h2
             style={{
               fontFamily: 'var(--font-display)',
               fontSize: 'clamp(1.2rem, 3vw, 1.6rem)',
-              color: 'var(--color-sphinx-gold)',
+              color: 'var(--color-primary)',
               letterSpacing: '0.15em',
               textTransform: 'uppercase',
               whiteSpace: 'nowrap',
@@ -115,7 +124,7 @@ export function ContentCarousel() {
               flex: '1',
               maxWidth: '200px',
               height: '1px',
-              background: 'linear-gradient(90deg, var(--color-sphinx-gold-dim), transparent)',
+              background: 'linear-gradient(90deg, var(--color-primary-dim), transparent)',
             }}
           />
         </div>
@@ -144,12 +153,25 @@ export function ContentCarousel() {
                 transition: `all 0.6s cubic-bezier(0.22, 1, 0.36, 1) ${0.15 * i}s`,
               }}
             >
+              {/* Background image if available */}
+              {card.imageUrl && (
+                <div
+                  style={{
+                    position: 'absolute',
+                    inset: 0,
+                    backgroundImage: `url(${card.imageUrl})`,
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                  }}
+                />
+              )}
+
               {/* Icon */}
               <div style={{ position: 'absolute', top: '2rem', left: '1.5rem', opacity: 0.3 }}>
                 <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
                   <path
                     d={card.iconPath}
-                    stroke="var(--color-sphinx-gold)"
+                    stroke="var(--color-primary)"
                     strokeWidth="1.5"
                     strokeLinejoin="round"
                     strokeLinecap="round"
@@ -163,7 +185,9 @@ export function ContentCarousel() {
                 style={{
                   position: 'absolute',
                   inset: 0,
-                  background: 'linear-gradient(180deg, transparent 30%, rgba(0,0,0,0.7) 100%)',
+                  background: card.imageUrl
+                    ? 'linear-gradient(180deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.8) 100%)'
+                    : 'linear-gradient(180deg, transparent 30%, rgba(0,0,0,0.7) 100%)',
                   opacity: 0.6,
                   transition: 'opacity 0.4s ease',
                 }}
@@ -189,9 +213,9 @@ export function ContentCarousel() {
                     fontSize: '0.6rem',
                     letterSpacing: '0.2em',
                     textTransform: 'uppercase',
-                    color: 'var(--color-sphinx-gold)',
-                    background: 'rgba(255,215,0,0.1)',
-                    border: '1px solid rgba(255,215,0,0.2)',
+                    color: 'var(--color-primary)',
+                    background: 'rgba(212,145,46,0.1)',
+                    border: '1px solid rgba(212,145,46,0.2)',
                     padding: '0.25rem 0.6rem',
                     borderRadius: '4px',
                     marginBottom: '0.75rem',

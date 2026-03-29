@@ -4,8 +4,8 @@ import { useInView } from './useInView';
 
 const emailStyles = `
 @keyframes goldBorderGlow {
-  0%, 100% { box-shadow: inset 0 0 30px rgba(255,215,0,0.05), 0 0 15px rgba(255,215,0,0.1); border-color: rgba(255,215,0,0.2); }
-  50%      { box-shadow: inset 0 0 40px rgba(255,215,0,0.08), 0 0 30px rgba(255,215,0,0.2); border-color: rgba(255,215,0,0.4); }
+  0%, 100% { box-shadow: inset 0 0 30px rgba(212,145,46,0.05), 0 0 15px rgba(212,145,46,0.1); border-color: rgba(212,145,46,0.2); }
+  50%      { box-shadow: inset 0 0 40px rgba(212,145,46,0.08), 0 0 30px rgba(212,145,46,0.2); border-color: rgba(212,145,46,0.4); }
 }
 
 @keyframes checkmarkDraw {
@@ -40,13 +40,13 @@ const emailStyles = `
   color: rgba(184,131,74,0.4);
 }
 .email-input-field:focus {
-  border-color: var(--color-sphinx-gold);
-  box-shadow: 0 0 20px rgba(255,215,0,0.15);
+  border-color: var(--color-primary);
+  box-shadow: 0 0 20px rgba(212,145,46,0.15);
 }
 
 .email-submit-btn {
   padding: 1rem 2rem;
-  background: var(--color-sphinx-gold);
+  background: var(--color-primary);
   color: var(--color-obsidian);
   font-family: var(--font-display);
   font-weight: 700;
@@ -60,9 +60,9 @@ const emailStyles = `
   white-space: nowrap;
 }
 .email-submit-btn:hover {
-  background: var(--color-sphinx-gold-dim);
+  background: var(--color-primary-dim);
   transform: translateY(-2px);
-  box-shadow: 0 4px 20px rgba(255,215,0,0.3);
+  box-shadow: 0 4px 20px rgba(212,145,46,0.3);
 }
 .email-submit-btn:disabled {
   opacity: 0.5;
@@ -117,8 +117,8 @@ export function EmailCapture() {
             maxWidth: '800px',
             margin: '0 auto',
             padding: 'clamp(2.5rem, 5vw, 4rem) clamp(1.5rem, 4vw, 3rem)',
-            background: 'linear-gradient(135deg, var(--color-shadow) 0%, var(--color-obsidian) 50%, rgba(26,16,40,0.8) 100%)',
-            border: '1px solid rgba(255,215,0,0.2)',
+            background: 'linear-gradient(135deg, var(--color-shadow) 0%, var(--color-obsidian) 50%, rgba(21,40,40,0.8) 100%)',
+            border: '1px solid rgba(212,145,46,0.2)',
             borderRadius: '16px',
             textAlign: 'center',
             position: 'relative',
@@ -126,10 +126,10 @@ export function EmailCapture() {
           }}
         >
           {/* Decorative corner marks */}
-          <div style={{ position: 'absolute', top: '12px', left: '12px', width: '20px', height: '20px', borderTop: '1px solid var(--color-sphinx-gold)', borderLeft: '1px solid var(--color-sphinx-gold)', opacity: 0.4 }} />
-          <div style={{ position: 'absolute', top: '12px', right: '12px', width: '20px', height: '20px', borderTop: '1px solid var(--color-sphinx-gold)', borderRight: '1px solid var(--color-sphinx-gold)', opacity: 0.4 }} />
-          <div style={{ position: 'absolute', bottom: '12px', left: '12px', width: '20px', height: '20px', borderBottom: '1px solid var(--color-sphinx-gold)', borderLeft: '1px solid var(--color-sphinx-gold)', opacity: 0.4 }} />
-          <div style={{ position: 'absolute', bottom: '12px', right: '12px', width: '20px', height: '20px', borderBottom: '1px solid var(--color-sphinx-gold)', borderRight: '1px solid var(--color-sphinx-gold)', opacity: 0.4 }} />
+          <div style={{ position: 'absolute', top: '12px', left: '12px', width: '20px', height: '20px', borderTop: '1px solid var(--color-primary)', borderLeft: '1px solid var(--color-primary)', opacity: 0.4 }} />
+          <div style={{ position: 'absolute', top: '12px', right: '12px', width: '20px', height: '20px', borderTop: '1px solid var(--color-primary)', borderRight: '1px solid var(--color-primary)', opacity: 0.4 }} />
+          <div style={{ position: 'absolute', bottom: '12px', left: '12px', width: '20px', height: '20px', borderBottom: '1px solid var(--color-primary)', borderLeft: '1px solid var(--color-primary)', opacity: 0.4 }} />
+          <div style={{ position: 'absolute', bottom: '12px', right: '12px', width: '20px', height: '20px', borderBottom: '1px solid var(--color-primary)', borderRight: '1px solid var(--color-primary)', opacity: 0.4 }} />
 
           {/* Eye icon */}
           <svg
@@ -141,19 +141,19 @@ export function EmailCapture() {
           >
             <path
               d="M4 24 C10 14, 18 10, 24 10 C30 10, 38 14, 44 24 C38 34, 30 38, 24 38 C18 38, 10 34, 4 24 Z"
-              stroke="var(--color-sphinx-gold)"
+              stroke="var(--color-primary)"
               strokeWidth="1.5"
               fill="none"
             />
-            <circle cx="24" cy="24" r="6" stroke="var(--color-sphinx-gold)" strokeWidth="1.5" fill="rgba(255,215,0,0.1)" />
-            <circle cx="24" cy="24" r="2" fill="var(--color-sphinx-gold)" />
+            <circle cx="24" cy="24" r="6" stroke="var(--color-primary)" strokeWidth="1.5" fill="rgba(212,145,46,0.1)" />
+            <circle cx="24" cy="24" r="2" fill="var(--color-primary)" />
           </svg>
 
           <h2
             style={{
               fontFamily: 'var(--font-display)',
               fontSize: 'clamp(1.8rem, 4vw, 2.5rem)',
-              color: 'var(--color-sphinx-gold)',
+              color: 'var(--color-primary)',
               marginBottom: '0.75rem',
               letterSpacing: '0.08em',
             }}
@@ -183,10 +183,10 @@ export function EmailCapture() {
             >
               {/* Animated checkmark */}
               <svg width="48" height="48" viewBox="0 0 48 48" style={{ margin: '0 auto 1rem', display: 'block' }}>
-                <circle cx="24" cy="24" r="20" stroke="var(--color-sphinx-gold)" strokeWidth="1.5" fill="none" opacity="0.3" />
+                <circle cx="24" cy="24" r="20" stroke="var(--color-primary)" strokeWidth="1.5" fill="none" opacity="0.3" />
                 <path
                   d="M15 24 L21 30 L33 18"
-                  stroke="var(--color-sphinx-gold)"
+                  stroke="var(--color-primary)"
                   strokeWidth="2.5"
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -199,7 +199,7 @@ export function EmailCapture() {
                 style={{
                   fontFamily: 'var(--font-display)',
                   fontSize: '1.3rem',
-                  color: 'var(--color-sphinx-gold)',
+                  color: 'var(--color-primary)',
                   letterSpacing: '0.1em',
                 }}
               >

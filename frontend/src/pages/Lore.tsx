@@ -133,7 +133,7 @@ const loreStyles = `
 
 .lore-title-underline {
   height: 2px;
-  background: linear-gradient(90deg, transparent, var(--color-sphinx-gold), transparent);
+  background: linear-gradient(90deg, transparent, var(--color-primary), transparent);
   margin: 12px auto 0;
   animation: underlineExpand 1.2s ease-out forwards;
   max-width: 200px;
@@ -152,15 +152,15 @@ const loreStyles = `
   display: flex;
   align-items: center;
   min-height: 40px;
-  background: linear-gradient(180deg, rgba(45,45,68,0.5) 0%, rgba(35,35,55,0.6) 100%),
+  background: linear-gradient(180deg, rgba(21,40,40,0.5) 0%, rgba(13,27,27,0.6) 100%),
     repeating-linear-gradient(0deg, transparent, transparent 6px, rgba(184,131,74,0.02) 6px, rgba(184,131,74,0.02) 7px);
 }
-.stone-tab:hover { border-color: rgba(255,215,0,0.3); background: rgba(45,45,68,0.7); }
+.stone-tab:hover { border-color: rgba(212,145,46,0.3); background: rgba(21,40,40,0.7); }
 .stone-tab-active {
-  background: rgba(45,45,68,0.8) !important;
-  border-color: var(--color-sphinx-gold) !important;
-  color: var(--color-sphinx-gold) !important;
-  box-shadow: 0 2px 0 0 var(--color-sphinx-gold), 0 0 12px rgba(255,215,0,0.08);
+  background: rgba(21,40,40,0.8) !important;
+  border-color: var(--color-primary) !important;
+  color: var(--color-primary) !important;
+  box-shadow: 0 2px 0 0 var(--color-primary), 0 0 12px rgba(212,145,46,0.08);
 }
 
 .lore-card {
@@ -171,8 +171,8 @@ const loreStyles = `
 }
 .lore-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 8px 32px rgba(0,0,0,0.35), 0 0 16px rgba(255,215,0,0.06);
-  border-color: rgba(255,215,0,0.3);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.35), 0 0 16px rgba(212,145,46,0.06);
+  border-color: rgba(212,145,46,0.3);
 }
 
 .lore-card-expand {
@@ -188,7 +188,7 @@ const loreStyles = `
 }
 .locked-card::before {
   content: ''; position: absolute; inset: 0;
-  background: linear-gradient(180deg, rgba(13,13,26,0.3) 0%, rgba(13,13,26,0.7) 100%);
+  background: linear-gradient(180deg, rgba(13,27,27,0.3) 0%, rgba(13,27,27,0.7) 100%);
   z-index: 1;
 }
 .locked-card-fog { position: absolute; inset: 0; pointer-events: none; }
@@ -201,7 +201,7 @@ const loreStyles = `
 
 .section-reveal-underline {
   height: 1px;
-  background: linear-gradient(90deg, transparent, var(--color-sphinx-gold-dim), transparent);
+  background: linear-gradient(90deg, transparent, var(--color-primary-dim), transparent);
   opacity: 0; width: 0;
   transition: width 0.8s ease, opacity 0.8s ease;
 }
@@ -242,7 +242,7 @@ export function Lore() {
           {/* Page header */}
           <RevealSection style={{ textAlign: 'center', paddingTop: 32, marginBottom: 40 }}>
             <h2 style={{
-              fontFamily: 'var(--font-display)', color: 'var(--color-sphinx-gold)',
+              fontFamily: 'var(--font-display)', color: 'var(--color-primary)',
               fontSize: 'clamp(1.75rem, 4vw, 2.5rem)', margin: 0, letterSpacing: '0.08em', fontWeight: 700,
             }}>
               World Lore
@@ -265,7 +265,7 @@ export function Lore() {
                   key={key}
                   onClick={() => setFilter(key)}
                   className={`stone-tab ${filter === key ? 'stone-tab-active' : ''}`}
-                  style={{ color: filter === key ? 'var(--color-sphinx-gold)' : 'var(--color-sand)' }}
+                  style={{ color: filter === key ? 'var(--color-primary)' : 'var(--color-sand)' }}
                 >
                   {IconComp && <IconComp />}
                   {label}
@@ -330,7 +330,7 @@ export function Lore() {
                     <div className="lore-card" onClick={() => setExpanded(isExpanded ? null : item.id)}>
                       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 }}>
                         <h3 style={{
-                          fontFamily: 'var(--font-display)', color: 'var(--color-sphinx-gold)',
+                          fontFamily: 'var(--font-display)', color: 'var(--color-primary)',
                           fontSize: '1.1rem', margin: 0, letterSpacing: '0.04em', fontWeight: 700,
                         }}>
                           {item.title}
@@ -380,7 +380,7 @@ function SealedArchives() {
     }}>
       <div style={{ textAlign: 'center', marginBottom: 20 }}>
         <h3 style={{
-          fontFamily: 'var(--font-display)', color: 'var(--color-sphinx-gold)',
+          fontFamily: 'var(--font-display)', color: 'var(--color-primary)',
           fontSize: '1.2rem', margin: 0, letterSpacing: '0.06em',
         }}>
           Sealed Archives

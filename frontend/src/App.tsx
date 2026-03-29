@@ -4,6 +4,10 @@ import { Chat } from './pages/Chat';
 import { Lore } from './pages/Lore';
 import { Home } from './pages/Home';
 import { About } from './pages/About';
+import { Admin } from './pages/Admin';
+import { Gallery } from './pages/Gallery';
+
+const LOGO_URL = 'https://res.cloudinary.com/dcpeomifz/image/upload/image0_1_avuytq.png';
 
 function ScrollProgress() {
   const [progress, setProgress] = useState(0);
@@ -23,7 +27,7 @@ function ScrollProgress() {
       className="fixed top-0 left-0 h-[3px] z-[100]"
       style={{
         width: `${progress}%`,
-        background: 'linear-gradient(90deg, var(--color-gold-dim), var(--color-gold), var(--color-amber))',
+        background: 'linear-gradient(90deg, var(--color-primary-dim), var(--color-primary), var(--color-teal))',
         transition: 'width 50ms linear',
       }}
     />
@@ -59,10 +63,10 @@ function ParticleField() {
             height: `${p.size}px`,
             borderRadius: '50%',
             background: p.id % 3 === 0
-              ? 'var(--color-gold)'
+              ? 'var(--color-primary)'
               : p.id % 3 === 1
-                ? 'var(--color-sand)'
-                : 'var(--color-sand-light)',
+                ? 'var(--color-teal)'
+                : 'var(--color-sand)',
             opacity: p.opacity,
             animation: `${p.animation} ${p.duration}s ease-in-out ${p.delay}s infinite`,
           }}
@@ -81,22 +85,22 @@ function NavLink({ to, children, onClick }: { to: string; children: React.ReactN
       onClick={onClick}
       className="relative no-underline transition-colors font-[var(--font-display)] text-sm tracking-wider uppercase group"
       style={{
-        color: active ? 'var(--color-gold)' : 'rgba(232, 201, 160, 0.7)',
+        color: active ? 'var(--color-primary)' : 'rgba(240, 200, 120, 0.7)',
       }}
     >
-      <span className="relative z-10 transition-colors duration-200 group-hover:text-[var(--color-gold)]">
+      <span className="relative z-10 transition-colors duration-200 group-hover:text-[var(--color-primary)]">
         {children}
       </span>
       <span
         className="absolute -bottom-1 left-0 h-[2px] transition-all duration-300 ease-out"
         style={{
           width: active ? '100%' : '0%',
-          background: 'linear-gradient(90deg, var(--color-gold), var(--color-amber))',
+          background: 'linear-gradient(90deg, var(--color-primary), var(--color-teal))',
           opacity: active ? 1 : 0,
         }}
       />
       {!active && (
-        <span className="absolute -bottom-1 left-1/2 h-[2px] w-0 group-hover:w-full group-hover:left-0 transition-all duration-300 ease-out bg-[var(--color-gold)]/40" />
+        <span className="absolute -bottom-1 left-1/2 h-[2px] w-0 group-hover:w-full group-hover:left-0 transition-all duration-300 ease-out bg-[var(--color-primary)]/40" />
       )}
     </Link>
   );
@@ -111,7 +115,7 @@ function MobileNavLink({ to, children, onClick, index }: { to: string; children:
       onClick={onClick}
       className="no-underline font-[var(--font-display)] text-3xl tracking-widest uppercase transition-all duration-300"
       style={{
-        color: active ? 'var(--color-gold)' : 'var(--color-sand-light)',
+        color: active ? 'var(--color-primary)' : 'var(--color-sand-light)',
         animation: `fadeInUp 0.4s ease-out ${index * 0.1}s forwards`,
         opacity: 0,
       }}
@@ -149,6 +153,8 @@ function AnimatedRoutes() {
         <Route path="/chat" element={<Chat />} />
         <Route path="/lore" element={<Lore />} />
         <Route path="/about" element={<About />} />
+            <Route path="/gallery" element={<Gallery />} />
+            <Route path="/admin" element={<Admin />} />
       </Routes>
     </div>
   );
@@ -197,20 +203,20 @@ function Footer() {
   };
 
   return (
-    <footer className="relative border-t border-[var(--color-gold)]/10 overflow-hidden bg-[var(--color-obsidian)]">
+    <footer className="relative border-t border-[var(--color-primary)]/10 overflow-hidden bg-[var(--color-obsidian)]">
       <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
         <svg className="w-full h-full opacity-[0.03]" xmlns="http://www.w3.org/2000/svg">
           <defs>
             <pattern id="hieroglyph" x="0" y="0" width="80" height="80" patternUnits="userSpaceOnUse">
-              <ellipse cx="20" cy="16" rx="6" ry="8" fill="none" stroke="var(--color-gold)" strokeWidth="1" />
-              <line x1="20" y1="24" x2="20" y2="44" stroke="var(--color-gold)" strokeWidth="1" />
-              <line x1="12" y1="32" x2="28" y2="32" stroke="var(--color-gold)" strokeWidth="1" />
-              <ellipse cx="60" cy="20" rx="10" ry="5" fill="none" stroke="var(--color-gold)" strokeWidth="0.8" />
-              <circle cx="60" cy="20" r="2.5" fill="var(--color-gold)" opacity="0.3" />
-              <polyline points="10,60 18,52 26,60 34,52 42,60" fill="none" stroke="var(--color-gold)" strokeWidth="0.8" />
-              <line x1="60" y1="50" x2="60" y2="72" stroke="var(--color-gold)" strokeWidth="0.8" />
-              <path d="M56 56 Q60 50 64 56" fill="none" stroke="var(--color-gold)" strokeWidth="0.8" />
-              <path d="M56 64 Q60 58 64 64" fill="none" stroke="var(--color-gold)" strokeWidth="0.8" />
+              <ellipse cx="20" cy="16" rx="6" ry="8" fill="none" stroke="var(--color-primary)" strokeWidth="1" />
+              <line x1="20" y1="24" x2="20" y2="44" stroke="var(--color-primary)" strokeWidth="1" />
+              <line x1="12" y1="32" x2="28" y2="32" stroke="var(--color-primary)" strokeWidth="1" />
+              <ellipse cx="60" cy="20" rx="10" ry="5" fill="none" stroke="var(--color-primary)" strokeWidth="0.8" />
+              <circle cx="60" cy="20" r="2.5" fill="var(--color-primary)" opacity="0.3" />
+              <polyline points="10,60 18,52 26,60 34,52 42,60" fill="none" stroke="var(--color-primary)" strokeWidth="0.8" />
+              <line x1="60" y1="50" x2="60" y2="72" stroke="var(--color-primary)" strokeWidth="0.8" />
+              <path d="M56 56 Q60 50 64 56" fill="none" stroke="var(--color-primary)" strokeWidth="0.8" />
+              <path d="M56 64 Q60 58 64 64" fill="none" stroke="var(--color-primary)" strokeWidth="0.8" />
             </pattern>
           </defs>
           <rect width="100%" height="100%" fill="url(#hieroglyph)" />
@@ -219,25 +225,26 @@ function Footer() {
       <div className="relative z-10 max-w-6xl mx-auto px-4 py-12 md:py-16">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-8 mb-12">
           <div>
-            <h4 className="font-[var(--font-display)] text-[var(--color-gold)] text-lg tracking-wider mb-4">About</h4>
+            <h4 className="font-[var(--font-display)] text-[var(--color-primary)] text-lg tracking-wider mb-4">About</h4>
             <p className="text-[var(--color-sand)]/80 text-sm leading-relaxed mb-3">
               A seven-volume saga where ancient civilization collides with modern power.
             </p>
             <p className="text-[var(--color-sand-dark)] text-xs italic">A world forged in riddles.</p>
           </div>
           <div>
-            <h4 className="font-[var(--font-display)] text-[var(--color-gold)] text-lg tracking-wider mb-4">Quick Links</h4>
+            <h4 className="font-[var(--font-display)] text-[var(--color-primary)] text-lg tracking-wider mb-4">Quick Links</h4>
             <nav className="flex flex-col gap-2.5">
               {[
                 { to: '/', label: 'Home' },
                 { to: '/chat', label: 'The Sphinx' },
                 { to: '/lore', label: 'The World' },
                 { to: '/about', label: 'About' },
+                { to: '/gallery', label: 'Gallery' },
               ].map((link) => (
                 <Link
                   key={link.to}
                   to={link.to}
-                  className="text-[var(--color-sand)]/70 hover:text-[var(--color-gold)] transition-colors text-sm no-underline font-[var(--font-display)] tracking-wide uppercase"
+                  className="text-[var(--color-sand)]/70 hover:text-[var(--color-primary)] transition-colors text-sm no-underline font-[var(--font-display)] tracking-wide uppercase"
                 >
                   {link.label}
                 </Link>
@@ -245,20 +252,20 @@ function Footer() {
             </nav>
           </div>
           <div>
-            <h4 className="font-[var(--font-display)] text-[var(--color-gold)] text-lg tracking-wider mb-4">Connect</h4>
+            <h4 className="font-[var(--font-display)] text-[var(--color-primary)] text-lg tracking-wider mb-4">Connect</h4>
             <div className="flex gap-4 mb-6">
-              <a href="#" className="text-[var(--color-sand-dark)] hover:text-[var(--color-gold)] transition-all duration-300 hover:drop-shadow-[0_0_8px_rgba(255,215,0,0.4)] p-1" aria-label="Twitter / X">
+              <a href="#" className="text-[var(--color-sand-dark)] hover:text-[var(--color-primary)] transition-all duration-300 hover:drop-shadow-[0_0_8px_rgba(212,145,46,0.4)] p-1" aria-label="Twitter / X">
                 <svg viewBox="0 0 24 24" className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="1.5">
                   <path d="M4 4l6.5 8L4 20h2l5.5-6.8L16 20h4l-6.8-8.4L20 4h-2l-5.2 6.4L8 4H4z" />
                 </svg>
               </a>
-              <a href="#" className="text-[var(--color-sand-dark)] hover:text-[var(--color-gold)] transition-all duration-300 hover:drop-shadow-[0_0_8px_rgba(255,215,0,0.4)] p-1" aria-label="Discord">
+              <a href="#" className="text-[var(--color-sand-dark)] hover:text-[var(--color-primary)] transition-all duration-300 hover:drop-shadow-[0_0_8px_rgba(212,145,46,0.4)] p-1" aria-label="Discord">
                 <svg viewBox="0 0 24 24" className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="1.5">
                   <path d="M9.5 14.5a1.5 1.5 0 100-3 1.5 1.5 0 000 3zM14.5 14.5a1.5 1.5 0 100-3 1.5 1.5 0 000 3z" fill="currentColor" />
                   <path d="M5.5 16c1.5 2 4 3 6.5 3s5-1 6.5-3M8 8c1-0.5 2.5-1 4-1s3 .5 4 1M6 9l-1 7 3.5 3h7l3.5-3-1-7" />
                 </svg>
               </a>
-              <a href="#" className="text-[var(--color-sand-dark)] hover:text-[var(--color-gold)] transition-all duration-300 hover:drop-shadow-[0_0_8px_rgba(255,215,0,0.4)] p-1" aria-label="Instagram">
+              <a href="#" className="text-[var(--color-sand-dark)] hover:text-[var(--color-primary)] transition-all duration-300 hover:drop-shadow-[0_0_8px_rgba(212,145,46,0.4)] p-1" aria-label="Instagram">
                 <svg viewBox="0 0 24 24" className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="1.5">
                   <rect x="3" y="3" width="18" height="18" rx="5" />
                   <circle cx="12" cy="12" r="5" />
@@ -267,7 +274,7 @@ function Footer() {
               </a>
             </div>
             {footerState === 'done' ? (
-              <p className="text-[var(--color-gold)] text-sm font-[var(--font-display)] tracking-wide">The Archive remembers you.</p>
+              <p className="text-[var(--color-primary)] text-sm font-[var(--font-display)] tracking-wide">The Archive remembers you.</p>
             ) : (
               <form onSubmit={handleFooterSubscribe} className="flex gap-2">
                 <input
@@ -276,11 +283,11 @@ function Footer() {
                   onChange={(e) => setFooterEmail(e.target.value)}
                   placeholder="your@email.com"
                   required
-                  className="flex-1 min-w-0 px-3 py-2 rounded bg-[var(--color-obsidian-light)] border border-[var(--color-sand-dark)]/20 text-[var(--color-sand-light)] placeholder-[var(--color-sand-dark)]/50 text-sm focus:outline-none focus:border-[var(--color-gold)]/40 transition-colors"
+                  className="flex-1 min-w-0 px-3 py-2 rounded bg-[var(--color-obsidian-light)] border border-[var(--color-sand-dark)]/20 text-[var(--color-sand-light)] placeholder-[var(--color-sand-dark)]/50 text-sm focus:outline-none focus:border-[var(--color-primary)]/40 transition-colors"
                 />
                 <button
                   type="submit"
-                  className="px-4 py-2 bg-[var(--color-gold)] text-[var(--color-obsidian)] font-[var(--font-display)] text-xs tracking-wider uppercase rounded hover:bg-[var(--color-gold-dim)] transition-colors font-semibold whitespace-nowrap"
+                  className="px-4 py-2 bg-[var(--color-primary)] text-[var(--color-obsidian)] font-[var(--font-display)] text-xs tracking-wider uppercase rounded hover:bg-[var(--color-primary-dim)] transition-colors font-semibold whitespace-nowrap"
                 >
                   Join
                 </button>
@@ -288,8 +295,8 @@ function Footer() {
             )}
           </div>
         </div>
-        <div className="border-t border-[var(--color-gold)]/10 pt-6 text-center">
-          <p className="text-[var(--color-gold)]/50 font-[var(--font-display)] tracking-[0.2em] text-sm mb-2">War of the Sphinx</p>
+        <div className="border-t border-[var(--color-primary)]/10 pt-6 text-center">
+          <img src={LOGO_URL} alt="War of the Sphinx" style={{ height: '30px', margin: '0 auto 8px', display: 'block', opacity: 0.5 }} />
           <p className="text-xs text-[var(--color-sand-dark)]/40">&copy; 2026 War of the Sphinx. All rights reserved.</p>
         </div>
       </div>
@@ -323,39 +330,25 @@ function LoadingScreen({ onComplete }: { onComplete: () => void }) {
       }}
     >
       <div style={{ animation: 'loadingEyeScale 1s ease-out forwards' }}>
-        <svg viewBox="0 0 120 80" className="w-28 h-20 md:w-36 md:h-24">
-          <ellipse cx="60" cy="40" rx="50" ry="25" fill="none" stroke="var(--color-gold)" strokeWidth="1.5" opacity="0.6" />
-          <ellipse cx="60" cy="40" rx="42" ry="20" fill="none" stroke="var(--color-gold)" strokeWidth="0.5" opacity="0.3" />
-          <defs>
-            <radialGradient id="irisGrad">
-              <stop offset="0%" stopColor="var(--color-gold)" />
-              <stop offset="60%" stopColor="var(--color-gold-dim)" />
-              <stop offset="100%" stopColor="var(--color-sand-dark)" />
-            </radialGradient>
-          </defs>
-          <circle cx="60" cy="40" r="14" fill="url(#irisGrad)" opacity="0.9">
-            <animate attributeName="r" values="14;15;14" dur="2s" repeatCount="indefinite" />
-          </circle>
-          <circle cx="60" cy="40" r="5" fill="var(--color-obsidian)">
-            <animate attributeName="r" values="5;6;5" dur="2s" repeatCount="indefinite" />
-          </circle>
-          {[0, 30, -30, 60, -60].map((angle) => (
-            <line key={`t${angle}`} x1="60" y1={angle === 0 ? 5 : 8} x2="60" y2={angle === 0 ? 12 : 14} stroke="var(--color-gold)" strokeWidth="0.8" opacity="0.4" transform={`rotate(${angle} 60 40)`} />
-          ))}
-          {[0, 30, -30, 60, -60].map((angle) => (
-            <line key={`b${angle}`} x1="60" y1={angle === 0 ? 75 : 72} x2="60" y2={angle === 0 ? 68 : 66} stroke="var(--color-gold)" strokeWidth="0.8" opacity="0.4" transform={`rotate(${angle} 60 40)`} />
-          ))}
-        </svg>
+        <img
+          src={LOGO_URL}
+          alt="War of the Sphinx"
+          style={{
+            width: '200px',
+            maxWidth: '60vw',
+            filter: 'drop-shadow(0 0 30px rgba(212, 145, 46, 0.4)) drop-shadow(0 0 60px rgba(196, 90, 42, 0.2))',
+          }}
+        />
       </div>
       <p
-        className="font-[var(--font-display)] text-[var(--color-gold)] text-lg tracking-[0.3em] uppercase mt-6"
+        className="font-[var(--font-display)] text-[var(--color-primary)] text-sm tracking-[0.3em] uppercase mt-6"
         style={{
-          opacity: phase === 'eye' ? 0 : 1,
+          opacity: phase === 'eye' ? 0 : 0.6,
           transform: phase === 'eye' ? 'translateY(10px)' : 'translateY(0)',
           transition: 'opacity 0.6s ease-out, transform 0.6s ease-out',
         }}
       >
-        War of the Sphinx
+        A World Forged in Riddles
       </p>
     </div>
   );
@@ -380,10 +373,10 @@ function Layout() {
       <ScrollProgress />
       <ParticleField />
 
-      <nav ref={navRef} className="sticky top-0 z-50 glass-heavy border-b border-[var(--color-gold)]/8">
+      <nav ref={navRef} className="sticky top-0 z-50 glass-heavy border-b border-[var(--color-primary)]/8">
         <div className="flex items-center justify-between px-4 md:px-8 py-3 md:py-4 max-w-7xl mx-auto">
-          <Link to="/" className="text-lg md:text-xl font-bold no-underline tracking-[0.15em] font-[var(--font-display)] group relative">
-            <span className="text-[var(--color-gold)] group-hover:text-shimmer transition-all duration-500">War of the Sphinx</span>
+          <Link to="/" className="no-underline group relative">
+            <img src={LOGO_URL} alt="War of the Sphinx" style={{ height: '40px' }} />
           </Link>
           <div className="hidden md:flex gap-8 items-center">
             <NavLink to="/">Home</NavLink>
@@ -393,7 +386,7 @@ function Layout() {
           </div>
           <button
             onClick={() => setMenuOpen(!menuOpen)}
-            className="md:hidden p-2 text-[var(--color-sand-light)] hover:text-[var(--color-gold)] transition-colors relative z-[60]"
+            className="md:hidden p-2 text-[var(--color-sand-light)] hover:text-[var(--color-primary)] transition-colors relative z-[60]"
             aria-label="Toggle menu"
             aria-expanded={menuOpen}
           >
@@ -405,7 +398,7 @@ function Layout() {
       <div
         className="fixed inset-0 z-[55] md:hidden flex flex-col items-center justify-center gap-8 transition-all duration-300"
         style={{
-          background: 'rgba(10, 10, 20, 0.97)',
+          background: 'rgba(13, 27, 27, 0.97)',
           backdropFilter: 'blur(20px)',
           WebkitBackdropFilter: 'blur(20px)',
           opacity: menuOpen ? 1 : 0,
@@ -413,11 +406,7 @@ function Layout() {
           pointerEvents: menuOpen ? 'auto' : 'none',
         }}
       >
-        <svg viewBox="0 0 80 40" className="w-16 h-8 mb-4 opacity-30" aria-hidden="true">
-          <ellipse cx="40" cy="20" rx="35" ry="16" fill="none" stroke="var(--color-gold)" strokeWidth="1" />
-          <circle cx="40" cy="20" r="6" fill="var(--color-gold)" opacity="0.4" />
-          <circle cx="40" cy="20" r="2.5" fill="var(--color-obsidian)" />
-        </svg>
+        <img src={LOGO_URL} alt="War of the Sphinx" style={{ width: '120px', marginBottom: '16px', opacity: 0.3 }} />
         <MobileNavLink to="/" onClick={() => setMenuOpen(false)} index={0}>Home</MobileNavLink>
         <MobileNavLink to="/chat" onClick={() => setMenuOpen(false)} index={1}>The Sphinx</MobileNavLink>
         <MobileNavLink to="/lore" onClick={() => setMenuOpen(false)} index={2}>The World</MobileNavLink>

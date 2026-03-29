@@ -18,7 +18,7 @@ export function SectionDivider({ className = '' }: { className?: string }) {
             <polygon
               points="30,5 55,30 30,55 5,30"
               fill="none"
-              stroke="var(--color-gold)"
+              stroke="var(--color-primary)"
               strokeWidth="0.5"
               opacity="0.25"
             />
@@ -31,10 +31,10 @@ export function SectionDivider({ className = '' }: { className?: string }) {
             />
             <path
               d="M30 5 Q35 15 30 25 Q25 15 30 5"
-              fill="var(--color-gold)"
+              fill="var(--color-primary)"
               opacity="0.06"
             />
-            <circle cx="30" cy="30" r="2" fill="var(--color-gold)" opacity="0.2" />
+            <circle cx="30" cy="30" r="2" fill="var(--color-primary)" opacity="0.2" />
             <circle cx="0" cy="0" r="1" fill="var(--color-sand-dark)" opacity="0.12" />
             <circle cx="60" cy="0" r="1" fill="var(--color-sand-dark)" opacity="0.12" />
             <circle cx="0" cy="60" r="1" fill="var(--color-sand-dark)" opacity="0.12" />
@@ -54,18 +54,18 @@ export function SectionDivider({ className = '' }: { className?: string }) {
           y1="30"
           x2="1120"
           y2="30"
-          stroke="var(--color-gold)"
+          stroke="var(--color-primary)"
           strokeWidth="0.5"
           opacity="0.12"
         />
         <path
           d="M590 24 L600 18 L610 24 M590 36 L600 42 L610 36"
           fill="none"
-          stroke="var(--color-gold)"
+          stroke="var(--color-primary)"
           strokeWidth="0.8"
           opacity="0.3"
         />
-        <circle cx="600" cy="30" r="1.5" fill="var(--color-gold)" opacity="0.25" />
+        <circle cx="600" cy="30" r="1.5" fill="var(--color-primary)" opacity="0.25" />
       </svg>
     </div>
   );

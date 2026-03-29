@@ -1,4 +1,8 @@
 import { useEffect, useState } from 'react';
+import type { GalleryImage } from '../types';
+import { getGalleryImages } from '../api';
+
+const LOGO_URL = 'https://res.cloudinary.com/dcpeomifz/image/upload/image0_1_avuytq.png';
 
 /* ── inline styles for the hero (keeps everything in one file, no external CSS needed) ── */
 
@@ -26,8 +30,8 @@ const heroStyles = `
 }
 
 @keyframes sphinxEyePulse {
-  0%, 100% { box-shadow: 0 0 40px 10px rgba(255,215,0,0.15), 0 0 80px 20px rgba(255,215,0,0.08); transform: scale(1); }
-  50%      { box-shadow: 0 0 60px 20px rgba(255,215,0,0.3), 0 0 120px 40px rgba(255,215,0,0.12); transform: scale(1.05); }
+  0%, 100% { box-shadow: 0 0 40px 10px rgba(212,145,46,0.15), 0 0 80px 20px rgba(212,145,46,0.08); transform: scale(1); }
+  50%      { box-shadow: 0 0 60px 20px rgba(212,145,46,0.3), 0 0 120px 40px rgba(212,145,46,0.12); transform: scale(1.05); }
 }
 
 @keyframes sphinxIrisPulse {
@@ -53,6 +57,11 @@ const heroStyles = `
 @keyframes pyramidFadeIn {
   0%   { opacity: 0; }
   100% { opacity: 1; }
+}
+
+@keyframes logoGlow {
+  0%, 100% { filter: drop-shadow(0 0 20px rgba(212,145,46,0.3)) drop-shadow(0 0 40px rgba(196,90,42,0.15)); }
+  50%      { filter: drop-shadow(0 0 30px rgba(212,145,46,0.5)) drop-shadow(0 0 60px rgba(196,90,42,0.25)); }
 }
 
 .hero-title-animate {
@@ -85,11 +94,20 @@ const PARTICLES = Array.from({ length: 18 }, (_, i) => ({
 
 export function HeroSection() {
   const [scrollY, setScrollY] = useState(0);
+  const [heroImage, setHeroImage] = useState<GalleryImage | null>(null);
 
   useEffect(() => {
     const onScroll = () => setScrollY(window.scrollY);
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  useEffect(() => {
+    getGalleryImages('hero')
+      .then((imgs) => {
+        if (imgs.length > 0) setHeroImage(imgs[0]);
+      })
+      .catch(() => { /* fallback to CSS gradient */ });
   }, []);
 
   const parallaxSlow = scrollY * 0.2;
@@ -110,26 +128,54 @@ export function HeroSection() {
           justifyContent: 'center',
         }}
       >
-        {/* ── BG: Animated gradient sky ── */}
-        <div
-          style={{
-            position: 'absolute',
-            inset: 0,
-            background: `linear-gradient(
-              180deg,
-              var(--color-shadow) 0%,
-              #1a1028 25%,
-              #2a1535 45%,
-              #3d1a2e 60%,
-              #5c3a1a 78%,
-              #8b6914 92%,
-              var(--color-sphinx-gold-dim) 100%
-            )`,
-            backgroundSize: '100% 200%',
-            animation: 'heroGradientShift 20s ease-in-out infinite',
-            transform: `translateY(${parallaxSlow}px)`,
-          }}
-        />
+        {/* ── BG: Hero image or animated gradient sky ── */}
+        {heroImage ? (
+          <>
+            <div
+              style={{
+                position: 'absolute',
+                inset: 0,
+                backgroundImage: `url(${heroImage.url})`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                transform: `translateY(${parallaxSlow}px)`,
+              }}
+            />
+            <div
+              style={{
+                position: 'absolute',
+                inset: 0,
+                background: `linear-gradient(
+                  180deg,
+                  rgba(5,10,10,0.7) 0%,
+                  rgba(13,27,27,0.4) 40%,
+                  rgba(13,27,27,0.6) 70%,
+                  var(--color-obsidian) 100%
+                )`,
+              }}
+            />
+          </>
+        ) : (
+          <div
+            style={{
+              position: 'absolute',
+              inset: 0,
+              background: `linear-gradient(
+                180deg,
+                #050A0A 0%,
+                #0D1B1B 25%,
+                #152828 45%,
+                #2a2010 60%,
+                #5c3a1a 78%,
+                #8b5a14 92%,
+                var(--color-primary-dim) 100%
+              )`,
+              backgroundSize: '100% 200%',
+              animation: 'heroGradientShift 20s ease-in-out infinite',
+              transform: `translateY(${parallaxSlow}px)`,
+            }}
+          />
+        )}
 
         {/* ── Pyramid silhouettes (CSS clip-path) ── */}
         <div
@@ -140,7 +186,7 @@ export function HeroSection() {
             width: '25%',
             maxWidth: '300px',
             aspectRatio: '2/1',
-            background: 'linear-gradient(180deg, rgba(13,13,26,0.9) 0%, rgba(26,26,46,0.7) 100%)',
+            background: 'linear-gradient(180deg, rgba(13,27,27,0.9) 0%, rgba(21,40,40,0.7) 100%)',
             clipPath: 'polygon(50% 0%, 100% 100%, 0% 100%)',
             transform: `translateY(${parallaxSlow}px)`,
             animation: 'pyramidFadeIn 2s ease-out forwards',
@@ -156,7 +202,7 @@ export function HeroSection() {
             width: '35%',
             maxWidth: '400px',
             aspectRatio: '2.2/1',
-            background: 'linear-gradient(180deg, rgba(13,13,26,0.8) 0%, rgba(26,26,46,0.6) 100%)',
+            background: 'linear-gradient(180deg, rgba(13,27,27,0.8) 0%, rgba(21,40,40,0.6) 100%)',
             clipPath: 'polygon(45% 0%, 100% 100%, 0% 100%)',
             transform: `translateY(${parallaxSlow}px)`,
             animation: 'pyramidFadeIn 2s ease-out forwards',
@@ -172,7 +218,7 @@ export function HeroSection() {
             width: '20%',
             maxWidth: '220px',
             aspectRatio: '1.8/1',
-            background: 'linear-gradient(180deg, rgba(13,13,26,0.7) 0%, rgba(26,26,46,0.5) 100%)',
+            background: 'linear-gradient(180deg, rgba(13,27,27,0.7) 0%, rgba(21,40,40,0.5) 100%)',
             clipPath: 'polygon(50% 0%, 100% 100%, 0% 100%)',
             transform: `translateY(${parallaxSlow}px)`,
             animation: 'pyramidFadeIn 2s ease-out forwards',
@@ -223,7 +269,9 @@ export function HeroSection() {
                 width: `${p.size}px`,
                 height: `${p.size}px`,
                 borderRadius: '50%',
-                background: `radial-gradient(circle, var(--color-sphinx-gold), var(--color-sand))`,
+                background: p.id % 2 === 0
+                  ? `radial-gradient(circle, var(--color-primary), var(--color-sand))`
+                  : `radial-gradient(circle, var(--color-teal), var(--color-teal-dim))`,
                 opacity: p.opacity,
                 animation: `particleDrift ${p.duration}s ease-in-out ${p.delay}s infinite`,
               }}
@@ -247,7 +295,7 @@ export function HeroSection() {
               width: '80px',
               height: '80px',
               borderRadius: '50%',
-              background: 'radial-gradient(circle, rgba(255,215,0,0.2) 0%, rgba(255,215,0,0.05) 40%, transparent 70%)',
+              background: 'radial-gradient(circle, rgba(212,145,46,0.2) 0%, rgba(212,145,46,0.05) 40%, transparent 70%)',
               animation: 'sphinxEyePulse 4s ease-in-out infinite',
               display: 'flex',
               alignItems: 'center',
@@ -260,9 +308,9 @@ export function HeroSection() {
                 width: '24px',
                 height: '24px',
                 borderRadius: '50%',
-                background: 'radial-gradient(circle, var(--color-sphinx-gold), var(--color-sphinx-gold-dim))',
+                background: 'radial-gradient(circle, var(--color-primary), var(--color-primary-dim))',
                 animation: 'sphinxIrisPulse 3s ease-in-out infinite',
-                boxShadow: '0 0 20px rgba(255,215,0,0.4)',
+                boxShadow: '0 0 20px rgba(212,145,46,0.4)',
               }}
             >
               {/* Pupil slit */}
@@ -303,18 +351,17 @@ export function HeroSection() {
             A World Forged in Riddles
           </p>
 
-          <h1
-            className="text-shimmer hero-title-animate"
-            style={{
-              fontFamily: 'var(--font-display)',
-              fontSize: 'clamp(2.5rem, 8vw, 5rem)',
-              fontWeight: 700,
-              marginBottom: '1.5rem',
-              lineHeight: 1.1,
-            }}
-          >
-            War of the Sphinx
-          </h1>
+          <div className="hero-title-animate" style={{ marginBottom: '1.5rem' }}>
+            <img
+              src={LOGO_URL}
+              alt="War of the Sphinx"
+              style={{
+                maxWidth: '600px',
+                width: '90%',
+                animation: 'logoGlow 4s ease-in-out infinite',
+              }}
+            />
+          </div>
 
           {/* Decorative line */}
           <div
@@ -323,7 +370,7 @@ export function HeroSection() {
               width: '80px',
               height: '1px',
               margin: '0 auto 1.5rem',
-              background: 'linear-gradient(90deg, transparent, var(--color-sphinx-gold), transparent)',
+              background: 'linear-gradient(90deg, transparent, var(--color-primary), transparent)',
             }}
           />
 
@@ -347,7 +394,7 @@ export function HeroSection() {
               href="/chat"
               style={{
                 padding: '0.875rem 2rem',
-                background: 'var(--color-sphinx-gold)',
+                background: 'var(--color-primary)',
                 color: 'var(--color-obsidian)',
                 fontFamily: 'var(--font-display)',
                 fontWeight: 600,
@@ -359,11 +406,11 @@ export function HeroSection() {
                 transition: 'background 0.3s, transform 0.3s',
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.background = 'var(--color-sphinx-gold-dim)';
+                e.currentTarget.style.background = 'var(--color-primary-dim)';
                 e.currentTarget.style.transform = 'translateY(-2px)';
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.background = 'var(--color-sphinx-gold)';
+                e.currentTarget.style.background = 'var(--color-primary)';
                 e.currentTarget.style.transform = 'translateY(0)';
               }}
             >
@@ -373,7 +420,7 @@ export function HeroSection() {
               href="/lore"
               style={{
                 padding: '0.875rem 2rem',
-                border: '1px solid rgba(212,165,116,0.4)',
+                border: '1px solid rgba(196,90,42,0.5)',
                 color: 'var(--color-sand)',
                 fontFamily: 'var(--font-display)',
                 fontWeight: 600,
@@ -386,12 +433,12 @@ export function HeroSection() {
                 transition: 'all 0.3s',
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.background = 'rgba(212,165,116,0.1)';
-                e.currentTarget.style.borderColor = 'var(--color-sand)';
+                e.currentTarget.style.background = 'rgba(196,90,42,0.15)';
+                e.currentTarget.style.borderColor = 'var(--color-border)';
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.background = 'transparent';
-                e.currentTarget.style.borderColor = 'rgba(212,165,116,0.4)';
+                e.currentTarget.style.borderColor = 'rgba(196,90,42,0.5)';
               }}
             >
               Explore the World

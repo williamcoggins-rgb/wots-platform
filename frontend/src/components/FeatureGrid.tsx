@@ -8,7 +8,7 @@ const gridStyles = `
 }
 
 .feature-card {
-  background: rgba(45,45,68,0.3);
+  background: rgba(21,40,40,0.3);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid rgba(184,131,74,0.15);
@@ -29,9 +29,9 @@ const gridStyles = `
 }
 .feature-card:hover {
   transform: translateY(-6px);
-  box-shadow: 0 12px 40px rgba(0,0,0,0.4), 0 0 30px rgba(255,215,0,0.05);
-  border-color: rgba(255,215,0,0.3);
-  background: rgba(45,45,68,0.45);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.4), 0 0 30px rgba(212,145,46,0.05);
+  border-color: rgba(212,145,46,0.3);
+  background: rgba(21,40,40,0.45);
 }
 .feature-card:hover .feature-icon {
   animation: iconHoverSpin 0.6s ease-out;
@@ -41,12 +41,20 @@ const gridStyles = `
 }
 `;
 
-const FEATURES = [
+interface Feature {
+  title: string;
+  desc: string;
+  icon: React.ReactNode;
+  glowColor: string;
+  imageUrl?: string;
+}
+
+const FEATURES: Feature[] = [
   {
     title: 'A World Buried in Sand',
     desc: 'An ancient civilization stirs beneath the desert. Its cities remember what its people have forgotten.',
     icon: (
-      <svg viewBox="0 0 48 48" width="40" height="40" fill="none" stroke="var(--color-sphinx-gold)" strokeWidth="1.5">
+      <svg viewBox="0 0 48 48" width="40" height="40" fill="none" stroke="var(--color-primary)" strokeWidth="1.5">
         {/* Pyramid with inner structure */}
         <polygon points="24,6 42,38 6,38" strokeLinejoin="round" />
         <line x1="24" y1="6" x2="24" y2="38" opacity="0.5" />
@@ -54,17 +62,17 @@ const FEATURES = [
         <circle cx="24" cy="28" r="3" opacity="0.6" />
       </svg>
     ),
-    glowColor: 'rgba(212,165,116,0.3)',
+    glowColor: 'rgba(212,145,46,0.3)',
   },
   {
     title: 'Ancient Riddles',
     desc: 'The Sphinx speaks in puzzles. Every answer opens a door — and every door hides another question.',
     icon: (
-      <svg viewBox="0 0 48 48" width="40" height="40" fill="none" stroke="var(--color-sphinx-gold)" strokeWidth="1.5">
+      <svg viewBox="0 0 48 48" width="40" height="40" fill="none" stroke="var(--color-primary)" strokeWidth="1.5">
         {/* Eye of knowledge */}
         <path d="M4 24 C12 14 20 10 24 10 C28 10 36 14 44 24 C36 34 28 38 24 38 C20 38 12 34 4 24 Z" />
         <circle cx="24" cy="24" r="7" />
-        <circle cx="24" cy="24" r="3" fill="var(--color-sphinx-gold)" opacity="0.4" />
+        <circle cx="24" cy="24" r="3" fill="var(--color-primary)" opacity="0.4" />
         {/* Rays */}
         <line x1="24" y1="2" x2="24" y2="7" opacity="0.3" />
         <line x1="24" y1="41" x2="24" y2="46" opacity="0.3" />
@@ -72,18 +80,18 @@ const FEATURES = [
         <line x1="41" y1="24" x2="46" y2="24" opacity="0.3" />
       </svg>
     ),
-    glowColor: 'rgba(107,63,160,0.3)',
+    glowColor: 'rgba(43,165,165,0.3)',
   },
   {
     title: 'A War Is Coming',
     desc: 'Power shifts in the dark. Something old is waking, and not everyone will survive what follows.',
     icon: (
-      <svg viewBox="0 0 48 48" width="40" height="40" fill="none" stroke="var(--color-sphinx-gold)" strokeWidth="1.5">
+      <svg viewBox="0 0 48 48" width="40" height="40" fill="none" stroke="var(--color-primary)" strokeWidth="1.5">
         {/* Crossed swords / conflict */}
         <line x1="8" y1="8" x2="40" y2="40" strokeLinecap="round" />
         <line x1="40" y1="8" x2="8" y2="40" strokeLinecap="round" />
         <circle cx="24" cy="24" r="8" opacity="0.5" />
-        <circle cx="24" cy="24" r="3" fill="var(--color-sphinx-gold)" opacity="0.3" />
+        <circle cx="24" cy="24" r="3" fill="var(--color-primary)" opacity="0.3" />
         {/* Spark lines */}
         <line x1="24" y1="4" x2="24" y2="10" opacity="0.3" />
         <line x1="24" y1="38" x2="24" y2="44" opacity="0.3" />
@@ -91,7 +99,7 @@ const FEATURES = [
         <line x1="38" y1="24" x2="44" y2="24" opacity="0.3" />
       </svg>
     ),
-    glowColor: 'rgba(120,40,40,0.3)',
+    glowColor: 'rgba(196,90,42,0.3)',
   },
 ];
 
@@ -123,7 +131,7 @@ export function FeatureGrid() {
             style={{
               fontFamily: 'var(--font-display)',
               fontSize: 'clamp(1.4rem, 3vw, 1.8rem)',
-              color: 'var(--color-sphinx-gold)',
+              color: 'var(--color-primary)',
               letterSpacing: '0.1em',
               marginBottom: '0.5rem',
             }}
@@ -160,6 +168,31 @@ export function FeatureGrid() {
                 transition: `all 0.6s cubic-bezier(0.22, 1, 0.36, 1) ${0.15 * i}s`,
               }}
             >
+              {/* Background image if available */}
+              {feat.imageUrl && (
+                <>
+                  <div
+                    style={{
+                      position: 'absolute',
+                      inset: 0,
+                      backgroundImage: `url(${feat.imageUrl})`,
+                      backgroundSize: 'cover',
+                      backgroundPosition: 'center',
+                      borderRadius: '12px',
+                      opacity: 0.25,
+                    }}
+                  />
+                  <div
+                    style={{
+                      position: 'absolute',
+                      inset: 0,
+                      background: 'linear-gradient(180deg, rgba(13,27,27,0.6) 0%, rgba(13,27,27,0.9) 100%)',
+                      borderRadius: '12px',
+                    }}
+                  />
+                </>
+              )}
+
               {/* Background glow */}
               <div
                 className="feature-glow"
@@ -185,7 +218,7 @@ export function FeatureGrid() {
                 style={{
                   fontFamily: 'var(--font-display)',
                   fontSize: '1.1rem',
-                  color: 'var(--color-sphinx-gold)',
+                  color: 'var(--color-primary)',
                   letterSpacing: '0.05em',
                   marginBottom: '0.75rem',
                 }}

@@ -14,5 +14,9 @@ service cloud.firestore {
       allow read: if request.auth != null && request.auth.token.admin == true;
       allow create: if true;
     }
+    match /gallery_images/{imageId} {
+      allow read: if true;
+      allow write: if true;
+    }
   }
 }
