@@ -19,6 +19,7 @@ admin.initializeApp(serviceAccount ? {
 
 const db = admin.firestore();
 const app = express();
+const router = express.Router();
 
 const allowedOrigins = process.env.ALLOWED_ORIGINS
   ? process.env.ALLOWED_ORIGINS.split(',')
@@ -27,12 +28,12 @@ app.use(cors({ origin: allowedOrigins }));
 app.use(express.json());
 
 // Health check
-app.get('/health', (_req, res) => {
+router.get('/health', (_req, res) => {
   res.json({ status: 'ok', service: 'wots-api', timestamp: Date.now() });
 });
 
 // Chat endpoint - send message to the Sphinx
-app.post('/chat', async (req, res) => {
+router.post('/chat', async (req, res) => {
   try {
     const { sessionId, message, userId } = req.body;
     if (!message || !userId) {
@@ -91,7 +92,7 @@ app.post('/chat', async (req, res) => {
 });
 
 // Get chat session history
-app.get('/chat/:sessionId', async (req, res) => {
+router.get('/chat/:sessionId', async (req, res) => {
   try {
     const doc = await db.collection('sessions').doc(req.params.sessionId).get();
     if (!doc.exists) {
@@ -106,7 +107,7 @@ app.get('/chat/:sessionId', async (req, res) => {
 });
 
 // Content pipeline - generate new content
-app.post('/content/generate', async (req, res) => {
+router.post('/content/generate', async (req, res) => {
   try {
     const config: ContentPipelineConfig = req.body;
     if (!config.contentType || !config.prompt) {
@@ -133,7 +134,7 @@ app.post('/content/generate', async (req, res) => {
 });
 
 // List content
-app.get('/content', async (req, res) => {
+router.get('/content', async (req, res) => {
   try {
     const type = req.query.type as string | undefined;
     const status = req.query.status as string | undefined;
@@ -153,7 +154,7 @@ app.get('/content', async (req, res) => {
 });
 
 // Get single content item
-app.get('/content/:id', async (req, res) => {
+router.get('/content/:id', async (req, res) => {
   try {
     const doc = await db.collection('content').doc(req.params.id).get();
     if (!doc.exists) {
@@ -168,7 +169,7 @@ app.get('/content/:id', async (req, res) => {
 });
 
 // Email subscriber signup
-app.post('/subscribe', async (req, res) => {
+router.post('/subscribe', async (req, res) => {
   try {
     const { email } = req.body;
     if (!email || typeof email !== 'string' || !email.includes('@')) {
@@ -200,7 +201,7 @@ app.post('/subscribe', async (req, res) => {
 });
 
 // Update content status
-app.patch('/content/:id', async (req, res) => {
+router.patch('/content/:id', async (req, res) => {
   try {
     const { status } = req.body;
     if (!status || !['draft', 'published', 'archived'].includes(status)) {
@@ -250,7 +251,10 @@ if (process.env.NODE_ENV === 'production') {
   });
 }
 
+// Mount all routes under /api
+app.use('/api', router);
+
 const PORT = process.env.PORT || 3001;
-app.listen(PORT, () => {
-  console.log(`WOTS API listening on port ${PORT}`);
+app.listen(Number(PORT), '0.0.0.0', () => {
+  console.log(`WOTS API listening on 0.0.0.0:${PORT}`);
 });
