@@ -1,15 +1,29 @@
-import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
 import cors from 'cors';
+import cron from 'node-cron';
+import dotenv from 'dotenv';
 import express from 'express';
 import { getAssistantResponse, createNewSession } from './assistant';
 import { generateContent, buildContentItem } from './pipeline';
 import { ChatMessage, ApiResponse, ContentPipelineConfig } from './types';
 
-admin.initializeApp();
+dotenv.config();
+
+const serviceAccount = process.env.GOOGLE_APPLICATION_CREDENTIALS_JSON
+  ? JSON.parse(process.env.GOOGLE_APPLICATION_CREDENTIALS_JSON)
+  : undefined;
+
+admin.initializeApp(serviceAccount ? {
+  credential: admin.credential.cert(serviceAccount),
+} : undefined);
+
 const db = admin.firestore();
 const app = express();
-app.use(cors({ origin: true }));
+
+const allowedOrigins = process.env.ALLOWED_ORIGINS
+  ? process.env.ALLOWED_ORIGINS.split(',')
+  : ['http://localhost:5173', 'http://localhost:5000'];
+app.use(cors({ origin: allowedOrigins }));
 app.use(express.json());
 
 // Health check
@@ -26,7 +40,7 @@ app.post('/chat', async (req, res) => {
       return;
     }
 
-    const apiKey = process.env.ANTHROPIC_API_KEY || functions.config().anthropic?.api_key;
+    const apiKey = process.env.ANTHROPIC_API_KEY;
     if (!apiKey) {
       res.status(500).json({ success: false, error: 'API key not configured' } as ApiResponse);
       return;
@@ -100,7 +114,7 @@ app.post('/content/generate', async (req, res) => {
       return;
     }
 
-    const apiKey = process.env.ANTHROPIC_API_KEY || functions.config().anthropic?.api_key;
+    const apiKey = process.env.ANTHROPIC_API_KEY;
     if (!apiKey) {
       res.status(500).json({ success: false, error: 'API key not configured' } as ApiResponse);
       return;
@@ -209,11 +223,10 @@ app.patch('/content/:id', async (req, res) => {
   }
 });
 
-// Scheduled content generation (runs daily)
-export const scheduledContentGeneration = functions.pubsub
-  .schedule('every 24 hours')
-  .onRun(async () => {
-    const apiKey = process.env.ANTHROPIC_API_KEY || functions.config().anthropic?.api_key;
+// Schedule content generation (runs daily at midnight)
+if (process.env.NODE_ENV === 'production') {
+  cron.schedule('0 0 * * *', async () => {
+    const apiKey = process.env.ANTHROPIC_API_KEY;
     if (!apiKey) {
       console.error('ANTHROPIC_API_KEY not configured');
       return;
@@ -235,6 +248,9 @@ export const scheduledContentGeneration = functions.pubsub
       }
     }
   });
+}
 
-// Export the Express app as a Cloud Function
-export const api = functions.https.onRequest(app);
+const PORT = process.env.PORT || 3001;
+app.listen(PORT, () => {
+  console.log(`WOTS API listening on port ${PORT}`);
+});
