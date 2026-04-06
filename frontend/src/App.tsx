@@ -8,10 +8,11 @@ import { Admin } from './pages/Admin';
 import { Gallery } from './pages/Gallery';
 
 const LOGO_URL = 'https://res.cloudinary.com/dcpeomifz/image/upload/q_auto/f_auto/v1775484956/image0_2_om8az4.png';
+const SITE_BG_URL = 'https://res.cloudinary.com/dcpeomifz/image/upload/q_auto/f_auto/v1775489586/image2_gpapbe.jpg';
 
 const NAV_LINKS = [
   { to: '/', label: 'Home' },
-  { to: '/chat', label: 'The Sphinx' },
+  { to: '/chat', label: 'The Griot' },
   { to: '/lore', label: 'The World' },
   { to: '/gallery', label: 'Gallery' },
   { to: '/about', label: 'About' },
@@ -234,7 +235,7 @@ function Footer() {
             <div style={{ display: 'inline-block', marginBottom: '12px' }}>
               <img
                 src={LOGO_URL}
-                alt="War of the Sphinx"
+                alt="War of The Griot"
                 style={{ width: '100px', display: 'block' }}
               />
             </div>
@@ -406,7 +407,7 @@ function Footer() {
               margin: 0,
             }}
           >
-            &copy; 2026 War of the Sphinx. All rights reserved.
+            &copy; 2026 War of The Griot. All rights reserved.
           </p>
         </div>
       </div>
@@ -431,7 +432,7 @@ function Layout() {
   }, [menuOpen]);
 
   return (
-    <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', position: 'relative' }}>
+    <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', position: 'relative', backgroundImage: `linear-gradient(180deg, rgba(10,10,10,0.92) 0%, rgba(21,21,21,0.88) 50%, rgba(10,10,10,0.95) 100%), url(${SITE_BG_URL})`, backgroundSize: 'cover', backgroundPosition: 'center top', backgroundAttachment: 'fixed' }}>
       {/* ---- NAVBAR ---- */}
       <nav
         style={{
@@ -460,7 +461,7 @@ function Layout() {
         >
           {/* Logo */}
           <Link to="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center' }}>
-            <img src={LOGO_URL} alt="War of the Sphinx" style={{ height: '45px' }} />
+            <img src={LOGO_URL} alt="War of The Griot" style={{ height: '45px' }} />
           </Link>
 
           {/* Desktop nav links */}
