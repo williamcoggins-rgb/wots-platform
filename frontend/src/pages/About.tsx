@@ -11,7 +11,7 @@ const aboutStyles = `
   height: 44px;
   border-radius: 50%;
   border: 1px solid #333333;
-  background: #222222;
+  background: rgba(34,34,34,0.85);
   color: #FFFFFF;
   cursor: pointer;
   text-decoration: none;
@@ -40,7 +40,6 @@ export function About() {
       <style>{aboutStyles}</style>
       <div
         style={{
-          background: '#151515',
           minHeight: '100vh',
           paddingTop: 80,
         }}
