@@ -18,5 +18,9 @@ service cloud.firestore {
       allow read: if true;
       allow write: if true;
     }
+    match /site_content/{docId} {
+      allow read: if true;
+      allow write: if true;
+    }
   }
 }

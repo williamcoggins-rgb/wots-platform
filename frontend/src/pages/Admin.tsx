@@ -13,9 +13,9 @@ const CATEGORIES: GalleryImage['category'][] = ['hero', 'characters', 'environme
 type AdminTab = 'gallery' | 'site-content';
 
 const defaultHero: SiteHeroContent = {
-  tagline: '',
-  ctaPrimary: { label: '', link: '' },
-  ctaSecondary: { label: '', link: '' },
+  tagline: 'The war for an ancient world begins.',
+  ctaPrimary: { label: 'Consult the Griot', link: '/chat' },
+  ctaSecondary: { label: 'Explore the World', link: '/lore' },
   updatedAt: 0,
 };
 
@@ -27,6 +27,13 @@ const defaultFeaturedCard: FeaturedCard = {
   imageCategory: '',
 };
 
+const DEFAULT_FEATURED_CARDS: FeaturedCard[] = [
+  { title: 'Volume 1 Coming Soon', category: 'Announcement', desc: 'The first chapter of an ancient war is about to be written.', gradient: 'linear-gradient(135deg, rgba(30,60,80,0.85), rgba(20,40,60,0.9))', imageCategory: '' },
+  { title: 'Meet the Sphinx', category: 'Lore', desc: 'A guardian older than memory. Its riddles shape the fate of worlds.', gradient: 'linear-gradient(135deg, rgba(20,80,80,0.85), rgba(15,60,60,0.9))', imageCategory: '' },
+  { title: 'The War Begins', category: 'Story', desc: 'Ancient powers stir. Lines are drawn in sand and blood.', gradient: 'linear-gradient(135deg, rgba(80,30,40,0.85), rgba(60,20,30,0.9))', imageCategory: '' },
+  { title: 'Join the Seekers', category: 'Community', desc: 'Knowledge is earned, not given. The worthy will find their way.', gradient: 'linear-gradient(135deg, rgba(30,70,40,0.85), rgba(20,50,30,0.9))', imageCategory: '' },
+];
+
 const defaultDiscoverCard: DiscoverCard = {
   title: '',
   desc: '',
@@ -34,10 +41,16 @@ const defaultDiscoverCard: DiscoverCard = {
   hoverBorderColor: '',
 };
 
+const DEFAULT_DISCOVER_CARDS: DiscoverCard[] = [
+  { title: 'A World Buried in Sand', desc: 'An ancient civilization stirs beneath the desert. Its cities remember what its people have forgotten.', borderColor: '#E88A1A', hoverBorderColor: '#F5C542' },
+  { title: 'Ancient Riddles', desc: 'The Sphinx speaks in puzzles. Every answer opens a door \u2014 and every door hides another question.', borderColor: '#2BA5A5', hoverBorderColor: '#35BFBF' },
+  { title: 'A War is Coming', desc: 'Power shifts in the dark. Something old is waking, and not everyone will survive what follows.', borderColor: '#999999', hoverBorderColor: '#FFFFFF' },
+];
+
 const defaultEmailCapture: SiteEmailCaptureContent = {
-  heading: '',
-  subheading: '',
-  buttonText: '',
+  heading: 'Enter the Archive',
+  subheading: 'Be among the first to know when the saga begins.',
+  buttonText: 'Subscribe',
   updatedAt: 0,
 };
 
@@ -261,21 +274,12 @@ function SiteContentEditor() {
   const [heroError, setHeroError] = useState('');
 
   // Featured cards state
-  const [featuredCards, setFeaturedCards] = useState<FeaturedCard[]>([
-    { ...defaultFeaturedCard },
-    { ...defaultFeaturedCard },
-    { ...defaultFeaturedCard },
-    { ...defaultFeaturedCard },
-  ]);
+  const [featuredCards, setFeaturedCards] = useState<FeaturedCard[]>(DEFAULT_FEATURED_CARDS.map(c => ({ ...c })));
   const [featuredStatus, setFeaturedStatus] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle');
   const [featuredError, setFeaturedError] = useState('');
 
   // Discover cards state
-  const [discoverCards, setDiscoverCards] = useState<DiscoverCard[]>([
-    { ...defaultDiscoverCard },
-    { ...defaultDiscoverCard },
-    { ...defaultDiscoverCard },
-  ]);
+  const [discoverCards, setDiscoverCards] = useState<DiscoverCard[]>(DEFAULT_DISCOVER_CARDS.map(c => ({ ...c })));
   const [discoverStatus, setDiscoverStatus] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle');
   const [discoverError, setDiscoverError] = useState('');
 
