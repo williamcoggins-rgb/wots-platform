@@ -39,7 +39,7 @@ const loreStyles = `
   border-bottom-color: #E88A1A !important;
 }
 .lore-card {
-  background: #222222;
+  background: rgba(34,34,34,0.85);
   border-radius: 4px;
   padding: 20px;
   cursor: pointer;
@@ -79,8 +79,7 @@ export function Lore() {
       <style>{loreStyles}</style>
       <div
         style={{
-          background: '#151515',
-          minHeight: '100vh',
+                    minHeight: '100vh',
           paddingTop: 80,
         }}
       >
@@ -168,7 +167,7 @@ export function Lore() {
                   <div
                     key={n}
                     style={{
-                      background: '#1A1A1A',
+                      background: 'rgba(26,26,26,0.85)',
                       borderRadius: 4,
                       padding: '40px 20px',
                       display: 'flex',
@@ -331,7 +330,7 @@ export function Lore() {
                   <div
                     key={n}
                     style={{
-                      background: '#1A1A1A',
+                      background: 'rgba(26,26,26,0.85)',
                       borderRadius: 4,
                       padding: '40px 20px',
                       display: 'flex',
