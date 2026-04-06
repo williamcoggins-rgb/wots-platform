@@ -19,9 +19,9 @@ export function HeroSection() {
         style={{
           position: 'relative',
           width: '100%',
-          height: '100vh',
+          
           minHeight: '600px',
-          overflow: 'hidden',
+          
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
