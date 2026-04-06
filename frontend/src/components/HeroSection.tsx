@@ -104,7 +104,7 @@ export function HeroSection() {
                 e.currentTarget.style.background = '#E88A1A';
               }}
             >
-              Consult the Sphinx
+              Consult the Griot
             </a>
             <a
               href="/lore"
