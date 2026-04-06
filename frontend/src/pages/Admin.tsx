@@ -681,7 +681,59 @@ const adminStyles = `
 }
 `;
 
+const ADMIN_PASSWORD = 'Sanford8715!';
+const AUTH_KEY = 'wots_admin_auth';
+
+function PasswordGate({ onAuth }: { onAuth: () => void }) {
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState(false);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (password === ADMIN_PASSWORD) {
+      sessionStorage.setItem(AUTH_KEY, 'true');
+      onAuth();
+    } else {
+      setError(true);
+    }
+  };
+
+  return (
+    <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#151515', padding: '1rem' }}>
+      <form onSubmit={handleSubmit} style={{ background: '#1A1A1A', border: '1px solid #333', borderRadius: '4px', padding: '40px', maxWidth: '360px', width: '100%', textAlign: 'center' }}>
+        <h2 style={{ fontFamily: "'Roboto Condensed', sans-serif", color: '#FFFFFF', fontSize: '22px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1px', margin: '0 0 24px' }}>
+          Admin Access
+        </h2>
+        <input
+          type="password"
+          value={password}
+          onChange={(e) => { setPassword(e.target.value); setError(false); }}
+          placeholder="Enter password"
+          autoFocus
+          style={{ width: '100%', padding: '12px 14px', background: '#222', border: `1px solid ${error ? '#E05555' : '#444'}`, borderRadius: '2px', color: '#FFF', fontFamily: "'Inter', sans-serif", fontSize: '15px', outline: 'none', boxSizing: 'border-box', marginBottom: '16px' }}
+          onFocus={(e) => { if (!error) e.currentTarget.style.borderColor = '#E88A1A'; }}
+          onBlur={(e) => { if (!error) e.currentTarget.style.borderColor = '#444'; }}
+        />
+        {error && <p style={{ color: '#E05555', fontSize: '13px', margin: '0 0 12px', fontFamily: "'Inter', sans-serif" }}>Incorrect password</p>}
+        <button type="submit" style={{ width: '100%', padding: '12px', background: '#E88A1A', color: '#FFF', border: 'none', borderRadius: '2px', fontFamily: "'Roboto Condensed', sans-serif", fontSize: '14px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1px', cursor: 'pointer' }}>
+          Login
+        </button>
+      </form>
+    </div>
+  );
+}
+
 export function Admin() {
+  const [authed, setAuthed] = useState(() => sessionStorage.getItem(AUTH_KEY) === 'true');
+
+  if (!authed) {
+    return <PasswordGate onAuth={() => setAuthed(true)} />;
+  }
+
+  return <AdminPanel />;
+}
+
+function AdminPanel() {
   const [activeTab, setActiveTab] = useState<AdminTab>('gallery');
   const [images, setImages] = useState<GalleryImage[]>([]);
   const [loading, setLoading] = useState(true);

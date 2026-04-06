@@ -409,6 +409,22 @@ function Footer() {
           >
             &copy; 2026 War of The Griot. All rights reserved.
           </p>
+          <Link
+            to="/admin"
+            style={{
+              display: 'inline-block',
+              marginTop: '8px',
+              textDecoration: 'none',
+              fontFamily: 'var(--font-body)',
+              fontSize: '11px',
+              color: '#444444',
+              transition: 'color 200ms ease',
+            }}
+            onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.color = '#666666'; }}
+            onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.color = '#444444'; }}
+          >
+            Admin
+          </Link>
         </div>
       </div>
     </footer>
