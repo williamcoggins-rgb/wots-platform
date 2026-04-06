@@ -4,6 +4,8 @@ import type { ChatMessage } from '../types';
 
 const USER_ID = 'anonymous-player';
 
+const GRIOT_BG_URL = 'https://res.cloudinary.com/dcpeomifz/image/upload/q_auto/f_auto/v1775489599/image1_h71sst.jpg';
+
 const CONVERSATION_STARTERS = [
   'What is this place?',
   'Who are you?',
@@ -106,7 +108,7 @@ export function Chat() {
                 textTransform: 'uppercase',
               }}
             >
-              THE SPHINX
+              THE Griot
             </h2>
             <p
               style={{
@@ -125,7 +127,7 @@ export function Chat() {
             style={{
               flex: 1,
               minHeight: 0,
-              background: '#1A1A1A',
+              backgroundImage: `linear-gradient(180deg, rgba(26,26,26,0.85) 0%, rgba(26,26,26,0.95) 100%), url(${GRIOT_BG_URL})`, backgroundSize: 'cover', backgroundPosition: 'center',
               border: '1px solid #333333',
               borderRadius: 4,
               overflowY: 'auto',
@@ -157,7 +159,7 @@ export function Chat() {
                     letterSpacing: 0.5,
                   }}
                 >
-                  Ask the Sphinx anything.
+                  Ask the Griot anything.
                 </p>
 
                 {/* Conversation starters */}
@@ -176,7 +178,7 @@ export function Chat() {
                       onClick={() => handleSend(starter)}
                       className="starter-pill"
                       style={{
-                        background: '#222222',
+                        background: 'rgba(34, 34, 34, 0.85)',
                         border: '1px solid #444444',
                         borderRadius: 2,
                         padding: '10px 16px',
@@ -224,7 +226,7 @@ export function Chat() {
                         marginBottom: 6,
                       }}
                     >
-                      THE SPHINX
+                      THE Griot
                     </span>
                   )}
                   <p
@@ -247,7 +249,7 @@ export function Chat() {
                 <div
                   style={{
                     alignSelf: 'flex-start',
-                    background: '#222222',
+                    background: 'rgba(34, 34, 34, 0.85)',
                     borderLeft: '3px solid #E88A1A',
                     borderRadius: 4,
                     padding: '16px 20px',
@@ -295,7 +297,7 @@ export function Chat() {
                 padding: 14,
                 borderRadius: 2,
                 border: '1px solid #333333',
-                background: '#222222',
+                background: 'rgba(34, 34, 34, 0.85)',
                 color: '#FFFFFF',
                 fontFamily: "'Inter', sans-serif",
                 fontSize: 15,
