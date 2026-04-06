@@ -77,7 +77,6 @@ export function Chat() {
       <style>{chatStyles}</style>
       <div
         style={{
-          background: '#151515',
           minHeight: '100dvh',
           paddingTop: 80,
           display: 'flex',
