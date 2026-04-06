@@ -1,7 +1,7 @@
 import { useRef, useState, useEffect } from 'react';
 import { useInView } from './useInView';
-import { getGalleryImages } from '../api';
-import type { GalleryImage } from '../types';
+import { getGalleryImages, getSiteContent } from '../api';
+import type { GalleryImage, SiteFeaturedContent, FeaturedCard } from '../types';
 
 const carouselStyles = `
 .carousel-card {
@@ -39,7 +39,7 @@ interface CarouselCard {
   imageUrl?: string;
 }
 
-const CARDS: CarouselCard[] = [
+const DEFAULT_CARDS: CarouselCard[] = [
   {
     title: 'Volume 1 Coming Soon',
     category: 'ANNOUNCEMENT',
@@ -66,7 +66,7 @@ const CARDS: CarouselCard[] = [
   },
 ];
 
-const CARD_CATEGORY_MAP: Record<string, GalleryImage['category']> = {
+const DEFAULT_CATEGORY_MAP: Record<string, GalleryImage['category']> = {
   'ANNOUNCEMENT': 'covers',
   'LORE': 'characters',
   'STORY': 'hero',
@@ -77,15 +77,40 @@ export function ContentCarousel() {
   const scrollRef = useRef<HTMLDivElement>(null);
   const { ref: sectionRef, isVisible } = useInView(0.1);
   const [galleryImages, setGalleryImages] = useState<GalleryImage[]>([]);
+  const [cards, setCards] = useState<CarouselCard[]>(DEFAULT_CARDS);
+  const [categoryMap, setCategoryMap] = useState<Record<string, string>>(DEFAULT_CATEGORY_MAP);
 
   useEffect(() => {
     getGalleryImages()
       .then(setGalleryImages)
       .catch(() => {/* use gradient fallbacks */});
+
+    getSiteContent('featured_cards')
+      .then((data: SiteFeaturedContent | null) => {
+        if (data?.cards?.length) {
+          const newCards: CarouselCard[] = data.cards.map((c: FeaturedCard) => ({
+            title: c.title,
+            category: c.category,
+            desc: c.desc,
+            gradient: c.gradient,
+          }));
+          setCards(newCards);
+          const newMap: Record<string, string> = {};
+          for (const c of data.cards) {
+            if (c.imageCategory) {
+              newMap[c.category] = c.imageCategory;
+            }
+          }
+          if (Object.keys(newMap).length > 0) {
+            setCategoryMap(newMap);
+          }
+        }
+      })
+      .catch(() => {/* use default cards */});
   }, []);
 
-  const cardsWithImages = CARDS.map((card) => {
-    const targetCategory = CARD_CATEGORY_MAP[card.category];
+  const cardsWithImages = cards.map((card) => {
+    const targetCategory = categoryMap[card.category];
     const match = targetCategory
       ? galleryImages.find((img) => img.category === targetCategory)
       : undefined;

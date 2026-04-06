@@ -1,6 +1,14 @@
-import { useState } from 'react';
-import { subscribeEmail } from '../api';
+import { useState, useEffect } from 'react';
+import { subscribeEmail, getSiteContent } from '../api';
 import { useInView } from './useInView';
+import type { SiteEmailCaptureContent } from '../types';
+
+const DEFAULT_CONTENT: SiteEmailCaptureContent = {
+  heading: 'Enter the Archive',
+  subheading: 'Be among the first to know when the saga begins.',
+  buttonText: 'Subscribe',
+  updatedAt: 0,
+};
 
 const emailStyles = `
 .email-input-field {
@@ -58,6 +66,15 @@ export function EmailCapture() {
   const [state, setState] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [message, setMessage] = useState('');
   const { ref, isVisible } = useInView(0.15);
+  const [content, setContent] = useState<SiteEmailCaptureContent>(DEFAULT_CONTENT);
+
+  useEffect(() => {
+    getSiteContent('email_capture')
+      .then((data: SiteEmailCaptureContent | null) => {
+        if (data) setContent(data);
+      })
+      .catch(() => {/* use defaults */});
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -113,7 +130,7 @@ export function EmailCapture() {
               marginTop: 0,
             }}
           >
-            Enter the Archive
+            {content.heading}
           </h2>
           <p
             style={{
@@ -124,7 +141,7 @@ export function EmailCapture() {
               lineHeight: 1.6,
             }}
           >
-            Be among the first to know when the gates open.
+            {content.subheading}
           </p>
 
           {state === 'success' ? (
@@ -163,7 +180,7 @@ export function EmailCapture() {
                 disabled={state === 'loading'}
                 className="email-submit-btn"
               >
-                {state === 'loading' ? 'Sending...' : 'SUBSCRIBE'}
+                {state === 'loading' ? 'Sending...' : content.buttonText.toUpperCase()}
               </button>
             </form>
           )}

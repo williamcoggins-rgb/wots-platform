@@ -57,7 +57,7 @@ const galleryStyles = `
   background: transparent;
   border: 1px solid rgba(184,131,74,0.2);
   border-radius: 6px;
-  color: var(--color-sand-dark);
+  color: #FFFFFF;
   font-family: var(--font-display);
   font-size: 0.7rem;
   letter-spacing: 0.15em;
@@ -168,27 +168,35 @@ export function Gallery() {
         }}
       >
         {/* Page Header */}
-        <div style={{ textAlign: 'center', marginBottom: '2.5rem' }}>
+        <div
+          style={{
+            textAlign: 'center',
+            marginBottom: '2.5rem',
+            background: 'linear-gradient(180deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.4) 80%, transparent 100%)',
+            margin: '-6rem -1.5rem 2.5rem',
+            padding: '6rem 1.5rem 2rem',
+          }}
+        >
           <p
             style={{
               fontFamily: 'var(--font-display)',
               fontSize: '0.7rem',
               letterSpacing: '0.4em',
               textTransform: 'uppercase',
-              color: 'var(--color-sand-dark)',
+              color: '#FFFFFF',
               marginBottom: '0.75rem',
             }}
           >
             The Archives
           </p>
           <h1
-            className="text-shimmer"
             style={{
               fontFamily: 'var(--font-display)',
               fontSize: 'clamp(2rem, 5vw, 3rem)',
               fontWeight: 700,
               marginBottom: '1rem',
               lineHeight: 1.1,
+              color: '#FFFFFF',
             }}
           >
             Art Gallery
@@ -205,7 +213,7 @@ export function Gallery() {
             style={{
               fontFamily: 'var(--font-body)',
               fontSize: '1.05rem',
-              color: 'var(--color-sand)',
+              color: '#F0C878',
               maxWidth: '500px',
               margin: '0 auto',
               lineHeight: 1.6,
@@ -213,27 +221,27 @@ export function Gallery() {
           >
             Visions from the world of the Sphinx, rendered in light and shadow.
           </p>
-        </div>
 
-        {/* Filter Tabs */}
-        <div
-          style={{
-            display: 'flex',
-            gap: '0.75rem',
-            justifyContent: 'center',
-            flexWrap: 'wrap',
-            marginBottom: '2.5rem',
-          }}
-        >
-          {FILTER_TABS.map((tab) => (
-            <button
-              key={tab.label}
-              className={`gallery-filter-tab ${activeFilter === tab.value ? 'active' : ''}`}
-              onClick={() => setActiveFilter(tab.value)}
-            >
-              {tab.label}
-            </button>
-          ))}
+          {/* Filter Tabs */}
+          <div
+            style={{
+              display: 'flex',
+              gap: '0.75rem',
+              justifyContent: 'center',
+              flexWrap: 'wrap',
+              marginTop: '1.5rem',
+            }}
+          >
+            {FILTER_TABS.map((tab) => (
+              <button
+                key={tab.label}
+                className={`gallery-filter-tab ${activeFilter === tab.value ? 'active' : ''}`}
+                onClick={() => setActiveFilter(tab.value)}
+              >
+                {tab.label}
+              </button>
+            ))}
+          </div>
         </div>
 
         {/* Gallery Grid */}

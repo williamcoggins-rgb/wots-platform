@@ -1,6 +1,6 @@
 import type { ApiResponse, ChatMessage, ContentItem, ChatSession, GalleryImage } from './types';
 import { db } from './firebase';
-import { collection, getDocs, query, orderBy, where, type QueryConstraint } from 'firebase/firestore';
+import { collection, getDocs, query, orderBy, where, doc, getDoc, setDoc, type QueryConstraint } from 'firebase/firestore';
 
 const API_BASE = import.meta.env.VITE_API_URL || '/api';
 
@@ -47,6 +47,18 @@ export async function subscribeEmail(email: string): Promise<ApiResponse<{ messa
     method: 'POST',
     body: JSON.stringify({ email }),
   });
+}
+
+// Site content CMS
+export async function getSiteContent(section: string): Promise<any> {
+  const docRef = doc(db, 'site_content', section);
+  const snapshot = await getDoc(docRef);
+  return snapshot.exists() ? snapshot.data() : null;
+}
+
+export async function updateSiteContent(section: string, data: any): Promise<void> {
+  const docRef = doc(db, 'site_content', section);
+  await setDoc(docRef, { ...data, updatedAt: Date.now() }, { merge: true });
 }
 
 export async function getGalleryImages(category?: string): Promise<GalleryImage[]> {

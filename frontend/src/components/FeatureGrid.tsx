@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useInView } from './useInView';
-import { getGalleryImages } from '../api';
-import type { GalleryImage } from '../types';
+import { getGalleryImages, getSiteContent } from '../api';
+import type { GalleryImage, SiteDiscoverContent, DiscoverCard } from '../types';
 
 const gridStyles = `
 .feature-card-modern {
@@ -25,7 +25,7 @@ interface Feature {
   imageUrl?: string;
 }
 
-const FEATURES: Feature[] = [
+const DEFAULT_FEATURES: Feature[] = [
   {
     title: 'A World Buried in Sand',
     desc: 'An ancient civilization stirs beneath the desert. Its cities remember what its people have forgotten.',
@@ -49,14 +49,29 @@ const FEATURES: Feature[] = [
 export function FeatureGrid() {
   const { ref, isVisible } = useInView(0.1);
   const [envImages, setEnvImages] = useState<GalleryImage[]>([]);
+  const [features, setFeatures] = useState<Feature[]>(DEFAULT_FEATURES);
 
   useEffect(() => {
     getGalleryImages('environments')
       .then(setEnvImages)
       .catch(() => {/* use plain background fallbacks */});
+
+    getSiteContent('discover_cards')
+      .then((data: SiteDiscoverContent | null) => {
+        if (data?.cards?.length) {
+          const newFeatures: Feature[] = data.cards.map((c: DiscoverCard) => ({
+            title: c.title,
+            desc: c.desc,
+            borderColor: c.borderColor,
+            hoverBorderColor: c.hoverBorderColor,
+          }));
+          setFeatures(newFeatures);
+        }
+      })
+      .catch(() => {/* use default features */});
   }, []);
 
-  const featuresWithImages = FEATURES.map((feat, i) => {
+  const featuresWithImages = features.map((feat, i) => {
     const img = envImages[i];
     return img ? { ...feat, imageUrl: img.url } : feat;
   });

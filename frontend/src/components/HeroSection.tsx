@@ -1,4 +1,15 @@
+import { useState, useEffect } from 'react';
+import { getSiteContent } from '../api';
+import type { SiteHeroContent } from '../types';
+
 const LOGO_URL = 'https://res.cloudinary.com/dcpeomifz/image/upload/q_auto/f_auto/v1775484956/image0_2_om8az4.png';
+
+const DEFAULT_HERO: SiteHeroContent = {
+  tagline: 'The war for an ancient world begins.',
+  ctaPrimary: { label: 'Consult the Griot', link: '/chat' },
+  ctaSecondary: { label: 'Explore the World', link: '/lore' },
+  updatedAt: 0,
+};
 
 const heroStyles = `
   @keyframes scrollBounce {
@@ -12,6 +23,16 @@ const heroStyles = `
 `;
 
 export function HeroSection() {
+  const [hero, setHero] = useState<SiteHeroContent>(DEFAULT_HERO);
+
+  useEffect(() => {
+    getSiteContent('hero')
+      .then((data: SiteHeroContent | null) => {
+        if (data) setHero(data);
+      })
+      .catch(() => {/* use defaults */});
+  }, []);
+
   return (
     <>
       <style>{heroStyles}</style>
@@ -19,9 +40,9 @@ export function HeroSection() {
         style={{
           position: 'relative',
           width: '100%',
-          
+
           minHeight: '600px',
-          
+
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
@@ -66,7 +87,7 @@ export function HeroSection() {
               opacity: 0,
             }}
           >
-            The war for an ancient world begins.
+            {hero.tagline}
           </p>
 
           {/* CTA Buttons */}
@@ -81,7 +102,7 @@ export function HeroSection() {
             }}
           >
             <a
-              href="/chat"
+              href={hero.ctaPrimary.link}
               style={{
                 padding: '14px 32px',
                 background: '#E88A1A',
@@ -103,10 +124,10 @@ export function HeroSection() {
                 e.currentTarget.style.background = '#E88A1A';
               }}
             >
-              Consult the Griot
+              {hero.ctaPrimary.label}
             </a>
             <a
-              href="/lore"
+              href={hero.ctaSecondary.link}
               style={{
                 padding: '14px 32px',
                 background: '#2A2A2A',
@@ -128,7 +149,7 @@ export function HeroSection() {
                 e.currentTarget.style.borderColor = '#444';
               }}
             >
-              Explore the World
+              {hero.ctaSecondary.label}
             </a>
           </div>
         </div>

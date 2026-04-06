@@ -44,3 +44,42 @@ export interface GalleryImage {
   category: 'hero' | 'characters' | 'environments' | 'covers' | 'misc';
   uploadedAt: number;
 }
+
+export interface SiteHeroContent {
+  tagline: string;
+  ctaPrimary: { label: string; link: string };
+  ctaSecondary: { label: string; link: string };
+  updatedAt: number;
+}
+
+export interface FeaturedCard {
+  title: string;
+  category: string;
+  desc: string;
+  gradient: string;
+  imageCategory: string;
+}
+
+export interface SiteFeaturedContent {
+  cards: FeaturedCard[];
+  updatedAt: number;
+}
+
+export interface DiscoverCard {
+  title: string;
+  desc: string;
+  borderColor: string;
+  hoverBorderColor: string;
+}
+
+export interface SiteDiscoverContent {
+  cards: DiscoverCard[];
+  updatedAt: number;
+}
+
+export interface SiteEmailCaptureContent {
+  heading: string;
+  subheading: string;
+  buttonText: string;
+  updatedAt: number;
+}
