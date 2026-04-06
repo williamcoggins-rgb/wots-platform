@@ -88,7 +88,7 @@ export function EmailCapture() {
         ref={ref}
         style={{
           padding: '5rem 1.5rem',
-          background: '#1A1A1A',
+                      background: 'rgba(26,26,26,0.85)',
           opacity: isVisible ? 1 : 0,
           transform: isVisible ? 'translateY(0)' : 'translateY(20px)',
           transition: 'all 0.8s ease',
