@@ -7,7 +7,7 @@ import { About } from './pages/About';
 import { Admin } from './pages/Admin';
 import { Gallery } from './pages/Gallery';
 
-const LOGO_URL = 'https://res.cloudinary.com/dcpeomifz/image/upload/image0_1_avuytq.png';
+const LOGO_URL = 'https://res.cloudinary.com/dcpeomifz/image/upload/q_auto/f_auto/v1775484956/image0_2_om8az4.png';
 
 const NAV_LINKS = [
   { to: '/', label: 'Home' },
@@ -231,11 +231,11 @@ function Footer() {
         >
           {/* Col 1: Logo + tagline */}
           <div>
-            <div style={{ backgroundColor: '#111111', display: 'inline-block', marginBottom: '12px' }}>
+            <div style={{ display: 'inline-block', marginBottom: '12px' }}>
               <img
                 src={LOGO_URL}
                 alt="War of the Sphinx"
-                style={{ width: '100px', display: 'block', mixBlendMode: 'multiply' }}
+                style={{ width: '100px', display: 'block' }}
               />
             </div>
             <p
@@ -459,8 +459,8 @@ function Layout() {
           }}
         >
           {/* Logo */}
-          <Link to="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', backgroundColor: '#151515' }}>
-            <img src={LOGO_URL} alt="War of the Sphinx" style={{ height: '45px', mixBlendMode: 'multiply' }} />
+          <Link to="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center' }}>
+            <img src={LOGO_URL} alt="War of the Sphinx" style={{ height: '45px' }} />
           </Link>
 
           {/* Desktop nav links */}
