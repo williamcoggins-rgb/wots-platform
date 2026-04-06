@@ -6,7 +6,7 @@ import { SectionDivider } from '../components/SectionDivider';
 
 export function Home() {
   return (
-    <div style={{ overflow: 'hidden', paddingTop: '60px', background: '#151515' }}>
+    <div style={{ overflow: 'hidden', paddingTop: '60px' }}>
       {/* FULL-VIEWPORT HERO */}
       <HeroSection />
 
