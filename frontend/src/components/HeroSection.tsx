@@ -27,7 +27,7 @@ export function HeroSection() {
           justifyContent: 'center',
           backgroundImage: `
             radial-gradient(ellipse 60% 50% at 50% 50%, rgba(232,138,26,0.08) 0%, transparent 70%),
-            linear-gradient(180deg, rgba(10,10,10,0.85) 0%, rgba(21,21,21,0.8) 100%)
+                        linear-gradient(180deg, rgba(10,10,10,0.5) 0%, rgba(21,21,21,0.4) 100%)
           `,
         }}
       >
@@ -36,7 +36,7 @@ export function HeroSection() {
           style={{
             position: 'relative',
             textAlign: 'center',
-            padding: '4rem 1.5rem',
+                        padding: '2rem 1.5rem',
             maxWidth: '800px',
           }}
         >
