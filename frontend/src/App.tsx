@@ -432,7 +432,7 @@ function Layout() {
   }, [menuOpen]);
 
   return (
-    <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', position: 'relative', backgroundImage: `linear-gradient(180deg, rgba(10,10,10,0.92) 0%, rgba(21,21,21,0.88) 50%, rgba(10,10,10,0.95) 100%), url(${SITE_BG_URL})`, backgroundSize: 'cover', backgroundPosition: 'center top', backgroundAttachment: 'fixed' }}>
+        <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', position: 'relative', backgroundImage: `linear-gradient(180deg, rgba(10,10,10,0.55) 0%, rgba(21,21,21,0.45) 50%, rgba(10,10,10,0.6) 100%), url(${SITE_BG_URL})`, backgroundSize: 'cover', backgroundPosition: 'center top', backgroundAttachment: 'fixed' }}>
       {/* ---- NAVBAR ---- */}
       <nav
         style={{
