@@ -1,35 +1,20 @@
-const CACHE_NAME = 'wots-v3';
-const PRECACHE_URLS = ['/', '/index.html'];
+// Self-destruct service worker: unregisters itself and purges all caches.
+// Deployed to replace the old caching SW so existing users get a clean slate.
 
-self.addEventListener('install', (event) => {
-  event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => cache.addAll(PRECACHE_URLS))
-  );
+self.addEventListener('install', () => {
   self.skipWaiting();
 });
 
 self.addEventListener('activate', (event) => {
   event.waitUntil(
-    caches.keys().then((names) =>
-      Promise.all(
-        names.filter((name) => name !== CACHE_NAME).map((name) => caches.delete(name))
-      )
-    )
+    Promise.all([
+      // Delete every cache
+      caches.keys().then((names) =>
+        Promise.all(names.map((name) => caches.delete(name)))
+      ),
+      // Unregister this service worker
+      self.registration.unregister(),
+    ])
   );
   self.clients.claim();
-});
-
-self.addEventListener('fetch', (event) => {
-  if (event.request.method !== 'GET') return;
-  event.respondWith(
-    fetch(event.request)
-      .then((response) => {
-        if (response && response.status === 200) {
-          const clone = response.clone();
-          caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone));
-        }
-        return response;
-      })
-      .catch(() => caches.match(event.request))
-  );
 });
