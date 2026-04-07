@@ -77,17 +77,17 @@ export function Chat() {
       <style>{chatStyles}</style>
       <div
         style={{
-          minHeight: '100dvh',
-          paddingTop: 80,
+          height: 'calc(100dvh - 60px)',
           display: 'flex',
           justifyContent: 'center',
+          overflow: 'hidden',
         }}
       >
         <div
           style={{
             width: '100%',
             maxWidth: 800,
-            height: 'calc(100dvh - 80px)',
+            height: '100%',
             display: 'flex',
             flexDirection: 'column',
             padding: '0 16px',

@@ -292,6 +292,24 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* ================================================================
+   MOBILE RESPONSIVE FIXES
+   ================================================================ */
+
+/* Hamburger button needs flex for icon alignment (Tailwind md:hidden handles visibility) */
+@media (max-width: 767px) {
+  .md\:hidden {
+    display: flex !important;
+  }
+}
+
+/* Ensure pages don't have excessive top padding on mobile */
+@media (max-width: 640px) {
+  .mobile-pt-sm {
+    padding-top: 16px !important;
+  }
+}
+
+/* ================================================================
    PAGE TRANSITIONS
    ================================================================ */
 

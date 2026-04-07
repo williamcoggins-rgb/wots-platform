@@ -483,7 +483,6 @@ function Layout() {
           {/* Desktop nav links */}
           <div
             style={{
-              display: 'flex',
               alignItems: 'center',
               gap: '32px',
             }}
@@ -526,7 +525,6 @@ function Layout() {
               padding: '8px',
               position: 'relative',
               zIndex: 60,
-              display: 'flex',
               alignItems: 'center',
             }}
             aria-label="Toggle menu"

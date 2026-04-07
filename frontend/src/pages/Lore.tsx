@@ -17,6 +17,7 @@ const TYPE_COLORS: Record<string, string> = {
 };
 
 const loreStyles = `
+.lore-tabs-wrap::-webkit-scrollbar { display: none; }
 .lore-tab {
   background: transparent;
   border: none;
@@ -30,6 +31,8 @@ const loreStyles = `
   color: #999999;
   cursor: pointer;
   transition: color 0.2s, border-color 0.2s;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 .lore-tab:hover {
   color: #FFFFFF;
@@ -79,15 +82,15 @@ export function Lore() {
       <style>{loreStyles}</style>
       <div
         style={{
-                    minHeight: '100vh',
-          paddingTop: 80,
+          minHeight: '100vh',
+          paddingTop: 24,
         }}
       >
         <div
           style={{
             maxWidth: 1200,
             margin: '0 auto',
-            padding: '0 16px 80px',
+            padding: '0 16px 60px',
           }}
         >
           {/* Header */}
@@ -96,7 +99,7 @@ export function Lore() {
               style={{
                 fontFamily: "'Roboto Condensed', sans-serif",
                 color: '#FFFFFF',
-                fontSize: 36,
+                fontSize: 'clamp(28px, 5vw, 36px)',
                 margin: 0,
                 fontWeight: 700,
                 textTransform: 'uppercase',
@@ -119,13 +122,16 @@ export function Lore() {
 
           {/* Filter tabs */}
           <div
+            className="lore-tabs-wrap"
             style={{
               display: 'flex',
               justifyContent: 'center',
               gap: 4,
               marginBottom: 36,
-              flexWrap: 'wrap',
+              overflowX: 'auto',
+              WebkitOverflowScrolling: 'touch',
               borderBottom: '1px solid #333333',
+              scrollbarWidth: 'none',
             }}
           >
             {filterTabs.map(({ key, label }) => (

@@ -25,6 +25,7 @@ const galleryStyles = `
 @media (max-width: 640px) {
   .gallery-grid {
     grid-template-columns: 1fr;
+    gap: 1rem;
   }
 }
 .gallery-card {
@@ -52,6 +53,7 @@ const galleryStyles = `
   display: block;
   transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
 }
+.gallery-filter-tabs::-webkit-scrollbar { display: none; }
 .gallery-filter-tab {
   padding: 0.5rem 1.25rem;
   background: transparent;
@@ -64,6 +66,8 @@ const galleryStyles = `
   text-transform: uppercase;
   cursor: pointer;
   transition: all 0.3s ease;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 .gallery-filter-tab:hover {
   border-color: var(--color-sand);
@@ -104,8 +108,8 @@ const galleryStyles = `
 }
 .lightbox-close {
   position: absolute;
-  top: 1.5rem;
-  right: 1.5rem;
+  top: max(1rem, env(safe-area-inset-top, 1rem));
+  right: 1rem;
   width: 48px;
   height: 48px;
   background: rgba(20,20,40,0.6);
@@ -162,9 +166,9 @@ export function Gallery() {
       <div
         style={{
           minHeight: '100vh',
-          padding: '6rem 1.5rem 4rem',
           maxWidth: '1200px',
           margin: '0 auto',
+          padding: '0 1.5rem 4rem',
         }}
       >
         {/* Page Header */}
@@ -172,9 +176,7 @@ export function Gallery() {
           style={{
             textAlign: 'center',
             marginBottom: '2.5rem',
-            background: 'linear-gradient(180deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.4) 80%, transparent 100%)',
-            margin: '-6rem -1.5rem 2.5rem',
-            padding: '6rem 1.5rem 2rem',
+            padding: '2rem 0',
           }}
         >
           <p
@@ -224,12 +226,16 @@ export function Gallery() {
 
           {/* Filter Tabs */}
           <div
+            className="gallery-filter-tabs"
             style={{
               display: 'flex',
               gap: '0.75rem',
               justifyContent: 'center',
-              flexWrap: 'wrap',
+              overflowX: 'auto',
+              WebkitOverflowScrolling: 'touch',
+              scrollbarWidth: 'none',
               marginTop: '1.5rem',
+              padding: '0 0 4px',
             }}
           >
             {FILTER_TABS.map((tab) => (

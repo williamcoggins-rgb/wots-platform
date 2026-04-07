@@ -41,14 +41,14 @@ export function About() {
       <div
         style={{
           minHeight: '100vh',
-          paddingTop: 80,
+          paddingTop: 24,
         }}
       >
         <div
           style={{
             maxWidth: 900,
             margin: '0 auto',
-            padding: '0 16px 80px',
+            padding: '0 16px 60px',
           }}
         >
           {/* Section 1: About the Project */}
@@ -57,7 +57,7 @@ export function About() {
               style={{
                 fontFamily: "'Roboto Condensed', sans-serif",
                 color: '#FFFFFF',
-                fontSize: 32,
+                fontSize: 'clamp(24px, 5vw, 32px)',
                 margin: '0 0 24px',
                 fontWeight: 700,
                 textTransform: 'uppercase',
@@ -101,7 +101,7 @@ export function About() {
               style={{
                 fontFamily: "'Roboto Condensed', sans-serif",
                 color: '#FFFFFF',
-                fontSize: 32,
+                fontSize: 'clamp(24px, 5vw, 32px)',
                 margin: '0 0 32px',
                 fontWeight: 700,
                 textTransform: 'uppercase',
@@ -237,7 +237,7 @@ export function About() {
               style={{
                 fontFamily: "'Roboto Condensed', sans-serif",
                 color: '#FFFFFF',
-                fontSize: 32,
+                fontSize: 'clamp(24px, 5vw, 32px)',
                 margin: '0 0 16px',
                 fontWeight: 700,
                 textTransform: 'uppercase',

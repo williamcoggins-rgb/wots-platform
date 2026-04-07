@@ -41,7 +41,7 @@ export function HeroSection() {
           position: 'relative',
           width: '100%',
 
-          minHeight: '600px',
+          minHeight: 'calc(100dvh - 60px)',
 
           display: 'flex',
           alignItems: 'center',
