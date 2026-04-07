@@ -456,7 +456,7 @@ function Layout() {
           top: 0,
           left: 0,
           width: '100%',
-          zIndex: 50,
+          zIndex: 60,
           background: '#151515',
           borderBottom: '1px solid #333333',
           height: '60px',

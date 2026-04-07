@@ -24,9 +24,16 @@ const carouselStyles = `
 .carousel-scroll::-webkit-scrollbar { display: none; }
 
 @media (max-width: 640px) {
+  .carousel-scroll {
+    flex-direction: column !important;
+    overflow-x: visible !important;
+    padding: 0 1rem 1rem !important;
+    gap: 1rem !important;
+  }
   .carousel-card {
-    flex: 0 0 260px;
-    height: 340px;
+    flex: none !important;
+    width: 100% !important;
+    height: 220px;
   }
 }
 `;

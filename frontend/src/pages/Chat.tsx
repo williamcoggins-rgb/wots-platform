@@ -33,10 +33,13 @@ export function Chat() {
   const [loading, setLoading] = useState(false);
   const [sessionId, setSessionId] = useState<string | undefined>();
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const chatContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [messages]);
+    if (chatContainerRef.current) {
+      chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+    }
+  }, [messages, loading]);
 
   const handleSend = async (text?: string) => {
     const msg = (text || input).trim();
@@ -123,6 +126,7 @@ export function Chat() {
 
           {/* Chat container */}
           <div
+            ref={chatContainerRef}
             style={{
               flex: 1,
               minHeight: 0,
