@@ -1,5 +1,5 @@
-import { useState, useRef, useEffect } from 'react';
-import { sendMessage } from '../api';
+import { useState, useRef, useEffect, useCallback } from 'react';
+import { sendMessage, textToSpeech } from '../api';
 import type { ChatMessage } from '../types';
 
 const USER_ID = 'anonymous-player';
@@ -32,8 +32,47 @@ export function Chat() {
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
   const [sessionId, setSessionId] = useState<string | undefined>();
+  const [playingIndex, setPlayingIndex] = useState<number | null>(null);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const chatContainerRef = useRef<HTMLDivElement>(null);
+
+  const handleSpeak = useCallback(async (text: string, index: number) => {
+    // If already playing this message, stop it
+    if (playingIndex === index && audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current = null;
+      setPlayingIndex(null);
+      return;
+    }
+
+    // Stop any currently playing audio
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current = null;
+    }
+
+    setPlayingIndex(index);
+    try {
+      const blob = await textToSpeech(text);
+      const url = URL.createObjectURL(blob);
+      const audio = new Audio(url);
+      audioRef.current = audio;
+      audio.onended = () => {
+        setPlayingIndex(null);
+        audioRef.current = null;
+        URL.revokeObjectURL(url);
+      };
+      audio.onerror = () => {
+        setPlayingIndex(null);
+        audioRef.current = null;
+        URL.revokeObjectURL(url);
+      };
+      await audio.play();
+    } catch {
+      setPlayingIndex(null);
+    }
+  }, [playingIndex]);
 
   useEffect(() => {
     if (chatContainerRef.current) {
@@ -217,20 +256,47 @@ export function Chat() {
                   }}
                 >
                   {msg.role === 'assistant' && (
-                    <span
-                      style={{
-                        display: 'block',
-                        fontFamily: "'Roboto Condensed', sans-serif",
-                        color: '#E88A1A',
-                        fontSize: 11,
-                        letterSpacing: 1,
-                        textTransform: 'uppercase',
-                        fontWeight: 700,
-                        marginBottom: 6,
-                      }}
-                    >
-                      THE Griot
-                    </span>
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 6 }}>
+                      <span
+                        style={{
+                          fontFamily: "'Roboto Condensed', sans-serif",
+                          color: '#E88A1A',
+                          fontSize: 11,
+                          letterSpacing: 1,
+                          textTransform: 'uppercase',
+                          fontWeight: 700,
+                        }}
+                      >
+                        THE Griot
+                      </span>
+                      <button
+                        onClick={(e) => { e.stopPropagation(); handleSpeak(msg.content, i); }}
+                        aria-label={playingIndex === i ? 'Stop audio' : 'Listen to response'}
+                        style={{
+                          background: 'none',
+                          border: 'none',
+                          cursor: 'pointer',
+                          padding: 4,
+                          color: playingIndex === i ? '#E88A1A' : '#666666',
+                          transition: 'color 0.2s',
+                          display: 'flex',
+                          alignItems: 'center',
+                        }}
+                      >
+                        {playingIndex === i ? (
+                          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                            <rect x="6" y="4" width="4" height="16" rx="1" />
+                            <rect x="14" y="4" width="4" height="16" rx="1" />
+                          </svg>
+                        ) : (
+                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" fill="currentColor" />
+                            <path d="M15.54 8.46a5 5 0 0 1 0 7.07" />
+                            <path d="M19.07 4.93a10 10 0 0 1 0 14.14" />
+                          </svg>
+                        )}
+                      </button>
+                    </div>
                   )}
                   <p
                     style={{

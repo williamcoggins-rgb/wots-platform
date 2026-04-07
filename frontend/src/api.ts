@@ -49,6 +49,20 @@ export async function subscribeEmail(email: string): Promise<ApiResponse<{ messa
   });
 }
 
+// Text-to-speech via ElevenLabs (The Griot voice)
+export async function textToSpeech(text: string): Promise<Blob> {
+  const res = await fetch(`${API_BASE}/tts`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ text }),
+  });
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({ error: 'TTS request failed' }));
+    throw new Error(err.error || 'TTS request failed');
+  }
+  return res.blob();
+}
+
 // Site content CMS
 export async function getSiteContent(section: string): Promise<any> {
   const docRef = doc(db, 'site_content', section);

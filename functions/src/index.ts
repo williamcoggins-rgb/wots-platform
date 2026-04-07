@@ -200,6 +200,58 @@ router.post('/subscribe', async (req, res) => {
   }
 });
 
+// Text-to-speech via ElevenLabs (The Griot voice)
+router.post('/tts', async (req, res) => {
+  try {
+    const { text } = req.body;
+    if (!text || typeof text !== 'string') {
+      res.status(400).json({ success: false, error: 'Missing text' } as ApiResponse);
+      return;
+    }
+
+    const apiKey = process.env.ELEVENLABS_API_KEY;
+    const voiceId = process.env.ELEVENLABS_VOICE_ID;
+    if (!apiKey || !voiceId) {
+      res.status(500).json({ success: false, error: 'ElevenLabs not configured' } as ApiResponse);
+      return;
+    }
+
+    const ttsRes = await fetch(`https://api.elevenlabs.io/v1/text-to-speech/${voiceId}`, {
+      method: 'POST',
+      headers: {
+        'xi-api-key': apiKey,
+        'Content-Type': 'application/json',
+        'Accept': 'audio/mpeg',
+      },
+      body: JSON.stringify({
+        text: text.substring(0, 5000),
+        model_id: 'eleven_multilingual_v2',
+        voice_settings: {
+          stability: 0.5,
+          similarity_boost: 0.75,
+        },
+      }),
+    });
+
+    if (!ttsRes.ok) {
+      const errBody = await ttsRes.text();
+      res.status(ttsRes.status).json({ success: false, error: `ElevenLabs error: ${errBody}` } as ApiResponse);
+      return;
+    }
+
+    const audioBuffer = Buffer.from(await ttsRes.arrayBuffer());
+    res.set({
+      'Content-Type': 'audio/mpeg',
+      'Content-Length': String(audioBuffer.length),
+      'Cache-Control': 'public, max-age=86400',
+    });
+    res.send(audioBuffer);
+  } catch (error) {
+    const errMsg = error instanceof Error ? error.message : 'Unknown error';
+    res.status(500).json({ success: false, error: errMsg } as ApiResponse);
+  }
+});
+
 // Update content status
 router.patch('/content/:id', async (req, res) => {
   try {
