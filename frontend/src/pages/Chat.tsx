@@ -18,12 +18,19 @@ const chatStyles = `
   0%, 80%, 100% { opacity: 0.3; }
   40% { opacity: 1; }
 }
+@keyframes spinTTS {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
 .chat-input-field:focus {
   border-color: #E88A1A !important;
 }
 .starter-pill:hover {
   border-color: #E88A1A !important;
   color: #FFFFFF !important;
+}
+.tts-btn:hover {
+  color: #E88A1A !important;
 }
 `;
 
@@ -32,17 +39,29 @@ export function Chat() {
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
   const [sessionId, setSessionId] = useState<string | undefined>();
-  const [playingIndex, setPlayingIndex] = useState<number | null>(null);
+  const [ttsState, setTtsState] = useState<Record<number, 'loading' | 'playing' | 'error'>>({});
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const activeIndexRef = useRef<number | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const chatContainerRef = useRef<HTMLDivElement>(null);
 
+  // Cleanup audio on unmount
+  useEffect(() => {
+    return () => {
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current = null;
+      }
+    };
+  }, []);
+
   const handleSpeak = useCallback(async (text: string, index: number) => {
-    // If already playing this message, stop it
-    if (playingIndex === index && audioRef.current) {
+    // If already playing or loading this message, stop it
+    if (activeIndexRef.current === index && audioRef.current) {
       audioRef.current.pause();
       audioRef.current = null;
-      setPlayingIndex(null);
+      activeIndexRef.current = null;
+      setTtsState({});
       return;
     }
 
@@ -52,27 +71,51 @@ export function Chat() {
       audioRef.current = null;
     }
 
-    setPlayingIndex(index);
+    // Pre-create Audio element in user gesture context (iOS Safari requirement).
+    // Safari blocks audio.play() if called after an async gap from the user tap.
+    const audio = new Audio();
+    audioRef.current = audio;
+    activeIndexRef.current = index;
+
+    setTtsState({ [index]: 'loading' });
+
     try {
       const blob = await textToSpeech(text);
+
+      // Check if user cancelled while we were fetching
+      if (activeIndexRef.current !== index) {
+        URL.revokeObjectURL(URL.createObjectURL(blob));
+        return;
+      }
+
       const url = URL.createObjectURL(blob);
-      const audio = new Audio(url);
-      audioRef.current = audio;
+      audio.src = url;
+
       audio.onended = () => {
-        setPlayingIndex(null);
+        setTtsState({});
+        activeIndexRef.current = null;
         audioRef.current = null;
         URL.revokeObjectURL(url);
       };
       audio.onerror = () => {
-        setPlayingIndex(null);
+        console.error('Audio playback error');
+        setTtsState({ [index]: 'error' });
+        activeIndexRef.current = null;
         audioRef.current = null;
         URL.revokeObjectURL(url);
+        setTimeout(() => setTtsState({}), 2000);
       };
+
       await audio.play();
-    } catch {
-      setPlayingIndex(null);
+      setTtsState({ [index]: 'playing' });
+    } catch (err) {
+      console.error('TTS failed:', err);
+      setTtsState({ [index]: 'error' });
+      activeIndexRef.current = null;
+      audioRef.current = null;
+      setTimeout(() => setTtsState({}), 2000);
     }
-  }, [playingIndex]);
+  }, []);
 
   useEffect(() => {
     if (chatContainerRef.current) {
@@ -271,22 +314,33 @@ export function Chat() {
                       </span>
                       <button
                         onClick={(e) => { e.stopPropagation(); handleSpeak(msg.content, i); }}
-                        aria-label={playingIndex === i ? 'Stop audio' : 'Listen to response'}
+                        className="tts-btn"
+                        aria-label={ttsState[i] === 'playing' ? 'Stop audio' : 'Listen to response'}
                         style={{
                           background: 'none',
                           border: 'none',
                           cursor: 'pointer',
                           padding: 4,
-                          color: playingIndex === i ? '#E88A1A' : '#666666',
+                          color: ttsState[i] === 'error' ? '#e85d5d' : ttsState[i] ? '#E88A1A' : '#666666',
                           transition: 'color 0.2s',
                           display: 'flex',
                           alignItems: 'center',
                         }}
                       >
-                        {playingIndex === i ? (
+                        {ttsState[i] === 'loading' ? (
+                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ animation: 'spinTTS 1s linear infinite' }}>
+                            <path d="M12 2a10 10 0 0 1 10 10" strokeLinecap="round" />
+                          </svg>
+                        ) : ttsState[i] === 'playing' ? (
                           <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
                             <rect x="6" y="4" width="4" height="16" rx="1" />
                             <rect x="14" y="4" width="4" height="16" rx="1" />
+                          </svg>
+                        ) : ttsState[i] === 'error' ? (
+                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+                            <circle cx="12" cy="12" r="10" />
+                            <line x1="15" y1="9" x2="9" y2="15" />
+                            <line x1="9" y1="9" x2="15" y2="15" />
                           </svg>
                         ) : (
                           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

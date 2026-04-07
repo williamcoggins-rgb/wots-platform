@@ -212,9 +212,12 @@ router.post('/tts', async (req, res) => {
     const apiKey = process.env.ELEVENLABS_API_KEY;
     const voiceId = process.env.ELEVENLABS_VOICE_ID;
     if (!apiKey || !voiceId) {
+      console.error('TTS: ELEVENLABS_API_KEY or ELEVENLABS_VOICE_ID not set');
       res.status(500).json({ success: false, error: 'ElevenLabs not configured' } as ApiResponse);
       return;
     }
+
+    console.log(`TTS: Requesting audio for ${text.length} chars, voice=${voiceId}`);
 
     const ttsRes = await fetch(`https://api.elevenlabs.io/v1/text-to-speech/${voiceId}`, {
       method: 'POST',
@@ -235,11 +238,13 @@ router.post('/tts', async (req, res) => {
 
     if (!ttsRes.ok) {
       const errBody = await ttsRes.text();
+      console.error(`TTS: ElevenLabs returned ${ttsRes.status}: ${errBody}`);
       res.status(ttsRes.status).json({ success: false, error: `ElevenLabs error: ${errBody}` } as ApiResponse);
       return;
     }
 
     const audioBuffer = Buffer.from(await ttsRes.arrayBuffer());
+    console.log(`TTS: Returning ${audioBuffer.length} bytes of audio`);
     res.set({
       'Content-Type': 'audio/mpeg',
       'Content-Length': String(audioBuffer.length),
@@ -248,6 +253,7 @@ router.post('/tts', async (req, res) => {
     res.send(audioBuffer);
   } catch (error) {
     const errMsg = error instanceof Error ? error.message : 'Unknown error';
+    console.error('TTS: Unexpected error:', errMsg);
     res.status(500).json({ success: false, error: errMsg } as ApiResponse);
   }
 });
