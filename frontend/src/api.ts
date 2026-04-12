@@ -42,11 +42,60 @@ export async function getContentItem(id: string): Promise<ApiResponse<ContentIte
   return request(`/content/${id}`);
 }
 
-export async function subscribeEmail(email: string): Promise<ApiResponse<{ message: string }>> {
+export async function subscribeEmail(
+  email: string,
+  source?: string
+): Promise<ApiResponse<{ message: string }>> {
   return request('/subscribe', {
     method: 'POST',
-    body: JSON.stringify({ email }),
+    body: JSON.stringify({ email, source }),
   });
+}
+
+// ================================================================
+// Visitor tracking (backend visitor_sessions) + analytics aggregation
+// ================================================================
+
+function getOrCreateSessionId(): string {
+  if (typeof window === 'undefined') return 'ssr';
+  const KEY = 'wots_session_id';
+  let id = sessionStorage.getItem(KEY);
+  if (!id) {
+    id = `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 10)}`;
+    sessionStorage.setItem(KEY, id);
+  }
+  return id;
+}
+
+export async function trackVisit(page: string, referrer?: string): Promise<void> {
+  try {
+    await fetch(`${API_BASE}/track-visit`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        sessionId: getOrCreateSessionId(),
+        page,
+        referrer: referrer ?? document.referrer ?? null,
+      }),
+      keepalive: true,
+    });
+  } catch {
+    /* silent — visitor tracking should never break UX */
+  }
+}
+
+export interface AnalyticsSummary {
+  windowDays: number;
+  totalVisits: number;
+  uniqueVisitors: number;
+  topCountries: { country: string; count: number }[];
+  topPages: { page: string; count: number }[];
+  signupCount: number;
+  chatMessageCount: number;
+}
+
+export async function getAnalytics(): Promise<ApiResponse<AnalyticsSummary>> {
+  return request('/analytics');
 }
 
 // Text-to-speech via ElevenLabs (The Griot voice)

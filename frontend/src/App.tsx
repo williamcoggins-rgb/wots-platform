@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { BrowserRouter, Routes, Route, Link, useLocation } from 'react-router-dom';
 import { Chat } from './pages/Chat';
 import { Lore } from './pages/Lore';
@@ -6,6 +6,17 @@ import { Home } from './pages/Home';
 import { About } from './pages/About';
 import { Admin } from './pages/Admin';
 import { Gallery } from './pages/Gallery';
+import { subscribeEmail, trackVisit } from './api';
+import { trackAnalyticsEvent } from './firebase';
+
+const PAGE_NAMES: Record<string, string> = {
+  '/': 'home',
+  '/chat': 'chat',
+  '/lore': 'lore',
+  '/gallery': 'gallery',
+  '/about': 'about',
+  '/admin': 'admin',
+};
 
 const LOGO_URL = 'https://res.cloudinary.com/dcpeomifz/image/upload/q_auto/f_auto/v1775484956/image0_2_om8az4.png';
 const SITE_BG_URL = 'https://res.cloudinary.com/dcpeomifz/image/upload/q_auto/f_auto/v1775489586/image2_gpapbe.jpg';
@@ -161,6 +172,24 @@ function AnimatedRoutes() {
   const location = useLocation();
   const [displayLocation, setDisplayLocation] = useState(location);
   const [transitionClass, setTransitionClass] = useState('page-transition-active');
+  const lastTrackedPath = useRef<string | null>(null);
+
+  // Fire page_view + track-visit on every route change (including first load)
+  useEffect(() => {
+    if (lastTrackedPath.current === location.pathname) return;
+    lastTrackedPath.current = location.pathname;
+
+    const pageName = PAGE_NAMES[location.pathname] || location.pathname;
+    const referrer = typeof document !== 'undefined' ? document.referrer : '';
+
+    trackAnalyticsEvent('page_view', { page_name: pageName, referrer });
+    trackVisit(location.pathname, referrer);
+
+    // Specific lore_viewed event on top of page_view
+    if (location.pathname === '/lore') {
+      trackAnalyticsEvent('lore_viewed');
+    }
+  }, [location.pathname]);
 
   useEffect(() => {
     if (location.pathname !== displayLocation.pathname) {
@@ -197,13 +226,24 @@ function AnimatedRoutes() {
    ---------------------------------------------------------------- */
 function Footer() {
   const [footerEmail, setFooterEmail] = useState('');
-  const [footerState, setFooterState] = useState<'idle' | 'done'>('idle');
+  const [footerState, setFooterState] = useState<'idle' | 'loading' | 'done'>('idle');
 
-  const handleFooterSubscribe = (e: React.FormEvent) => {
+  const handleFooterSubscribe = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (footerEmail.trim() && footerEmail.includes('@')) {
-      setFooterState('done');
-      setFooterEmail('');
+    const trimmed = footerEmail.trim();
+    if (!trimmed || !trimmed.includes('@') || footerState === 'loading') return;
+    setFooterState('loading');
+    try {
+      const res = await subscribeEmail(trimmed, 'footer');
+      if (res.success) {
+        trackAnalyticsEvent('email_signup', { source_page: 'footer' });
+        setFooterState('done');
+        setFooterEmail('');
+      } else {
+        setFooterState('idle');
+      }
+    } catch {
+      setFooterState('idle');
     }
   };
 
@@ -366,6 +406,7 @@ function Footer() {
                 />
                 <button
                   type="submit"
+                  disabled={footerState === 'loading'}
                   style={{
                     padding: '8px 16px',
                     background: '#E88A1A',
@@ -377,14 +418,15 @@ function Footer() {
                     letterSpacing: '0.5px',
                     border: 'none',
                     borderRadius: '4px',
-                    cursor: 'pointer',
-                    transition: 'background 200ms',
+                    cursor: footerState === 'loading' ? 'not-allowed' : 'pointer',
+                    opacity: footerState === 'loading' ? 0.6 : 1,
+                    transition: 'background 200ms, opacity 200ms',
                     whiteSpace: 'nowrap',
                   }}
-                  onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = '#F59E2E'; }}
+                  onMouseEnter={(e) => { if (footerState !== 'loading') (e.currentTarget as HTMLElement).style.background = '#F59E2E'; }}
                   onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = '#E88A1A'; }}
                 >
-                  Join
+                  {footerState === 'loading' ? '…' : 'Join'}
                 </button>
               </form>
             )}

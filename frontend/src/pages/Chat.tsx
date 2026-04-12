@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
 import { sendMessage, textToSpeech } from '../api';
+import { trackAnalyticsEvent } from '../firebase';
 import type { ChatMessage } from '../types';
 
 const USER_ID = 'anonymous-player';
@@ -78,6 +79,7 @@ export function Chat() {
     activeIndexRef.current = index;
 
     setTtsState({ [index]: 'loading' });
+    trackAnalyticsEvent('tts_played', { response_length: text.length });
 
     try {
       const blob = await textToSpeech(text);
@@ -126,6 +128,11 @@ export function Chat() {
   const handleSend = async (text?: string) => {
     const msg = (text || input).trim();
     if (!msg || loading) return;
+
+    trackAnalyticsEvent('chat_message_sent', {
+      message_length: msg.length,
+      is_suggested_prompt: Boolean(text),
+    });
 
     const userMsg: ChatMessage = { role: 'user', content: msg, timestamp: Date.now() };
     setMessages((prev) => [...prev, userMsg]);

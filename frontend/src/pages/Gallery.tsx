@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { getGalleryImages } from '../api';
+import { trackAnalyticsEvent } from '../firebase';
 import type { GalleryImage } from '../types';
 
 const FILTER_TABS: { label: string; value: string | undefined }[] = [
@@ -150,7 +151,8 @@ export function Gallery() {
 
   useEffect(() => {
     fetchImages();
-  }, [fetchImages]);
+    trackAnalyticsEvent('gallery_viewed', { filter: activeFilter || 'all' });
+  }, [fetchImages, activeFilter]);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {

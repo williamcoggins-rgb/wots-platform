@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { subscribeEmail, getSiteContent } from '../api';
+import { trackAnalyticsEvent } from '../firebase';
 import { useInView } from './useInView';
 import type { SiteEmailCaptureContent } from '../types';
 
@@ -83,8 +84,9 @@ export function EmailCapture() {
 
     setState('loading');
     try {
-      const res = await subscribeEmail(trimmed);
+      const res = await subscribeEmail(trimmed, 'homepage');
       if (res.success) {
+        trackAnalyticsEvent('email_signup', { source_page: 'homepage' });
         setState('success');
         setMessage(res.data?.message || 'Welcome, Seeker.');
         setEmail('');
