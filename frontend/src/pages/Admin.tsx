@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback, useRef } from 'react';
 import { db } from '../firebase';
 import { collection, addDoc, getDocs, deleteDoc, doc, query, orderBy } from 'firebase/firestore';
 import { getSiteContent, updateSiteContent } from '../api';
+import { ImageCropModal } from '../components/ImageCropModal';
 import type { GalleryImage, SiteHeroContent, SiteEmailCaptureContent, FeaturedCard, DiscoverCard } from '../types';
 
 const CLOUDINARY_CLOUD = 'dcpeomifz';
@@ -744,6 +745,7 @@ function AdminPanel() {
   const [category, setCategory] = useState<GalleryImage['category']>('misc');
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const [fileToCrop, setFileToCrop] = useState<File | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const fetchImages = useCallback(async () => {
@@ -773,11 +775,26 @@ function AdminPanel() {
       alert('Please select a valid image file (jpg, png, webp, gif).');
       return;
     }
-    setSelectedFile(file);
-    setPreviewUrl(URL.createObjectURL(file));
+    // Prefill the title from the filename on first selection
     if (!title) {
       setTitle(file.name.replace(/\.[^.]+$/, '').replace(/[-_]/g, ' '));
     }
+    // Open crop modal before committing the file
+    setFileToCrop(file);
+  };
+
+  const handleCropConfirm = (croppedFile: File) => {
+    // Revoke any previous preview URL to avoid memory leaks
+    if (previewUrl) URL.revokeObjectURL(previewUrl);
+    setSelectedFile(croppedFile);
+    setPreviewUrl(URL.createObjectURL(croppedFile));
+    setFileToCrop(null);
+  };
+
+  const handleCropCancel = () => {
+    setFileToCrop(null);
+    // Reset the file input so picking the same file again still triggers onChange
+    if (fileInputRef.current) fileInputRef.current.value = '';
   };
 
   const handleDrop = useCallback((e: React.DragEvent) => {
@@ -1200,6 +1217,15 @@ function AdminPanel() {
         {/* Site Content Tab */}
         {activeTab === 'site-content' && <SiteContentEditor />}
       </div>
+
+      {/* Image crop modal — opens when a file is selected, before upload */}
+      {fileToCrop && (
+        <ImageCropModal
+          file={fileToCrop}
+          onConfirm={handleCropConfirm}
+          onCancel={handleCropCancel}
+        />
+      )}
     </>
   );
 }
