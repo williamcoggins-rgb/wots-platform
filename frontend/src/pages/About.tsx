@@ -69,7 +69,7 @@ export function About() {
             <div
               style={{
                 fontFamily: "'Inter', sans-serif",
-                color: '#CCCCCC',
+                color: '#FFFFFF',
                 fontSize: 16,
                 lineHeight: 1.7,
                 display: 'flex',
@@ -77,20 +77,21 @@ export function About() {
                 gap: 16,
               }}
             >
-              <p style={{ margin: 0 }}>
+              <p style={{ margin: 0, color: '#FFFFFF' }}>
                 <strong style={{ color: '#E88A1A', fontFamily: "'Roboto Condensed', sans-serif" }}>
                   War of the Sphinx
                 </strong>{' '}
-                is an epic worldbuilding project that spans seven volumes. It is a universe built from the
-                ground up — its history, geography, people, and the mysteries that bind them together.
+                is a 7-volume independent comic book series set in Neo-Nubia — a near-future African
+                nation on the edge of collapse. Ancient power. Modern corruption. A war that was never
+                supposed to happen.
               </p>
-              <p style={{ margin: 0 }}>
-                This platform is your gateway into that world. Speak with the Sphinx. Uncover fragments of
-                lore as they surface. Be part of the story before the first volume arrives.
+              <p style={{ margin: 0, color: '#FFFFFF' }}>
+                Each volume deepens the world: its factions, its history, and the people caught between
+                what was and what's coming. Volume 1 is currently in production.
               </p>
-              <p style={{ margin: 0 }}>
-                Volume 1 is currently in development. Every detail is crafted with intention. Every riddle
-                has a purpose.
+              <p style={{ margin: 0, color: '#FFFFFF' }}>
+                This platform is your access point — consult The Griot, explore the world, and be among
+                the first to know when Volume 1 arrives.
               </p>
             </div>
           </div>
@@ -163,7 +164,7 @@ export function About() {
                     <span
                       style={{
                         fontFamily: "'Inter', sans-serif",
-                        color: vol.active ? '#999999' : '#666666',
+                        color: vol.active ? '#FFFFFF' : '#AAAAAA',
                         fontSize: 14,
                         marginLeft: 12,
                       }}
@@ -190,7 +191,7 @@ export function About() {
                         <span
                           style={{
                             fontFamily: "'Inter', sans-serif",
-                            color: '#999999',
+                            color: '#FFFFFF',
                             fontSize: 12,
                           }}
                         >
@@ -199,7 +200,7 @@ export function About() {
                         <span
                           style={{
                             fontFamily: "'Inter', sans-serif",
-                            color: '#999999',
+                            color: '#FFFFFF',
                             fontSize: 12,
                           }}
                         >
@@ -249,7 +250,7 @@ export function About() {
             <p
               style={{
                 fontFamily: "'Inter', sans-serif",
-                color: '#999999',
+                color: '#FFFFFF',
                 fontSize: 16,
                 margin: '0 0 8px',
                 lineHeight: 1.6,
@@ -260,7 +261,7 @@ export function About() {
             <p
               style={{
                 fontFamily: "'Inter', sans-serif",
-                color: '#999999',
+                color: '#FFFFFF',
                 fontSize: 16,
                 margin: '0 0 28px',
                 lineHeight: 1.6,
@@ -298,9 +299,10 @@ export function About() {
             <p
               style={{
                 fontFamily: "'Inter', sans-serif",
-                color: '#666666',
+                color: '#FFFFFF',
                 fontSize: 14,
                 fontStyle: 'italic',
+                opacity: 0.85,
               }}
             >
               The Sphinx remembers those who arrived first.
