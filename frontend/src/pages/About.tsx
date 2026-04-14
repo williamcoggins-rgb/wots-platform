@@ -3,25 +3,6 @@ const aboutStyles = `
   0% { width: 0; }
   100% { width: 30%; }
 }
-.social-link {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  border: 1px solid #333333;
-  background: rgba(34,34,34,0.85);
-  color: #FFFFFF;
-  cursor: pointer;
-  text-decoration: none;
-  transition: border-color 0.2s, color 0.2s, box-shadow 0.2s;
-}
-.social-link:hover {
-  color: #E88A1A;
-  border-color: #E88A1A;
-  box-shadow: 0 0 12px rgba(232,138,26,0.2);
-}
 `;
 
 const VOLUMES = [
@@ -267,31 +248,27 @@ export function About() {
                 lineHeight: 1.6,
               }}
             >
-              Follow for world teasers and development updates.
+              Subscribe below to be notified when Volume 1 arrives — and for world teasers along the way.
             </p>
 
-            {/* Social links */}
-            <div style={{ display: 'flex', justifyContent: 'center', gap: 16, marginBottom: 40 }}>
-              <a href="#" className="social-link" aria-label="X">
-                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.5">
-                  <path d="M4 4l6.5 8L4 20h2l5.5-6.8L16 20h4l-6.8-8.4L20 4h-2l-5.2 6.4L8 4H4z" />
-                </svg>
-              </a>
-              <a href="#" className="social-link" aria-label="Discord">
-                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.5">
-                  <path
-                    d="M9.5 14.5a1.5 1.5 0 100-3 1.5 1.5 0 000 3zM14.5 14.5a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"
-                    fill="currentColor"
-                  />
-                  <path d="M5.5 16c1.5 2 4 3 6.5 3s5-1 6.5-3M8 8c1-0.5 2.5-1 4-1s3 .5 4 1M6 9l-1 7 3.5 3h7l3.5-3-1-7" />
-                </svg>
-              </a>
-              <a href="#" className="social-link" aria-label="Instagram">
-                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.5">
-                  <rect x="3" y="3" width="18" height="18" rx="5" />
-                  <circle cx="12" cy="12" r="5" />
-                  <circle cx="17.5" cy="6.5" r="1" fill="currentColor" />
-                </svg>
+            <div style={{ marginBottom: 40 }}>
+              <a
+                href="/#email"
+                style={{
+                  display: 'inline-block',
+                  padding: '14px 32px',
+                  background: '#E88A1A',
+                  color: '#FFFFFF',
+                  fontFamily: "'Roboto Condensed', sans-serif",
+                  fontWeight: 700,
+                  fontSize: 13,
+                  letterSpacing: 2,
+                  textTransform: 'uppercase',
+                  textDecoration: 'none',
+                  borderRadius: 2,
+                }}
+              >
+                Join the Archive
               </a>
             </div>
 

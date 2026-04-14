@@ -6,6 +6,8 @@ import { Home } from './pages/Home';
 import { About } from './pages/About';
 import { Admin } from './pages/Admin';
 import { Gallery } from './pages/Gallery';
+import { Privacy } from './pages/Privacy';
+import { Terms } from './pages/Terms';
 import { subscribeEmail, trackVisit } from './api';
 import { trackAnalyticsEvent } from './firebase';
 
@@ -216,6 +218,8 @@ function AnimatedRoutes() {
         <Route path="/gallery" element={<Gallery />} />
         <Route path="/about" element={<About />} />
         <Route path="/admin" element={<Admin />} />
+        <Route path="/privacy" element={<Privacy />} />
+        <Route path="/terms" element={<Terms />} />
       </Routes>
     </div>
   );
@@ -329,7 +333,7 @@ function Footer() {
             </nav>
           </div>
 
-          {/* Col 3: Social + email signup */}
+          {/* Col 3: Email signup */}
           <div>
             <h4
               style={{
@@ -343,38 +347,8 @@ function Footer() {
                 marginTop: 0,
               }}
             >
-              Connect
+              Stay Updated
             </h4>
-            {/* Social icons */}
-            <div style={{ display: 'flex', gap: '16px', marginBottom: '20px' }}>
-              <a href="#" aria-label="X / Twitter" style={{ color: '#666666', transition: 'color 200ms' }}
-                onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.color = '#FFFFFF'; }}
-                onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.color = '#666666'; }}
-              >
-                <svg viewBox="0 0 24 24" style={{ width: '20px', height: '20px' }} fill="none" stroke="currentColor" strokeWidth="1.5">
-                  <path d="M4 4l6.5 8L4 20h2l5.5-6.8L16 20h4l-6.8-8.4L20 4h-2l-5.2 6.4L8 4H4z" />
-                </svg>
-              </a>
-              <a href="#" aria-label="Discord" style={{ color: '#666666', transition: 'color 200ms' }}
-                onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.color = '#FFFFFF'; }}
-                onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.color = '#666666'; }}
-              >
-                <svg viewBox="0 0 24 24" style={{ width: '20px', height: '20px' }} fill="none" stroke="currentColor" strokeWidth="1.5">
-                  <path d="M9.5 14.5a1.5 1.5 0 100-3 1.5 1.5 0 000 3zM14.5 14.5a1.5 1.5 0 100-3 1.5 1.5 0 000 3z" fill="currentColor" />
-                  <path d="M5.5 16c1.5 2 4 3 6.5 3s5-1 6.5-3M8 8c1-0.5 2.5-1 4-1s3 .5 4 1M6 9l-1 7 3.5 3h7l3.5-3-1-7" />
-                </svg>
-              </a>
-              <a href="#" aria-label="Instagram" style={{ color: '#666666', transition: 'color 200ms' }}
-                onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.color = '#FFFFFF'; }}
-                onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.color = '#666666'; }}
-              >
-                <svg viewBox="0 0 24 24" style={{ width: '20px', height: '20px' }} fill="none" stroke="currentColor" strokeWidth="1.5">
-                  <rect x="3" y="3" width="18" height="18" rx="5" />
-                  <circle cx="12" cy="12" r="5" />
-                  <circle cx="17.5" cy="6.5" r="1" fill="currentColor" />
-                </svg>
-              </a>
-            </div>
             {/* Mini email signup */}
             {footerState === 'done' ? (
               <p style={{ fontFamily: 'var(--font-body)', fontSize: '14px', color: '#E88A1A', margin: 0 }}>
@@ -451,22 +425,45 @@ function Footer() {
           >
             &copy; 2026 War of The Griot. All rights reserved.
           </p>
-          <Link
-            to="/admin"
+          <div
             style={{
-              display: 'inline-block',
-              marginTop: '8px',
-              textDecoration: 'none',
+              marginTop: '10px',
+              display: 'flex',
+              flexWrap: 'wrap',
+              justifyContent: 'center',
+              alignItems: 'center',
+              gap: '6px 14px',
               fontFamily: 'var(--font-body)',
-              fontSize: '11px',
-              color: '#444444',
-              transition: 'color 200ms ease',
+              fontSize: '12px',
             }}
-            onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.color = '#666666'; }}
-            onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.color = '#444444'; }}
           >
-            Admin
-          </Link>
+            <Link
+              to="/privacy"
+              style={{ textDecoration: 'none', color: '#888888', transition: 'color 200ms ease' }}
+              onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.color = '#E88A1A'; }}
+              onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.color = '#888888'; }}
+            >
+              Privacy
+            </Link>
+            <span style={{ color: '#333333' }}>·</span>
+            <Link
+              to="/terms"
+              style={{ textDecoration: 'none', color: '#888888', transition: 'color 200ms ease' }}
+              onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.color = '#E88A1A'; }}
+              onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.color = '#888888'; }}
+            >
+              Terms
+            </Link>
+            <span style={{ color: '#333333' }}>·</span>
+            <Link
+              to="/admin"
+              style={{ textDecoration: 'none', color: '#444444', transition: 'color 200ms ease', fontSize: '11px' }}
+              onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.color = '#666666'; }}
+              onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.color = '#444444'; }}
+            >
+              Admin
+            </Link>
+          </div>
         </div>
       </div>
     </footer>

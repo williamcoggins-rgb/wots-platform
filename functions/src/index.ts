@@ -4,6 +4,7 @@ import cron from 'node-cron';
 import crypto from 'crypto';
 import dotenv from 'dotenv';
 import express from 'express';
+import rateLimit from 'express-rate-limit';
 import { getAssistantResponse, createNewSession } from './assistant';
 import { generateContent, buildContentItem } from './pipeline';
 import { ChatMessage, ApiResponse, ContentPipelineConfig } from './types';
@@ -22,11 +23,80 @@ const db = admin.firestore();
 const app = express();
 const router = express.Router();
 
+// Railway/Fly/most PaaS sit behind a reverse proxy; trust it so req.ip
+// reflects the real client IP from x-forwarded-for (required for rate limits).
+app.set('trust proxy', 1);
+
 const allowedOrigins = process.env.ALLOWED_ORIGINS
   ? process.env.ALLOWED_ORIGINS.split(',')
   : ['http://localhost:5173', 'http://localhost:5000'];
 app.use(cors({ origin: allowedOrigins }));
 app.use(express.json());
+
+// ================================================================
+// Rate limiting — per-IP caps to prevent abuse and bill runup.
+// Both Anthropic and ElevenLabs are pay-per-use; these limits assume
+// the site is single-instance (in-memory store is fine on Railway).
+// ================================================================
+
+const rateLimitError = (message: string) => ({
+  success: false,
+  error: message,
+});
+
+// Chat: ~1 message every 4s sustained, burst protection for scraping
+const chatLimiter = rateLimit({
+  windowMs: 60 * 1000, // 1 min
+  limit: 15,
+  standardHeaders: 'draft-7',
+  legacyHeaders: false,
+  message: rateLimitError('Too many messages. Wait a moment before asking again.'),
+});
+
+const chatHourlyLimiter = rateLimit({
+  windowMs: 60 * 60 * 1000, // 1 hour
+  limit: 120,
+  standardHeaders: 'draft-7',
+  legacyHeaders: false,
+  message: rateLimitError('Hourly chat limit reached. Come back later.'),
+});
+
+// TTS: ElevenLabs charges per character — keep this tighter than chat
+const ttsLimiter = rateLimit({
+  windowMs: 60 * 1000,
+  limit: 10,
+  standardHeaders: 'draft-7',
+  legacyHeaders: false,
+  message: rateLimitError('Too many voice requests. Wait a moment.'),
+});
+
+const ttsHourlyLimiter = rateLimit({
+  windowMs: 60 * 60 * 1000,
+  limit: 40,
+  standardHeaders: 'draft-7',
+  legacyHeaders: false,
+  message: rateLimitError('Hourly voice limit reached.'),
+});
+
+// Subscribe: prevent signup spam
+const subscribeLimiter = rateLimit({
+  windowMs: 60 * 60 * 1000, // 1 hour
+  limit: 5,
+  standardHeaders: 'draft-7',
+  legacyHeaders: false,
+  message: rateLimitError('Too many signup attempts. Try again later.'),
+});
+
+// Visitor tracking: permissive but bounded (one event per route change is normal)
+const trackVisitLimiter = rateLimit({
+  windowMs: 60 * 1000,
+  limit: 60,
+  standardHeaders: 'draft-7',
+  legacyHeaders: false,
+  // Silently drop rather than erroring — this is fire-and-forget from the client
+  skipFailedRequests: true,
+  message: rateLimitError('Too many events.'),
+});
 
 // ================================================================
 // Visitor intelligence + analytics helpers
@@ -219,7 +289,7 @@ router.get('/health', (_req, res) => {
 });
 
 // Chat endpoint - send message to the Sphinx
-router.post('/chat', async (req, res) => {
+router.post('/chat', chatLimiter, chatHourlyLimiter, async (req, res) => {
   try {
     const { sessionId, message, userId } = req.body;
     if (!message || !userId) {
@@ -355,7 +425,7 @@ router.get('/content/:id', async (req, res) => {
 });
 
 // Email subscriber signup
-router.post('/subscribe', async (req, res) => {
+router.post('/subscribe', subscribeLimiter, async (req, res) => {
   try {
     const { email, source } = req.body;
     if (!email || typeof email !== 'string' || !email.includes('@')) {
@@ -397,7 +467,7 @@ router.post('/subscribe', async (req, res) => {
 });
 
 // Visitor intelligence — called silently on every frontend route change
-router.post('/track-visit', async (req, res) => {
+router.post('/track-visit', trackVisitLimiter, async (req, res) => {
   try {
     const { sessionId, page, referrer } = req.body;
     if (!sessionId || !page) {
@@ -496,7 +566,7 @@ router.get('/analytics', async (_req, res) => {
 });
 
 // Text-to-speech via ElevenLabs (The Griot voice)
-router.post('/tts', async (req, res) => {
+router.post('/tts', ttsLimiter, ttsHourlyLimiter, async (req, res) => {
   try {
     const { text } = req.body;
     if (!text || typeof text !== 'string') {
