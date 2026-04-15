@@ -283,6 +283,83 @@ async function sendWelcomeEmail(to: string): Promise<boolean> {
   }
 }
 
+// ================================================================
+// Admin authentication — HMAC-signed tokens, no user accounts.
+// Frontend exchanges ADMIN_PASSWORD for a 24h token; admin-gated
+// endpoints verify the token on the server.
+// ================================================================
+
+const ADMIN_TOKEN_TTL_MS = 24 * 60 * 60 * 1000; // 24 hours
+
+function getAdminSecret(): string | null {
+  return process.env.ADMIN_TOKEN_SECRET || null;
+}
+
+function createAdminToken(): string | null {
+  const secret = getAdminSecret();
+  if (!secret) return null;
+  const payload = { iat: Date.now(), exp: Date.now() + ADMIN_TOKEN_TTL_MS };
+  const payloadB64 = Buffer.from(JSON.stringify(payload)).toString('base64url');
+  const signature = crypto.createHmac('sha256', secret).update(payloadB64).digest('base64url');
+  return `${payloadB64}.${signature}`;
+}
+
+function verifyAdminToken(token: string | undefined): boolean {
+  if (!token) return false;
+  const secret = getAdminSecret();
+  if (!secret) return false;
+  const [payloadB64, signature] = token.split('.');
+  if (!payloadB64 || !signature) return false;
+
+  // Timing-safe compare of signatures
+  const expected = crypto.createHmac('sha256', secret).update(payloadB64).digest('base64url');
+  if (expected.length !== signature.length) return false;
+  const a = Buffer.from(expected);
+  const b = Buffer.from(signature);
+  if (a.length !== b.length) return false;
+  if (!crypto.timingSafeEqual(a, b)) return false;
+
+  try {
+    const payload = JSON.parse(Buffer.from(payloadB64, 'base64url').toString('utf-8'));
+    if (typeof payload.exp !== 'number') return false;
+    return payload.exp > Date.now();
+  } catch {
+    return false;
+  }
+}
+
+// Express middleware: 401 if Authorization: Bearer <token> is missing/invalid
+function requireAdmin(req: express.Request, res: express.Response, next: express.NextFunction) {
+  const authHeader = req.headers.authorization || '';
+  const token = authHeader.startsWith('Bearer ') ? authHeader.slice(7) : undefined;
+  if (!verifyAdminToken(token)) {
+    res.status(401).json({ success: false, error: 'Unauthorized' } as ApiResponse);
+    return;
+  }
+  next();
+}
+
+// Timing-safe string compare (prevents timing-attack password discovery)
+function timingSafeStringEqual(a: string, b: string): boolean {
+  const bufA = Buffer.from(a);
+  const bufB = Buffer.from(b);
+  if (bufA.length !== bufB.length) {
+    // Still do the compare to keep timing uniform-ish on length mismatch
+    crypto.timingSafeEqual(bufA, bufA);
+    return false;
+  }
+  return crypto.timingSafeEqual(bufA, bufB);
+}
+
+// Brute-force protection: 5 verify attempts per hour per IP
+const adminVerifyLimiter = rateLimit({
+  windowMs: 60 * 60 * 1000,
+  limit: 5,
+  standardHeaders: 'draft-7',
+  legacyHeaders: false,
+  message: rateLimitError('Too many login attempts. Try again later.'),
+});
+
 // Health check
 router.get('/health', (_req, res) => {
   res.json({ status: 'ok', service: 'wots-api', timestamp: Date.now() });
@@ -363,7 +440,7 @@ router.get('/chat/:sessionId', async (req, res) => {
 });
 
 // Content pipeline - generate new content
-router.post('/content/generate', async (req, res) => {
+router.post('/content/generate', requireAdmin, async (req, res) => {
   try {
     const config: ContentPipelineConfig = req.body;
     if (!config.contentType || !config.prompt) {
@@ -503,7 +580,7 @@ router.post('/track-visit', trackVisitLimiter, async (req, res) => {
 });
 
 // Analytics aggregation for admin panel
-router.get('/analytics', async (_req, res) => {
+router.get('/analytics', requireAdmin, async (_req, res) => {
   try {
     const THIRTY_DAYS_MS = 30 * 24 * 60 * 60 * 1000;
     const since = Date.now() - THIRTY_DAYS_MS;
@@ -561,6 +638,100 @@ router.get('/analytics', async (_req, res) => {
   } catch (error) {
     const errMsg = error instanceof Error ? error.message : 'Unknown error';
     console.error('Analytics error:', errMsg);
+    res.status(500).json({ success: false, error: errMsg } as ApiResponse);
+  }
+});
+
+// ================================================================
+// Admin endpoints — password verify + protected writes
+// ================================================================
+
+router.post('/admin/verify', adminVerifyLimiter, async (req, res) => {
+  try {
+    const { password } = req.body;
+    const configured = process.env.ADMIN_PASSWORD;
+    if (!configured || !getAdminSecret()) {
+      res.status(500).json({ success: false, error: 'Admin auth not configured' } as ApiResponse);
+      return;
+    }
+    if (typeof password !== 'string' || password.length === 0) {
+      res.status(400).json({ success: false, error: 'Password required' } as ApiResponse);
+      return;
+    }
+    if (!timingSafeStringEqual(password, configured)) {
+      res.status(401).json({ success: false, error: 'Incorrect password' } as ApiResponse);
+      return;
+    }
+    const token = createAdminToken();
+    if (!token) {
+      res.status(500).json({ success: false, error: 'Token generation failed' } as ApiResponse);
+      return;
+    }
+    res.json({ success: true, data: { token } } as ApiResponse);
+  } catch (error) {
+    const errMsg = error instanceof Error ? error.message : 'Unknown error';
+    res.status(500).json({ success: false, error: errMsg } as ApiResponse);
+  }
+});
+
+// Quick token validity check (used by admin UI to decide whether to re-prompt)
+router.get('/admin/check', requireAdmin, (_req, res) => {
+  res.json({ success: true, data: { valid: true } } as ApiResponse);
+});
+
+// Admin: create gallery image record (Cloudinary upload happens client-side,
+// this persists the metadata). Bypasses Firestore security rules via admin SDK.
+router.post('/admin/gallery', requireAdmin, async (req, res) => {
+  try {
+    const { url, title, category } = req.body;
+    if (typeof url !== 'string' || typeof title !== 'string' || typeof category !== 'string') {
+      res.status(400).json({ success: false, error: 'Missing url, title, or category' } as ApiResponse);
+      return;
+    }
+    const docRef = await db.collection('gallery_images').add({
+      url,
+      title: title.trim(),
+      category,
+      uploadedAt: Date.now(),
+    });
+    res.json({ success: true, data: { id: docRef.id } } as ApiResponse);
+  } catch (error) {
+    const errMsg = error instanceof Error ? error.message : 'Unknown error';
+    res.status(500).json({ success: false, error: errMsg } as ApiResponse);
+  }
+});
+
+// Admin: delete gallery image record
+router.delete('/admin/gallery/:id', requireAdmin, async (req, res) => {
+  try {
+    await db.collection('gallery_images').doc(req.params.id).delete();
+    res.json({ success: true, data: { id: req.params.id } } as ApiResponse);
+  } catch (error) {
+    const errMsg = error instanceof Error ? error.message : 'Unknown error';
+    res.status(500).json({ success: false, error: errMsg } as ApiResponse);
+  }
+});
+
+// Admin: update CMS site content section (hero, featured_cards, etc.)
+router.put('/admin/site-content/:section', requireAdmin, async (req, res) => {
+  try {
+    const section = req.params.section;
+    if (!/^[a-z0-9_]+$/i.test(section)) {
+      res.status(400).json({ success: false, error: 'Invalid section id' } as ApiResponse);
+      return;
+    }
+    const data = req.body;
+    if (!data || typeof data !== 'object') {
+      res.status(400).json({ success: false, error: 'Invalid body' } as ApiResponse);
+      return;
+    }
+    await db.collection('site_content').doc(section).set(
+      { ...data, updatedAt: Date.now() },
+      { merge: true }
+    );
+    res.json({ success: true, data: { section } } as ApiResponse);
+  } catch (error) {
+    const errMsg = error instanceof Error ? error.message : 'Unknown error';
     res.status(500).json({ success: false, error: errMsg } as ApiResponse);
   }
 });
@@ -624,7 +795,7 @@ router.post('/tts', ttsLimiter, ttsHourlyLimiter, async (req, res) => {
 });
 
 // Update content status
-router.patch('/content/:id', async (req, res) => {
+router.patch('/content/:id', requireAdmin, async (req, res) => {
   try {
     const { status } = req.body;
     if (!status || !['draft', 'published', 'archived'].includes(status)) {

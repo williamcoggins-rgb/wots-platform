@@ -1,8 +1,21 @@
 import type { ApiResponse, ChatMessage, ContentItem, ChatSession, GalleryImage } from './types';
 import { db } from './firebase';
-import { collection, getDocs, query, orderBy, where, doc, getDoc, setDoc, type QueryConstraint } from 'firebase/firestore';
+import { collection, getDocs, query, orderBy, where, doc, getDoc, type QueryConstraint } from 'firebase/firestore';
 
 const API_BASE = import.meta.env.VITE_API_URL || '/api';
+
+const ADMIN_TOKEN_KEY = 'wots_admin_token';
+
+function getAdminToken(): string | null {
+  if (typeof window === 'undefined') return null;
+  return sessionStorage.getItem(ADMIN_TOKEN_KEY);
+}
+
+export function setAdminToken(token: string | null): void {
+  if (typeof window === 'undefined') return;
+  if (token) sessionStorage.setItem(ADMIN_TOKEN_KEY, token);
+  else sessionStorage.removeItem(ADMIN_TOKEN_KEY);
+}
 
 async function request<T>(path: string, options?: RequestInit): Promise<ApiResponse<T>> {
   const res = await fetch(`${API_BASE}${path}`, {
@@ -10,6 +23,23 @@ async function request<T>(path: string, options?: RequestInit): Promise<ApiRespo
     ...options,
   });
   return res.json();
+}
+
+// Authenticated request — attaches the admin token as a Bearer header.
+async function adminRequest<T>(path: string, options: RequestInit = {}): Promise<ApiResponse<T>> {
+  const token = getAdminToken();
+  const headers: Record<string, string> = {
+    'Content-Type': 'application/json',
+    ...((options.headers as Record<string, string>) || {}),
+  };
+  if (token) headers['Authorization'] = `Bearer ${token}`;
+  const res = await fetch(`${API_BASE}${path}`, { ...options, headers });
+  const body = await res.json().catch(() => ({ success: false, error: 'Invalid response' }));
+  if (res.status === 401) {
+    // Token invalid/expired — clear it so UI can re-prompt
+    setAdminToken(null);
+  }
+  return body;
 }
 
 export async function sendMessage(
@@ -95,7 +125,60 @@ export interface AnalyticsSummary {
 }
 
 export async function getAnalytics(): Promise<ApiResponse<AnalyticsSummary>> {
-  return request('/analytics');
+  return adminRequest('/analytics');
+}
+
+// ================================================================
+// Admin authentication + admin-gated writes
+// ================================================================
+
+export async function adminLogin(password: string): Promise<ApiResponse<{ token: string }>> {
+  const res = await request<{ token: string }>('/admin/verify', {
+    method: 'POST',
+    body: JSON.stringify({ password }),
+  });
+  if (res.success && res.data?.token) {
+    setAdminToken(res.data.token);
+  }
+  return res;
+}
+
+export function adminLogout(): void {
+  setAdminToken(null);
+}
+
+export async function adminCheck(): Promise<boolean> {
+  const token = getAdminToken();
+  if (!token) return false;
+  const res = await adminRequest<{ valid: boolean }>('/admin/check');
+  return res.success === true;
+}
+
+export async function adminAddGalleryImage(
+  url: string,
+  title: string,
+  category: string
+): Promise<ApiResponse<{ id: string }>> {
+  return adminRequest('/admin/gallery', {
+    method: 'POST',
+    body: JSON.stringify({ url, title, category }),
+  });
+}
+
+export async function adminDeleteGalleryImage(id: string): Promise<ApiResponse<{ id: string }>> {
+  return adminRequest(`/admin/gallery/${encodeURIComponent(id)}`, {
+    method: 'DELETE',
+  });
+}
+
+export async function adminUpdateSiteContent(
+  section: string,
+  data: unknown
+): Promise<ApiResponse<{ section: string }>> {
+  return adminRequest(`/admin/site-content/${encodeURIComponent(section)}`, {
+    method: 'PUT',
+    body: JSON.stringify(data),
+  });
 }
 
 // Text-to-speech via ElevenLabs (The Griot voice)
@@ -112,16 +195,11 @@ export async function textToSpeech(text: string): Promise<Blob> {
   return res.blob();
 }
 
-// Site content CMS
+// Site content CMS — public read. Writes go through adminUpdateSiteContent.
 export async function getSiteContent(section: string): Promise<any> {
   const docRef = doc(db, 'site_content', section);
   const snapshot = await getDoc(docRef);
   return snapshot.exists() ? snapshot.data() : null;
-}
-
-export async function updateSiteContent(section: string, data: any): Promise<void> {
-  const docRef = doc(db, 'site_content', section);
-  await setDoc(docRef, { ...data, updatedAt: Date.now() }, { merge: true });
 }
 
 export async function getGalleryImages(category?: string): Promise<GalleryImage[]> {

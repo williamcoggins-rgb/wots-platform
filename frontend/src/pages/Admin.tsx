@@ -1,7 +1,15 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { db } from '../firebase';
-import { collection, addDoc, getDocs, deleteDoc, doc, query, orderBy } from 'firebase/firestore';
-import { getSiteContent, updateSiteContent } from '../api';
+import { collection, getDocs, query, orderBy } from 'firebase/firestore';
+import {
+  getSiteContent,
+  adminUpdateSiteContent,
+  adminAddGalleryImage,
+  adminDeleteGalleryImage,
+  adminLogin,
+  adminLogout,
+  adminCheck,
+} from '../api';
 import { ImageCropModal } from '../components/ImageCropModal';
 import type { GalleryImage, SiteHeroContent, SiteEmailCaptureContent, FeaturedCard, DiscoverCard } from '../types';
 
@@ -324,7 +332,8 @@ function SiteContentEditor() {
     setStatus('saving');
     setError('');
     try {
-      await updateSiteContent(section, data);
+      const res = await adminUpdateSiteContent(section, data);
+      if (!res.success) throw new Error(res.error || 'Save failed');
       setStatus('saved');
       setTimeout(() => setStatus('idle'), 2000);
     } catch (err: any) {
@@ -682,20 +691,27 @@ const adminStyles = `
 }
 `;
 
-const ADMIN_PASSWORD = 'Sanford8715!';
-const AUTH_KEY = 'wots_admin_auth';
-
 function PasswordGate({ onAuth }: { onAuth: () => void }) {
   const [password, setPassword] = useState('');
-  const [error, setError] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (password === ADMIN_PASSWORD) {
-      sessionStorage.setItem(AUTH_KEY, 'true');
-      onAuth();
-    } else {
-      setError(true);
+    if (loading) return;
+    setLoading(true);
+    setError(null);
+    try {
+      const res = await adminLogin(password);
+      if (res.success && res.data?.token) {
+        onAuth();
+      } else {
+        setError(res.error || 'Incorrect password');
+      }
+    } catch {
+      setError('Connection failed. Try again.');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -708,16 +724,35 @@ function PasswordGate({ onAuth }: { onAuth: () => void }) {
         <input
           type="password"
           value={password}
-          onChange={(e) => { setPassword(e.target.value); setError(false); }}
+          onChange={(e) => { setPassword(e.target.value); setError(null); }}
           placeholder="Enter password"
           autoFocus
+          disabled={loading}
           style={{ width: '100%', padding: '12px 14px', background: '#222', border: `1px solid ${error ? '#E05555' : '#444'}`, borderRadius: '2px', color: '#FFF', fontFamily: "'Inter', sans-serif", fontSize: '15px', outline: 'none', boxSizing: 'border-box', marginBottom: '16px' }}
           onFocus={(e) => { if (!error) e.currentTarget.style.borderColor = '#E88A1A'; }}
           onBlur={(e) => { if (!error) e.currentTarget.style.borderColor = '#444'; }}
         />
-        {error && <p style={{ color: '#E05555', fontSize: '13px', margin: '0 0 12px', fontFamily: "'Inter', sans-serif" }}>Incorrect password</p>}
-        <button type="submit" style={{ width: '100%', padding: '12px', background: '#E88A1A', color: '#FFF', border: 'none', borderRadius: '2px', fontFamily: "'Roboto Condensed', sans-serif", fontSize: '14px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1px', cursor: 'pointer' }}>
-          Login
+        {error && <p style={{ color: '#E05555', fontSize: '13px', margin: '0 0 12px', fontFamily: "'Inter', sans-serif" }}>{error}</p>}
+        <button
+          type="submit"
+          disabled={loading || password.length === 0}
+          style={{
+            width: '100%',
+            padding: '12px',
+            background: '#E88A1A',
+            color: '#FFF',
+            border: 'none',
+            borderRadius: '2px',
+            fontFamily: "'Roboto Condensed', sans-serif",
+            fontSize: '14px',
+            fontWeight: 700,
+            textTransform: 'uppercase',
+            letterSpacing: '1px',
+            cursor: loading || password.length === 0 ? 'not-allowed' : 'pointer',
+            opacity: loading || password.length === 0 ? 0.6 : 1,
+          }}
+        >
+          {loading ? 'Verifying…' : 'Login'}
         </button>
       </form>
     </div>
@@ -725,7 +760,20 @@ function PasswordGate({ onAuth }: { onAuth: () => void }) {
 }
 
 export function Admin() {
-  const [authed, setAuthed] = useState(() => sessionStorage.getItem(AUTH_KEY) === 'true');
+  const [authed, setAuthed] = useState<boolean | null>(null);
+
+  useEffect(() => {
+    // Check if existing token is still valid on mount
+    adminCheck().then((valid) => setAuthed(valid));
+  }, []);
+
+  if (authed === null) {
+    return (
+      <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#151515' }}>
+        <p style={{ color: '#666', fontFamily: "'Inter', sans-serif", fontSize: 14 }}>…</p>
+      </div>
+    );
+  }
 
   if (!authed) {
     return <PasswordGate onAuth={() => setAuthed(true)} />;
@@ -839,13 +887,11 @@ function AdminPanel() {
 
       setUploadProgress(70);
 
-      // Save to Firestore
-      await addDoc(collection(db, 'gallery_images'), {
-        url: secureUrl,
-        title: title.trim(),
-        category,
-        uploadedAt: Date.now(),
-      });
+      // Save via backend (admin SDK) — browser can no longer write directly
+      const saveRes = await adminAddGalleryImage(secureUrl, title.trim(), category);
+      if (!saveRes.success) {
+        throw new Error(saveRes.error || 'Save failed');
+      }
 
       setUploadProgress(100);
 
@@ -869,7 +915,8 @@ function AdminPanel() {
   const handleDelete = async (imageId: string) => {
     if (!confirm('Delete this image from the gallery?')) return;
     try {
-      await deleteDoc(doc(db, 'gallery_images', imageId));
+      const res = await adminDeleteGalleryImage(imageId);
+      if (!res.success) throw new Error(res.error || 'Delete failed');
       setImages((prev) => prev.filter((img) => img.id !== imageId));
     } catch (err) {
       console.error('Delete failed:', err);
@@ -918,6 +965,27 @@ function AdminPanel() {
           >
             Manage gallery and site content
           </p>
+          <button
+            onClick={() => { adminLogout(); window.location.reload(); }}
+            style={{
+              marginTop: 12,
+              padding: '6px 14px',
+              background: 'transparent',
+              color: '#888',
+              border: '1px solid #444',
+              borderRadius: 2,
+              fontFamily: "'Roboto Condensed', sans-serif",
+              fontSize: 11,
+              letterSpacing: '0.1em',
+              textTransform: 'uppercase',
+              cursor: 'pointer',
+              transition: 'color 0.2s, border-color 0.2s',
+            }}
+            onMouseEnter={(e) => { e.currentTarget.style.color = '#E88A1A'; e.currentTarget.style.borderColor = '#E88A1A'; }}
+            onMouseLeave={(e) => { e.currentTarget.style.color = '#888'; e.currentTarget.style.borderColor = '#444'; }}
+          >
+            Logout
+          </button>
         </div>
 
         {/* Tab Navigation */}
