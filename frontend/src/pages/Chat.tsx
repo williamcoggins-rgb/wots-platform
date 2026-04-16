@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
 import { sendMessage, textToSpeech } from '../api';
 import { trackAnalyticsEvent } from '../firebase';
+import { SEO } from '../components/SEO';
 import type { ChatMessage } from '../types';
 
 const USER_ID = 'anonymous-player';
@@ -166,6 +167,11 @@ export function Chat() {
 
   return (
     <>
+      <SEO
+        title="The Griot"
+        description="Speak with The Griot — an ancient keeper of records who guards the secrets of Neo-Nubia. Ask your questions. Choose wisely."
+        canonicalPath="/chat"
+      />
       <style>{chatStyles}</style>
       <div
         style={{

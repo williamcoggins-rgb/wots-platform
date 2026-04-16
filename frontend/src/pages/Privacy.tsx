@@ -1,3 +1,5 @@
+import { SEO } from '../components/SEO';
+
 const legalStyles = `
 .legal-page h2 {
   font-family: 'Roboto Condensed', sans-serif;
@@ -52,6 +54,11 @@ const CONTACT_EMAIL = 'seekers@warofthesphinx.com';
 export function Privacy() {
   return (
     <>
+      <SEO
+        title="Privacy Policy"
+        description="How War of the Sphinx collects, uses, and protects your information. Read our full privacy policy."
+        canonicalPath="/privacy"
+      />
       <style>{legalStyles}</style>
       <div
         style={{

@@ -10,6 +10,7 @@ import {
   adminLogout,
   adminCheck,
 } from '../api';
+import { SEO } from '../components/SEO';
 import { ImageCropModal } from '../components/ImageCropModal';
 import type { GalleryImage, SiteHeroContent, SiteEmailCaptureContent, FeaturedCard, DiscoverCard } from '../types';
 
@@ -934,6 +935,12 @@ function AdminPanel() {
 
   return (
     <>
+      <SEO
+        title="Admin"
+        description="Admin panel"
+        canonicalPath="/admin"
+        noindex
+      />
       <style>{adminStyles}</style>
       <div
         style={{

@@ -1,0 +1,29 @@
+# War of the Sphinx
+
+> An independent Afrofuturist superhero comic book platform.
+
+War of the Sphinx is a 7-volume independent comic book series set in Neo-Nubia — a near-future African nation on the edge of collapse. Ancient power. Modern corruption. A war that was never supposed to happen.
+
+This platform serves as the digital gateway to the series: lore, artwork, an AI-driven narrative guide called The Griot, and a mailing list for launch updates. Volume 1 is currently in production.
+
+## Key Pages
+
+- [Homepage](https://warofthesphinx.com/) — Series overview, featured content, email signup
+- [The Griot](https://warofthesphinx.com/chat) — AI character interaction with an in-universe narrator
+- [The World](https://warofthesphinx.com/lore) — Lore fragments and worldbuilding content
+- [Gallery](https://warofthesphinx.com/gallery) — Concept art, character designs, and environment artwork
+- [About](https://warofthesphinx.com/about) — 7-volume series overview, development timeline, production status
+- [Privacy](https://warofthesphinx.com/privacy) — Privacy policy
+- [Terms](https://warofthesphinx.com/terms) — Terms of service
+
+## About the Project
+
+- Genre: Afrofuturist superhero science fiction
+- Format: 7-volume comic book series
+- Setting: Neo-Nubia (fictional near-future African nation)
+- Status: Volume 1 in production
+- Platform: React, Firebase, Express
+
+## Contact
+
+Email: seekers@warofthesphinx.com

@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { getContent } from '../api';
+import { SEO } from '../components/SEO';
 import type { ContentItem } from '../types';
 
 const TYPE_LABELS: Record<string, string> = {
@@ -79,6 +80,11 @@ export function Lore() {
 
   return (
     <>
+      <SEO
+        title="The World"
+        description="Fragments of forgotten knowledge from the world of Neo-Nubia. Explore the lore behind War of the Sphinx — ancient civilizations, buried power, and riddles with no safe answers."
+        canonicalPath="/lore"
+      />
       <style>{loreStyles}</style>
       <div
         style={{

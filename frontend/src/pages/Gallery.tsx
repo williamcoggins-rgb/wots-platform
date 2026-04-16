@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { getGalleryImages } from '../api';
 import { trackAnalyticsEvent } from '../firebase';
+import { SEO } from '../components/SEO';
 import type { GalleryImage } from '../types';
 
 const FILTER_TABS: { label: string; value: string | undefined }[] = [
@@ -164,6 +165,11 @@ export function Gallery() {
 
   return (
     <>
+      <SEO
+        title="Gallery"
+        description="Concept art, character designs, and environment artwork from War of the Sphinx. Visions of Neo-Nubia rendered in light and shadow."
+        canonicalPath="/gallery"
+      />
       <style>{galleryStyles}</style>
       <div
         style={{

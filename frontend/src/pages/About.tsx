@@ -1,3 +1,5 @@
+import { SEO } from '../components/SEO';
+
 const aboutStyles = `
 @keyframes progressFill {
   0% { width: 0; }
@@ -18,6 +20,11 @@ const VOLUMES = [
 export function About() {
   return (
     <>
+      <SEO
+        title="About"
+        description="War of the Sphinx is a 7-volume independent Afrofuturist comic book series. Follow the journey from Volume 1 through the war for Neo-Nubia."
+        canonicalPath="/about"
+      />
       <style>{aboutStyles}</style>
       <div
         style={{

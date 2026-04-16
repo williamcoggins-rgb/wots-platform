@@ -1,15 +1,16 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, lazy, Suspense } from 'react';
 import { BrowserRouter, Routes, Route, Link, useLocation } from 'react-router-dom';
-import { Chat } from './pages/Chat';
-import { Lore } from './pages/Lore';
-import { Home } from './pages/Home';
-import { About } from './pages/About';
-import { Admin } from './pages/Admin';
-import { Gallery } from './pages/Gallery';
-import { Privacy } from './pages/Privacy';
-import { Terms } from './pages/Terms';
 import { subscribeEmail, trackVisit } from './api';
 import { trackAnalyticsEvent } from './firebase';
+
+const Home = lazy(() => import('./pages/Home').then(m => ({ default: m.Home })));
+const Chat = lazy(() => import('./pages/Chat').then(m => ({ default: m.Chat })));
+const Lore = lazy(() => import('./pages/Lore').then(m => ({ default: m.Lore })));
+const Gallery = lazy(() => import('./pages/Gallery').then(m => ({ default: m.Gallery })));
+const About = lazy(() => import('./pages/About').then(m => ({ default: m.About })));
+const Admin = lazy(() => import('./pages/Admin').then(m => ({ default: m.Admin })));
+const Privacy = lazy(() => import('./pages/Privacy').then(m => ({ default: m.Privacy })));
+const Terms = lazy(() => import('./pages/Terms').then(m => ({ default: m.Terms })));
 
 const PAGE_NAMES: Record<string, string> = {
   '/': 'home',
@@ -190,16 +191,18 @@ function AnimatedRoutes() {
 
   return (
     <div className={transitionClass}>
-      <Routes location={displayLocation}>
-        <Route path="/" element={<Home />} />
-        <Route path="/chat" element={<Chat />} />
-        <Route path="/lore" element={<Lore />} />
-        <Route path="/gallery" element={<Gallery />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/admin" element={<Admin />} />
-        <Route path="/privacy" element={<Privacy />} />
-        <Route path="/terms" element={<Terms />} />
-      </Routes>
+      <Suspense fallback={<div style={{ minHeight: '100vh' }} />}>
+        <Routes location={displayLocation}>
+          <Route path="/" element={<Home />} />
+          <Route path="/chat" element={<Chat />} />
+          <Route path="/lore" element={<Lore />} />
+          <Route path="/gallery" element={<Gallery />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/admin" element={<Admin />} />
+          <Route path="/privacy" element={<Privacy />} />
+          <Route path="/terms" element={<Terms />} />
+        </Routes>
+      </Suspense>
     </div>
   );
 }
@@ -467,8 +470,11 @@ function Layout() {
 
   return (
         <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', position: 'relative', backgroundImage: `linear-gradient(180deg, rgba(10,10,10,0.55) 0%, rgba(21,21,21,0.45) 50%, rgba(10,10,10,0.6) 100%), url(${SITE_BG_URL})`, backgroundSize: 'cover', backgroundPosition: 'center top', backgroundAttachment: 'fixed' }}>
-      {/* ---- NAVBAR ---- */}
+      {/* ---- HEADER + NAVBAR ---- */}
+      <header>
       <nav
+        role="navigation"
+        aria-label="Main navigation"
         style={{
           position: 'fixed',
           top: 0,
@@ -534,6 +540,7 @@ function Layout() {
           </button>
         </div>
       </nav>
+      </header>
 
       {/* ---- MOBILE MENU OVERLAY ---- */}
       <div

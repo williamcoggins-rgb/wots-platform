@@ -2,7 +2,8 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" sizes="48x48" />
+    <link rel="icon" type="image/png" href="/favicon.ico" sizes="32x32 16x16" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta name="theme-color" content="#151515" />
     <meta name="description" content="War of the Sphinx is a 7-volume independent comic book series set in Neo-Nubia — a near-future African nation on the edge of collapse. Ancient power. Modern corruption." />
@@ -30,6 +31,35 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Roboto+Condensed:wght@400;700;900&display=swap" rel="stylesheet" />
     <title>War of the Sphinx</title>
+
+    <!-- Structured Data / JSON-LD -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "War of the Sphinx",
+      "url": "https://warofthesphinx.com"
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "War of the Sphinx",
+      "url": "https://warofthesphinx.com",
+      "genre": ["Comics", "Afrofuturism"]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "CreativeWorkSeries",
+      "name": "War of the Sphinx",
+      "genre": ["Superhero", "Afrofuturism", "Science Fiction", "Comics"],
+      "numberOfVolumes": 7,
+      "url": "https://warofthesphinx.com"
+    }
+    </script>
   </head>
   <body>
     <div id="root"></div>

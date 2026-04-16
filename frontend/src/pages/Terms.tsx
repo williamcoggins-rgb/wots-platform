@@ -1,3 +1,5 @@
+import { SEO } from '../components/SEO';
+
 const legalStyles = `
 .legal-page h2 {
   font-family: 'Roboto Condensed', sans-serif;
@@ -52,6 +54,11 @@ const CONTACT_EMAIL = 'seekers@warofthesphinx.com';
 export function Terms() {
   return (
     <>
+      <SEO
+        title="Terms of Service"
+        description="Terms of service for the War of the Sphinx platform. Read before entering the archive."
+        canonicalPath="/terms"
+      />
       <style>{legalStyles}</style>
       <div
         style={{
