@@ -1,7 +1,7 @@
 import { Helmet } from 'react-helmet-async';
 
 const SITE_NAME = 'War of the Sphinx';
-const DOMAIN = 'https://warofthesphinx.com';
+const DOMAIN = 'https://wotscampaign.com';
 const DEFAULT_OG_IMAGE =
   'https://res.cloudinary.com/dcpeomifz/image/upload/c_fill,w_1200,h_630,q_auto,f_jpg/v1775489586/image2_gpapbe.jpg';
 

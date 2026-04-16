@@ -49,7 +49,7 @@ const legalStyles = `
 `;
 
 const EFFECTIVE_DATE = 'April 14, 2026';
-const CONTACT_EMAIL = 'seekers@warofthesphinx.com';
+const CONTACT_EMAIL = 'seekers@wotscampaign.com';
 
 export function Privacy() {
   return (

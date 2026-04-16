@@ -8,13 +8,13 @@ This platform serves as the digital gateway to the series: lore, artwork, an AI-
 
 ## Key Pages
 
-- [Homepage](https://warofthesphinx.com/) — Series overview, featured content, email signup
-- [The Griot](https://warofthesphinx.com/chat) — AI character interaction with an in-universe narrator
-- [The World](https://warofthesphinx.com/lore) — Lore fragments and worldbuilding content
-- [Gallery](https://warofthesphinx.com/gallery) — Concept art, character designs, and environment artwork
-- [About](https://warofthesphinx.com/about) — 7-volume series overview, development timeline, production status
-- [Privacy](https://warofthesphinx.com/privacy) — Privacy policy
-- [Terms](https://warofthesphinx.com/terms) — Terms of service
+- [Homepage](https://wotscampaign.com/) — Series overview, featured content, email signup
+- [The Griot](https://wotscampaign.com/chat) — AI character interaction with an in-universe narrator
+- [The World](https://wotscampaign.com/lore) — Lore fragments and worldbuilding content
+- [Gallery](https://wotscampaign.com/gallery) — Concept art, character designs, and environment artwork
+- [About](https://wotscampaign.com/about) — 7-volume series overview, development timeline, production status
+- [Privacy](https://wotscampaign.com/privacy) — Privacy policy
+- [Terms](https://wotscampaign.com/terms) — Terms of service
 
 ## About the Project
 
@@ -26,4 +26,4 @@ This platform serves as the digital gateway to the series: lore, artwork, an AI-
 
 ## Contact
 
-Email: seekers@warofthesphinx.com
+Email: seekers@wotscampaign.com
