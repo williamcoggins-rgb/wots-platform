@@ -191,7 +191,12 @@ function AnimatedRoutes() {
 
   return (
     <div className={transitionClass}>
-      <Suspense fallback={<div style={{ minHeight: '100vh' }} />}>
+      <Suspense fallback={
+        <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <div style={{ width: 32, height: 32, border: '3px solid #333', borderTopColor: '#E88A1A', borderRadius: '50%', animation: 'spin 0.8s linear infinite' }} />
+          <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
+        </div>
+      }>
         <Routes location={displayLocation}>
           <Route path="/" element={<Home />} />
           <Route path="/chat" element={<Chat />} />
