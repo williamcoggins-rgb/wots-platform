@@ -4,6 +4,7 @@ import cron from 'node-cron';
 import crypto from 'crypto';
 import dotenv from 'dotenv';
 import express from 'express';
+import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
 import { getAssistantResponse, createNewSession } from './assistant';
 import { generateContent, buildContentItem } from './pipeline';
@@ -31,6 +32,7 @@ const allowedOrigins = process.env.ALLOWED_ORIGINS
   ? process.env.ALLOWED_ORIGINS.split(',')
   : ['http://localhost:5173', 'http://localhost:5000'];
 app.use(cors({ origin: allowedOrigins }));
+app.use(helmet());
 app.use(express.json());
 
 // ================================================================
