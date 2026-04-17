@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
+import { createPortal } from 'react-dom';
 import { getGalleryImages } from '../api';
 import { trackAnalyticsEvent } from '../firebase';
 import { SEO } from '../components/SEO';
@@ -109,9 +110,10 @@ const galleryStyles = `
   to { opacity: 1; }
 }
 .lightbox-close {
-  position: absolute;
+  position: fixed;
   top: max(1rem, env(safe-area-inset-top, 1rem));
   right: 1rem;
+  z-index: 10000;
   width: 48px;
   height: 48px;
   background: rgba(20,20,40,0.6);
@@ -338,8 +340,7 @@ export function Gallery() {
         )}
 
         {/* Lightbox */}
-        {lightboxImage && (
-          <div
+        {lightboxImage && createPortal(          <div
             className="lightbox-overlay"
             onClick={() => setLightboxImage(null)}
           >
@@ -388,7 +389,7 @@ export function Gallery() {
               </div>
             </div>
           </div>
-        )}
+        , document.body)}
       </div>
     </>
   );
