@@ -142,7 +142,7 @@ export function Gallery() {
     setLoading(true);
     try {
       const imgs = await getGalleryImages(activeFilter);
-      setImages(imgs);
+      setImages([...imgs].sort((a, b) => a.title.localeCompare(b.title)));
     } catch (err) {
       console.error('Failed to fetch gallery images:', err);
     } finally {
@@ -355,8 +355,8 @@ export function Gallery() {
             <div
               onClick={(e) => e.stopPropagation()}
               style={{
-                maxWidth: '90vw',
-                maxHeight: '85vh',
+                maxWidth: '95vw',
+                maxHeight: '95vh',
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
@@ -367,7 +367,7 @@ export function Gallery() {
                 alt={lightboxImage.title}
                 style={{
                   maxWidth: '100%',
-                  maxHeight: '75vh',
+                  maxHeight: '88vh',
                   objectFit: 'contain',
                   borderRadius: '8px',
                 }}
