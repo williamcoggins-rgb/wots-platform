@@ -24,6 +24,7 @@ export function SEO({ title, description, canonicalPath, ogImage, noindex }: SEO
       <meta name="description" content={description} />
       <link rel="canonical" href={canonicalUrl} />
       <meta name="robots" content={noindex ? 'noindex, nofollow' : 'index, follow'} />
+      <meta name="google-site-verification" content="yBKtsSJ9fRiH23uCQLwXwh57CdJMMPKaTobPiy4oN-w" />
 
       <meta property="og:type" content="website" />
       <meta property="og:site_name" content={SITE_NAME} />
