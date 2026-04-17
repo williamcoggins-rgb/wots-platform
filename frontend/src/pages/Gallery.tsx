@@ -366,7 +366,7 @@ export function Gallery() {
                 src={lightboxImage.url}
                 alt={lightboxImage.title}
                 style={{
-                  maxWidth: '100%',
+                  width: '90vw',
                   maxHeight: '88vh',
                   objectFit: 'contain',
                   borderRadius: '8px',
