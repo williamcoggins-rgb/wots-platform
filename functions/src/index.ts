@@ -244,7 +244,7 @@ function welcomeEmailHtml(): string {
               <p style="margin:0 0 20px;font-size:16px;line-height:1.7;color:#DDDDDD;">I am <span style="color:#E88A1A;font-weight:600;">The Griot</span>. I keep the record. I hold the names. When the first volume breaks its silence — you will know before the rest of the world does.</p>
               <p style="margin:0 0 28px;font-size:16px;line-height:1.7;color:#DDDDDD;">Until then — ask. Come back often. The archive unfolds for those who return.</p>
               <div style="text-align:center;margin:32px 0 8px;">
-                <a href="https://wots-platform-11435.web.app/chat" style="display:inline-block;padding:14px 32px;background:#E88A1A;color:#FFFFFF;font-family:'Arial Narrow','Roboto Condensed',Arial,sans-serif;font-weight:700;font-size:13px;letter-spacing:2px;text-transform:uppercase;text-decoration:none;border-radius:2px;">Speak with The Griot</a>
+                <a href="https://wotscampaign.com/chat" style="display:inline-block;padding:14px 32px;background:#E88A1A;color:#FFFFFF;font-family:'Arial Narrow','Roboto Condensed',Arial,sans-serif;font-weight:700;font-size:13px;letter-spacing:2px;text-transform:uppercase;text-decoration:none;border-radius:2px;">Speak with The Griot</a>
               </div>
             </td>
           </tr>
