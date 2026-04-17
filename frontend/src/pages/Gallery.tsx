@@ -356,9 +356,8 @@ export function Gallery() {
             <div
               onClick={(e) => e.stopPropagation()}
               style={{
-                maxWidth: '95vw',
-                maxHeight: '92vh',
-                overflowY: 'auto',
+                maxWidth: '90vw',
+                maxHeight: '90vh',
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
@@ -368,8 +367,9 @@ export function Gallery() {
                 src={lightboxImage.url}
                 alt={lightboxImage.title}
                 style={{
-                  width: '90vw',
-                  height: 'auto',
+                  maxWidth: '85vw',
+                  maxHeight: '82vh',
+                  objectFit: 'contain',
                   borderRadius: '8px',
                 }}
               />
