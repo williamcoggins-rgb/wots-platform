@@ -235,12 +235,12 @@ function welcomeEmailHtml(): string {
     <td align="center" style="padding:32px 16px;">
       <table role="presentation" width="580" cellpadding="0" cellspacing="0" style="max-width:580px;width:100%;">
 
-        <!-- HEADER BANNER -->
+        <!-- HEADER -->
         <tr>
           <td style="background:#1a1200;border:2px solid #e07b00;border-radius:4px 4px 0 0;padding:36px 40px 28px;text-align:center;">
             <p style="margin:0 0 10px 0;font-size:10px;font-weight:800;letter-spacing:5px;color:#e07b00;text-transform:uppercase;">— The Archive Opens —</p>
             <h1 style="margin:0;font-size:36px;font-weight:900;color:#ffd166;line-height:1.1;text-transform:uppercase;letter-spacing:2px;">You Found It.</h1>
-            <p style="margin:10px 0 0 0;font-size:16px;color:#c49a3c;line-height:1.5;font-style:italic;">Welcome to the world of War of the Sphinx.</p>
+            <p style="margin:10px 0 0 0;font-size:16px;color:#c49a3c;line-height:1.5;font-style:italic;">Welcome to War of the Sphinx.</p>
           </td>
         </tr>
 
@@ -249,7 +249,7 @@ function welcomeEmailHtml(): string {
           <td style="background:#110f08;border-left:2px solid #e07b00;border-right:2px solid #e07b00;padding:36px 40px;">
 
             <!-- INTRO -->
-            <p style="margin:0 0 20px 0;font-size:16px;color:#d4c49a;line-height:1.8;">
+            <p style="margin:0 0 18px 0;font-size:16px;color:#d4c49a;line-height:1.8;">
               You just joined a list that didn't exist two years ago — when this whole thing was still just a vision in a sketchbook.
             </p>
             <p style="margin:0 0 28px 0;font-size:16px;color:#d4c49a;line-height:1.8;">
@@ -263,15 +263,15 @@ function welcomeEmailHtml(): string {
 
             <!-- WHAT IS WOTS -->
             <p style="margin:0 0 6px 0;font-size:10px;font-weight:800;letter-spacing:4px;color:#e07b00;text-transform:uppercase;">What Is This</p>
-            <h2 style="margin:0 0 14px 0;font-size:22px;font-weight:800;color:#ffd166;text-transform:uppercase;letter-spacing:1px;">A Comic Universe. A Card Game. Two Years of Work.</h2>
+            <h2 style="margin:0 0 14px 0;font-size:22px;font-weight:800;color:#ffd166;text-transform:uppercase;letter-spacing:1px;">A 7-Volume Independent Comic Series. Two Years in the Making.</h2>
             <p style="margin:0 0 14px 0;font-size:15px;color:#b8a87a;line-height:1.8;">
-              <strong style="color:#d4c49a;">War of the Sphinx</strong> is an independent comic series and collectible card game set in an ancient African world — gods, warriors, kingdoms, and the battles that decide who survives.
+              <strong style="color:#d4c49a;">War of the Sphinx</strong> is an independent comic book series set in Neo-Nubia — a near-future African nation on the edge of collapse. Ancient power. Modern corruption. A war that was never supposed to happen.
             </p>
             <p style="margin:0 0 14px 0;font-size:15px;color:#b8a87a;line-height:1.8;">
-              The comic lays the story. The cards bring it to the table. Every character you'll play has a place in the larger narrative — and the world keeps growing with every run.
+              Seven volumes. One saga. Each chapter deepens the world — the factions, the history, and the people caught between what was and what's coming.
             </p>
             <p style="margin:0 0 28px 0;font-size:15px;color:#b8a87a;line-height:1.8;">
-              This isn't a studio project. It's two years of hand-drawn panels, late nights, and a vision that refused to stay quiet.
+              Volume 1 is in production now. And it's heading to Kickstarter — you'll be first through the door.
             </p>
 
             <!-- DIVIDER -->
@@ -283,7 +283,7 @@ function welcomeEmailHtml(): string {
             <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#0d0b08;border:1px solid #3a2800;border-radius:4px;overflow:hidden;margin-bottom:28px;">
               <tr>
                 <td style="background:#e07b00;padding:8px 20px;">
-                  <p style="margin:0;font-size:9px;font-weight:800;letter-spacing:4px;color:#0d0b08;text-transform:uppercase;">Current Status</p>
+                  <p style="margin:0;font-size:9px;font-weight:800;letter-spacing:4px;color:#0d0b08;text-transform:uppercase;">Where We Are</p>
                 </td>
               </tr>
               <tr>
@@ -291,22 +291,22 @@ function welcomeEmailHtml(): string {
                   <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
                     <tr>
                       <td style="padding:8px 0;border-bottom:1px solid #1e1a10;">
-                        <p style="margin:0;font-size:14px;color:#d4c49a;"><span style="color:#e07b00;margin-right:10px;">&#9654;</span><strong>Campaign Runs 1 &amp; 2</strong> &nbsp;<span style="color:#666;">Completed &amp; shipped</span></p>
+                        <p style="margin:0;font-size:14px;color:#d4c49a;"><span style="color:#e07b00;margin-right:10px;">&#9654;</span><strong>Volume 1</strong> &nbsp;<span style="color:#666;">In production — ~30% complete</span></p>
                       </td>
                     </tr>
                     <tr>
                       <td style="padding:8px 0;border-bottom:1px solid #1e1a10;">
-                        <p style="margin:0;font-size:14px;color:#d4c49a;"><span style="color:#e07b00;margin-right:10px;">&#9654;</span><strong>Original Artwork</strong> &nbsp;<span style="color:#666;">Hand-illustrated card set in production</span></p>
+                        <p style="margin:0;font-size:14px;color:#d4c49a;"><span style="color:#e07b00;margin-right:10px;">&#9654;</span><strong>Original Artwork</strong> &nbsp;<span style="color:#666;">Hand-illustrated pages being drawn now</span></p>
                       </td>
                     </tr>
                     <tr>
                       <td style="padding:8px 0;border-bottom:1px solid #1e1a10;">
-                        <p style="margin:0;font-size:14px;color:#d4c49a;"><span style="color:#e07b00;margin-right:10px;">&#9654;</span><strong>The Comic</strong> &nbsp;<span style="color:#666;">Pages in progress — story is locked</span></p>
+                        <p style="margin:0;font-size:14px;color:#d4c49a;"><span style="color:#e07b00;margin-right:10px;">&#9654;</span><strong>Story</strong> &nbsp;<span style="color:#666;">All 7 volumes plotted and locked</span></p>
                       </td>
                     </tr>
                     <tr>
                       <td style="padding:8px 0;">
-                        <p style="margin:0;font-size:14px;color:#d4c49a;"><span style="color:#e07b00;margin-right:10px;">&#9654;</span><strong>Next Campaign Run</strong> &nbsp;<span style="color:#666;">Coming — you'll hear first</span></p>
+                        <p style="margin:0;font-size:14px;color:#d4c49a;"><span style="color:#e07b00;margin-right:10px;">&#9654;</span><strong>Kickstarter Launch</strong> &nbsp;<span style="color:#666;">Coming — subscribers notified first</span></p>
                       </td>
                     </tr>
                   </table>
@@ -326,12 +326,11 @@ function welcomeEmailHtml(): string {
               No spam. No filler. Just direct dispatches from the studio as we build.
             </p>
 
-            <!-- Update boxes -->
             <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:10px;">
               <tr>
                 <td style="background:#0d0b08;border:1px solid #3a2800;border-left:3px solid #e07b00;border-radius:3px;padding:14px 18px;">
                   <p style="margin:0 0 4px 0;font-size:10px;font-weight:800;letter-spacing:3px;color:#e07b00;text-transform:uppercase;">Monthly — The Deep Dive</p>
-                  <p style="margin:0;font-size:14px;color:#b8a87a;line-height:1.6;">New art reveals, story breakdowns, behind-the-scenes production updates, and where the campaign stands.</p>
+                  <p style="margin:0;font-size:14px;color:#b8a87a;line-height:1.6;">New art reveals, story breakdowns, behind-the-scenes production updates, and where Volume 1 stands.</p>
                 </td>
               </tr>
             </table>
@@ -339,7 +338,7 @@ function welcomeEmailHtml(): string {
               <tr>
                 <td style="background:#0d0b08;border:1px solid #3a2800;border-left:3px solid #c49a3c;border-radius:3px;padding:14px 18px;">
                   <p style="margin:0 0 4px 0;font-size:10px;font-weight:800;letter-spacing:3px;color:#c49a3c;text-transform:uppercase;">Bi-Weekly — The Drop</p>
-                  <p style="margin:0;font-size:14px;color:#b8a87a;line-height:1.6;">Card previews, character spotlights, comic panels, and whatever else is coming out of the studio that week.</p>
+                  <p style="margin:0;font-size:14px;color:#b8a87a;line-height:1.6;">Panel previews, character spotlights, world-building teasers, and whatever else is coming out of the studio.</p>
                 </td>
               </tr>
             </table>
@@ -347,7 +346,7 @@ function welcomeEmailHtml(): string {
               <tr>
                 <td style="background:#0d0b08;border:1px solid #3a2800;border-left:3px solid #7a6030;border-radius:3px;padding:14px 18px;">
                   <p style="margin:0 0 4px 0;font-size:10px;font-weight:800;letter-spacing:3px;color:#c49a3c;text-transform:uppercase;">Launch Day — First in Line</p>
-                  <p style="margin:0;font-size:14px;color:#b8a87a;line-height:1.6;">When the next campaign drops, this list gets the link before it goes anywhere else. That's the deal.</p>
+                  <p style="margin:0;font-size:14px;color:#b8a87a;line-height:1.6;">When the Kickstarter goes live, this list gets the link before it goes anywhere else. That's the deal.</p>
                 </td>
               </tr>
             </table>
