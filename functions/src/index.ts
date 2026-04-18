@@ -226,163 +226,170 @@ function welcomeEmailHtml(): string {
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>You're In — Welcome to the War of the Sphinx Community</title>
+  <title>Welcome to War of the Sphinx</title>
 </head>
-<body style="margin:0;padding:0;background:#0a0a0a;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;">
-  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#0a0a0a;">
-    <tr>
-      <td align="center" style="padding:40px 16px;">
-        <table role="presentation" width="560" cellpadding="0" cellspacing="0" style="max-width:560px;width:100%;background:#111111;border-radius:12px;overflow:hidden;border:1px solid #2a2a2a;">
+<body style="margin:0;padding:0;background:#0d0b08;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;">
 
-          <!-- HERO HEADER -->
-          <tr>
-            <td style="background:linear-gradient(135deg,#1a0a00 0%,#2d1200 50%,#0a0a0a 100%);padding:48px 40px 36px;text-align:center;border-bottom:2px solid #c97b2a;">
-              <p style="margin:0 0 8px 0;font-size:11px;font-weight:700;letter-spacing:4px;color:#c97b2a;text-transform:uppercase;">War of the Sphinx</p>
-              <h1 style="margin:0 0 12px 0;font-size:32px;font-weight:800;color:#ffffff;line-height:1.2;">You're officially on<br>the inside.</h1>
-              <p style="margin:0;font-size:16px;color:#a0a0a0;line-height:1.5;">Welcome to a community two years in the making.</p>
-            </td>
-          </tr>
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#0d0b08;">
+  <tr>
+    <td align="center" style="padding:32px 16px;">
+      <table role="presentation" width="580" cellpadding="0" cellspacing="0" style="max-width:580px;width:100%;">
 
-          <!-- THANK YOU BLOCK -->
-          <tr>
-            <td style="padding:36px 40px 28px;">
-              <p style="margin:0 0 16px 0;font-size:17px;color:#e8e8e8;line-height:1.7;">Thank you — genuinely — for signing up. Every person who joins this list is another vote of confidence in an independent project that started as a vision and has grown into something real.</p>
-              <p style="margin:0;font-size:17px;color:#e8e8e8;line-height:1.7;">You didn't stumble onto a polished corporate campaign. You found something built by hand, with purpose — and that means everything to us.</p>
-            </td>
-          </tr>
+        <!-- HEADER BANNER -->
+        <tr>
+          <td style="background:#1a1200;border:2px solid #e07b00;border-radius:4px 4px 0 0;padding:36px 40px 28px;text-align:center;">
+            <p style="margin:0 0 10px 0;font-size:10px;font-weight:800;letter-spacing:5px;color:#e07b00;text-transform:uppercase;">— The Archive Opens —</p>
+            <h1 style="margin:0;font-size:36px;font-weight:900;color:#ffd166;line-height:1.1;text-transform:uppercase;letter-spacing:2px;">You Found It.</h1>
+            <p style="margin:10px 0 0 0;font-size:16px;color:#c49a3c;line-height:1.5;font-style:italic;">Welcome to the world of War of the Sphinx.</p>
+          </td>
+        </tr>
 
-          <!-- DIVIDER -->
-          <tr>
-            <td style="padding:0 40px;">
-              <div style="height:1px;background:linear-gradient(90deg,transparent,#c97b2a,transparent);"></div>
-            </td>
-          </tr>
+        <!-- MAIN BODY -->
+        <tr>
+          <td style="background:#110f08;border-left:2px solid #e07b00;border-right:2px solid #e07b00;padding:36px 40px;">
 
-          <!-- WHAT IS WOTS -->
-          <tr>
-            <td style="padding:32px 40px 24px;">
-              <p style="margin:0 0 6px 0;font-size:10px;font-weight:700;letter-spacing:3px;color:#c97b2a;text-transform:uppercase;">What Is This?</p>
-              <h2 style="margin:0 0 16px 0;font-size:22px;font-weight:700;color:#ffffff;">A tabletop universe unlike anything you've seen.</h2>
-              <p style="margin:0 0 14px 0;font-size:15px;color:#b0b0b0;line-height:1.7;"><strong style="color:#e8e8e8;">War of the Sphinx</strong> is an original tabletop card game and world-building project set in a mythological universe rooted in ancient African civilization, mysticism, and high-stakes strategy.</p>
-              <p style="margin:0 0 14px 0;font-size:15px;color:#b0b0b0;line-height:1.7;">Think deep lore, stunning original artwork, and a game system built for players who want more than luck — they want skill, story, and stakes.</p>
-              <p style="margin:0;font-size:15px;color:#b0b0b0;line-height:1.7;">This is a passion project two years in development — and it's just getting started.</p>
-            </td>
-          </tr>
+            <!-- INTRO -->
+            <p style="margin:0 0 20px 0;font-size:16px;color:#d4c49a;line-height:1.8;">
+              You just joined a list that didn't exist two years ago — when this whole thing was still just a vision in a sketchbook.
+            </p>
+            <p style="margin:0 0 28px 0;font-size:16px;color:#d4c49a;line-height:1.8;">
+              Thank you for being here. Seriously.
+            </p>
 
-          <!-- CAMPAIGN HIGHLIGHT BOX -->
-          <tr>
-            <td style="padding:0 40px 28px;">
-              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#1a1a1a;border-radius:8px;border:1px solid #2d1200;overflow:hidden;">
-                <tr>
-                  <td style="padding:6px 20px;background:#c97b2a;">
-                    <p style="margin:0;font-size:10px;font-weight:700;letter-spacing:3px;color:#000000;text-transform:uppercase;">Where We Are Now</p>
-                  </td>
-                </tr>
-                <tr>
-                  <td style="padding:20px;">
-                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
-                      <tr>
-                        <td style="padding:6px 0;border-bottom:1px solid #2a2a2a;">
-                          <p style="margin:0;font-size:14px;color:#c97b2a;">✦ &nbsp;<strong style="color:#ffffff;">Campaign Run 1 &amp; 2</strong> <span style="color:#888888;">— Completed &amp; delivered</span></p>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td style="padding:6px 0;border-bottom:1px solid #2a2a2a;">
-                          <p style="margin:0;font-size:14px;color:#c97b2a;">✦ &nbsp;<strong style="color:#ffffff;">Original Artwork</strong> <span style="color:#888888;">— Hand-illustrated card set in progress</span></p>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td style="padding:6px 0;border-bottom:1px solid #2a2a2a;">
-                          <p style="margin:0;font-size:14px;color:#c97b2a;">✦ &nbsp;<strong style="color:#ffffff;">Game System</strong> <span style="color:#888888;">— Core rules finalized, playtesting ongoing</span></p>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td style="padding:6px 0;">
-                          <p style="margin:0;font-size:14px;color:#c97b2a;">✦ &nbsp;<strong style="color:#ffffff;">Next Campaign Run</strong> <span style="color:#888888;">— Coming soon — you'll know first</span></p>
-                        </td>
-                      </tr>
-                    </table>
-                  </td>
-                </tr>
-              </table>
-            </td>
-          </tr>
+            <!-- DIVIDER -->
+            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:28px;">
+              <tr><td style="height:1px;background:linear-gradient(90deg,transparent,#e07b00 30%,#e07b00 70%,transparent);"></td></tr>
+            </table>
 
-          <!-- DIVIDER -->
-          <tr>
-            <td style="padding:0 40px;">
-              <div style="height:1px;background:linear-gradient(90deg,transparent,#2a2a2a,transparent);"></div>
-            </td>
-          </tr>
+            <!-- WHAT IS WOTS -->
+            <p style="margin:0 0 6px 0;font-size:10px;font-weight:800;letter-spacing:4px;color:#e07b00;text-transform:uppercase;">What Is This</p>
+            <h2 style="margin:0 0 14px 0;font-size:22px;font-weight:800;color:#ffd166;text-transform:uppercase;letter-spacing:1px;">A Comic Universe. A Card Game. Two Years of Work.</h2>
+            <p style="margin:0 0 14px 0;font-size:15px;color:#b8a87a;line-height:1.8;">
+              <strong style="color:#d4c49a;">War of the Sphinx</strong> is an independent comic series and collectible card game set in an ancient African world — gods, warriors, kingdoms, and the battles that decide who survives.
+            </p>
+            <p style="margin:0 0 14px 0;font-size:15px;color:#b8a87a;line-height:1.8;">
+              The comic lays the story. The cards bring it to the table. Every character you'll play has a place in the larger narrative — and the world keeps growing with every run.
+            </p>
+            <p style="margin:0 0 28px 0;font-size:15px;color:#b8a87a;line-height:1.8;">
+              This isn't a studio project. It's two years of hand-drawn panels, late nights, and a vision that refused to stay quiet.
+            </p>
 
-          <!-- WHAT TO EXPECT -->
-          <tr>
-            <td style="padding:32px 40px 24px;">
-              <p style="margin:0 0 6px 0;font-size:10px;font-weight:700;letter-spacing:3px;color:#c97b2a;text-transform:uppercase;">What Happens Next</p>
-              <h2 style="margin:0 0 16px 0;font-size:22px;font-weight:700;color:#ffffff;">You're getting an all-access pass to the build.</h2>
-              <p style="margin:0 0 24px 0;font-size:15px;color:#b0b0b0;line-height:1.7;">As a subscriber, you'll receive direct updates from the team — no noise, no filler. Here's what's coming your way:</p>
+            <!-- DIVIDER -->
+            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:28px;">
+              <tr><td style="height:1px;background:linear-gradient(90deg,transparent,#3a2800 50%,transparent);"></td></tr>
+            </table>
 
-              <!-- Update types -->
-              <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
-                <tr>
-                  <td style="padding:12px 16px;background:#1a1a1a;border-radius:8px;border-left:3px solid #c97b2a;margin-bottom:10px;">
-                    <p style="margin:0 0 4px 0;font-size:13px;font-weight:700;color:#c97b2a;text-transform:uppercase;letter-spacing:1px;">Monthly Updates</p>
-                    <p style="margin:0;font-size:14px;color:#b0b0b0;line-height:1.5;">Deep dives into the project — new artwork reveals, game mechanics breakdowns, behind-the-scenes production updates, and milestone announcements.</p>
-                  </td>
-                </tr>
-                <tr><td style="height:10px;"></td></tr>
-                <tr>
-                  <td style="padding:12px 16px;background:#1a1a1a;border-radius:8px;border-left:3px solid #8b5a1a;">
-                    <p style="margin:0 0 4px 0;font-size:13px;font-weight:700;color:#c97b2a;text-transform:uppercase;letter-spacing:1px;">Bi-Weekly Drops</p>
-                    <p style="margin:0;font-size:14px;color:#b0b0b0;line-height:1.5;">Quick hits — card previews, community spotlights, campaign progress, and early access to anything new we're putting into the world.</p>
-                  </td>
-                </tr>
-                <tr><td style="height:10px;"></td></tr>
-                <tr>
-                  <td style="padding:12px 16px;background:#1a1a1a;border-radius:8px;border-left:3px solid #5a3a0a;">
-                    <p style="margin:0 0 4px 0;font-size:13px;font-weight:700;color:#c97b2a;text-transform:uppercase;letter-spacing:1px;">Subscriber-First Access</p>
-                    <p style="margin:0;font-size:14px;color:#b0b0b0;line-height:1.5;">When the next campaign launch drops, you'll get the link before anyone else. No waiting, no scrambling — first in line.</p>
-                  </td>
-                </tr>
-              </table>
-            </td>
-          </tr>
+            <!-- STATUS PANEL -->
+            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#0d0b08;border:1px solid #3a2800;border-radius:4px;overflow:hidden;margin-bottom:28px;">
+              <tr>
+                <td style="background:#e07b00;padding:8px 20px;">
+                  <p style="margin:0;font-size:9px;font-weight:800;letter-spacing:4px;color:#0d0b08;text-transform:uppercase;">Current Status</p>
+                </td>
+              </tr>
+              <tr>
+                <td style="padding:20px 20px 16px;">
+                  <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+                    <tr>
+                      <td style="padding:8px 0;border-bottom:1px solid #1e1a10;">
+                        <p style="margin:0;font-size:14px;color:#d4c49a;"><span style="color:#e07b00;margin-right:10px;">&#9654;</span><strong>Campaign Runs 1 &amp; 2</strong> &nbsp;<span style="color:#666;">Completed &amp; shipped</span></p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="padding:8px 0;border-bottom:1px solid #1e1a10;">
+                        <p style="margin:0;font-size:14px;color:#d4c49a;"><span style="color:#e07b00;margin-right:10px;">&#9654;</span><strong>Original Artwork</strong> &nbsp;<span style="color:#666;">Hand-illustrated card set in production</span></p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="padding:8px 0;border-bottom:1px solid #1e1a10;">
+                        <p style="margin:0;font-size:14px;color:#d4c49a;"><span style="color:#e07b00;margin-right:10px;">&#9654;</span><strong>The Comic</strong> &nbsp;<span style="color:#666;">Pages in progress — story is locked</span></p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="padding:8px 0;">
+                        <p style="margin:0;font-size:14px;color:#d4c49a;"><span style="color:#e07b00;margin-right:10px;">&#9654;</span><strong>Next Campaign Run</strong> &nbsp;<span style="color:#666;">Coming — you'll hear first</span></p>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+            </table>
 
-          <!-- CTA BUTTON -->
-          <tr>
-            <td style="padding:8px 40px 32px;text-align:center;">
-              <a href="https://wotscampaign.com" style="display:inline-block;padding:16px 36px;background:#c97b2a;color:#000000;font-size:15px;font-weight:700;text-decoration:none;border-radius:6px;letter-spacing:1px;text-transform:uppercase;">Explore the World</a>
-            </td>
-          </tr>
+            <!-- DIVIDER -->
+            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:28px;">
+              <tr><td style="height:1px;background:linear-gradient(90deg,transparent,#3a2800 50%,transparent);"></td></tr>
+            </table>
 
-          <!-- DIVIDER -->
-          <tr>
-            <td style="padding:0 40px;">
-              <div style="height:1px;background:linear-gradient(90deg,transparent,#2a2a2a,transparent);"></div>
-            </td>
-          </tr>
+            <!-- WHAT TO EXPECT -->
+            <p style="margin:0 0 6px 0;font-size:10px;font-weight:800;letter-spacing:4px;color:#e07b00;text-transform:uppercase;">What's Coming Your Way</p>
+            <h2 style="margin:0 0 14px 0;font-size:20px;font-weight:800;color:#ffd166;text-transform:uppercase;letter-spacing:1px;">You're Getting a Front-Row Seat.</h2>
+            <p style="margin:0 0 20px 0;font-size:15px;color:#b8a87a;line-height:1.8;">
+              No spam. No filler. Just direct dispatches from the studio as we build.
+            </p>
 
-          <!-- CLOSING MESSAGE -->
-          <tr>
-            <td style="padding:32px 40px 40px;text-align:center;">
-              <p style="margin:0 0 12px 0;font-size:15px;color:#888888;line-height:1.7;">Two years of work. Hundreds of hours of art, playtesting, and storytelling. This is the result — and it's only chapter one.</p>
-              <p style="margin:0 0 20px 0;font-size:15px;color:#888888;line-height:1.7;">We're glad you're here for it.</p>
-              <p style="margin:0;font-size:15px;color:#c97b2a;font-weight:600;">— The War of the Sphinx Team</p>
-            </td>
-          </tr>
+            <!-- Update boxes -->
+            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:10px;">
+              <tr>
+                <td style="background:#0d0b08;border:1px solid #3a2800;border-left:3px solid #e07b00;border-radius:3px;padding:14px 18px;">
+                  <p style="margin:0 0 4px 0;font-size:10px;font-weight:800;letter-spacing:3px;color:#e07b00;text-transform:uppercase;">Monthly — The Deep Dive</p>
+                  <p style="margin:0;font-size:14px;color:#b8a87a;line-height:1.6;">New art reveals, story breakdowns, behind-the-scenes production updates, and where the campaign stands.</p>
+                </td>
+              </tr>
+            </table>
+            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:10px;">
+              <tr>
+                <td style="background:#0d0b08;border:1px solid #3a2800;border-left:3px solid #c49a3c;border-radius:3px;padding:14px 18px;">
+                  <p style="margin:0 0 4px 0;font-size:10px;font-weight:800;letter-spacing:3px;color:#c49a3c;text-transform:uppercase;">Bi-Weekly — The Drop</p>
+                  <p style="margin:0;font-size:14px;color:#b8a87a;line-height:1.6;">Card previews, character spotlights, comic panels, and whatever else is coming out of the studio that week.</p>
+                </td>
+              </tr>
+            </table>
+            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:28px;">
+              <tr>
+                <td style="background:#0d0b08;border:1px solid #3a2800;border-left:3px solid #7a6030;border-radius:3px;padding:14px 18px;">
+                  <p style="margin:0 0 4px 0;font-size:10px;font-weight:800;letter-spacing:3px;color:#c49a3c;text-transform:uppercase;">Launch Day — First in Line</p>
+                  <p style="margin:0;font-size:14px;color:#b8a87a;line-height:1.6;">When the next campaign drops, this list gets the link before it goes anywhere else. That's the deal.</p>
+                </td>
+              </tr>
+            </table>
 
-          <!-- FOOTER -->
-          <tr>
-            <td style="background:#0d0d0d;padding:20px 40px;border-top:1px solid #1a1a1a;text-align:center;">
-              <p style="margin:0 0 6px 0;font-size:11px;color:#555555;">You're receiving this because you signed up at wotscampaign.com</p>
-              <p style="margin:0;font-size:11px;color:#555555;">© 2025 War of the Sphinx. All rights reserved.</p>
-            </td>
-          </tr>
+            <!-- CTA -->
+            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:28px;">
+              <tr>
+                <td align="center">
+                  <a href="https://wotscampaign.com" style="display:inline-block;padding:16px 40px;background:#e07b00;color:#0d0b08;font-size:13px;font-weight:800;text-decoration:none;border-radius:3px;letter-spacing:3px;text-transform:uppercase;">Enter the World</a>
+                </td>
+              </tr>
+            </table>
 
-        </table>
-      </td>
-    </tr>
-  </table>
+            <!-- DIVIDER -->
+            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:24px;">
+              <tr><td style="height:1px;background:linear-gradient(90deg,transparent,#3a2800 50%,transparent);"></td></tr>
+            </table>
+
+            <!-- CLOSE -->
+            <p style="margin:0 0 8px 0;font-size:15px;color:#b8a87a;line-height:1.8;text-align:center;">
+              Two years in. The story's just starting.
+            </p>
+            <p style="margin:0;font-size:15px;color:#e07b00;font-weight:700;text-align:center;letter-spacing:1px;">
+              — The War of the Sphinx Team
+            </p>
+
+          </td>
+        </tr>
+
+        <!-- FOOTER -->
+        <tr>
+          <td style="background:#0d0b08;border:2px solid #e07b00;border-top:none;border-radius:0 0 4px 4px;padding:18px 40px;text-align:center;">
+            <p style="margin:0 0 4px 0;font-size:11px;color:#3a3020;">You're receiving this because you signed up at wotscampaign.com</p>
+            <p style="margin:0;font-size:11px;color:#3a3020;">© 2025 War of the Sphinx · All rights reserved.</p>
+          </td>
+        </tr>
+
+      </table>
+    </td>
+  </tr>
+</table>
+
 </body>
 </html>`;
 }
